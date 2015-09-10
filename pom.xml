@@ -146,29 +146,29 @@
 
     <modules>
       <module>artifactory</module>
-      <module>brackets</module>
-      <module>chaos-monkey</module>
-      <module>cdelivery</module>
-      <module>elasticsearch</module>
-      <module>fabric8-forge</module>
-      <module>gerrit</module>
-      <module>gogs</module>
-      <module>grafana2</module>
-      <module>hubot-irc</module>
-      <module>hubot-letschat</module>
-      <module>hubot-notifier</module>
-      <module>hubot-slack</module>
-      <module>image-linker</module>
-      <module>jenkins</module>
-      <module>keycloak</module>
-      <module>kibana</module>
-      <module>kiwi-irc</module>
-      <module>letschat</module>
-      <module>nexus</module>
-      <module>orion</module>
-      <module>prometheus</module>
-      <module>sonarqube</module>
-      <module>taiga</module>
+      <!--<module>brackets</module>-->
+      <!--<module>chaos-monkey</module>-->
+      <!--<module>cdelivery</module>-->
+      <!--<module>elasticsearch</module>-->
+      <!--<module>fabric8-forge</module>-->
+      <!--<module>gerrit</module>-->
+      <!--<module>gogs</module>-->
+      <!--<module>grafana2</module>-->
+      <!--<module>hubot-irc</module>-->
+      <!--<module>hubot-letschat</module>-->
+      <!--<module>hubot-notifier</module>-->
+      <!--<module>hubot-slack</module>-->
+      <!--<module>image-linker</module>-->
+      <!--<module>jenkins</module>-->
+      <!--<module>keycloak</module>-->
+      <!--<module>kibana</module>-->
+      <!--<module>kiwi-irc</module>-->
+      <!--<module>letschat</module>-->
+      <!--<module>nexus</module>-->
+      <!--<module>orion</module>-->
+      <!--<module>prometheus</module>-->
+      <!--<module>sonarqube</module>-->
+      <!--<module>taiga</module>-->
     </modules>
 
     <build>
@@ -368,6 +368,19 @@
                                     </rules>
                                     <fail>true</fail>
                                 </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.jolokia</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <version>${docker.maven.plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                                <phase>package</phase>
                             </execution>
                         </executions>
                     </plugin>
