@@ -49,8 +49,11 @@
     <fabric8.label.provider>fabric8</fabric8.label.provider>
     <fabric8.iconRef>icons/jbossforge.svg</fabric8.iconRef>
 
+
     <!-- add certs -->
     <fabric8.serviceAccount>fabric8</fabric8.serviceAccount>
+
+    <fabric8.env.FABRIC8_ARCHETYPES_VERSION>${fabric8.archetypes.release.version}</fabric8.env.FABRIC8_ARCHETYPES_VERSION>
 
     <!-- allows you to work on different release versions of the forge plugins -->
     <fabric8.addon.release.version>${fabric8.release.version}</fabric8.addon.release.version>
@@ -158,6 +161,7 @@
                   <FORGE_ADDON_DIRECTORY>${docker.env.FORGE_ADDON_DIRECTORY}</FORGE_ADDON_DIRECTORY>
                   <KUBERNETES_TRUST_CERT>true</KUBERNETES_TRUST_CERT>
                   <SKIP_TLS_VERIFY>true</SKIP_TLS_VERIFY>
+                  <FABRIC8_ARCHETYPES_VERSION>${fabric8.env.FABRIC8_ARCHETYPES_VERSION}</FABRIC8_ARCHETYPES_VERSION>
                 </env>
                 <ports>
                   <port>${fabric8.service.containerPort}</port>
@@ -203,7 +207,7 @@
       <id>fabric8-snapshot</id>
       <properties>
         <fabric8.addon.release.version>2.3-SNAPSHOT</fabric8.addon.release.version>
-        <camel.addon.release.version>2.2.19</camel.addon.release.version>
+        <camel.addon.release.version>2.3-SNAPSHOT</camel.addon.release.version>
       </properties>
     </profile>
 
