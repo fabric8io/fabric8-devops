@@ -73,6 +73,13 @@
         <skipItests>true</skipItests>
         <integrationTestPattern>**/*KubernetesTest*.java</integrationTestPattern>
 
+        <docker.from>fabric8/java</docker.from>
+
+        <docker.image>${fabric8.dockerPrefix}${fabric8.dockerUser}${project.artifactId}:${project.version}</docker.image>
+        <docker.assemblyDescriptorRef>artifact-with-dependencies</docker.assemblyDescriptorRef>
+        <docker.port.container.jolokia>8778</docker.port.container.jolokia>
+
+
         <jube.plugin.enabled>false</jube.plugin.enabled>
 
         <maven.compiler.source>1.7</maven.compiler.source>
@@ -92,6 +99,7 @@
         <junit.version>4.12</junit.version>
         <fabric8.version>2.2.23</fabric8.version>
         <fabric8.release.version>${fabric8.version}</fabric8.release.version>
+        <fabric8.archetypes.release.version>2.2.23.1</fabric8.archetypes.release.version>
         <maven.require.version>3.1.1</maven.require.version>
         <maven.enforcer.plugin.version>1.4</maven.enforcer.plugin.version>
     </properties>
@@ -318,7 +326,7 @@
           <id>fabric8-snapshot</id>
           <properties>
             <fabric8.version>2.3-SNAPSHOT</fabric8.version>
-            <fabric8.release.version>2.2.22</fabric8.release.version>
+            <fabric8.release.version>2.3-SNAPSHOT</fabric8.release.version>
             <fabric8.dockerPrefix />
           </properties>
         </profile>
