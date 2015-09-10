@@ -146,29 +146,29 @@
 
     <modules>
       <module>artifactory</module>
-      <!--<module>brackets</module>-->
-      <!--<module>chaos-monkey</module>-->
-      <!--<module>cdelivery</module>-->
-      <!--<module>elasticsearch</module>-->
-      <!--<module>fabric8-forge</module>-->
-      <!--<module>gerrit</module>-->
-      <!--<module>gogs</module>-->
-      <!--<module>grafana2</module>-->
-      <!--<module>hubot-irc</module>-->
-      <!--<module>hubot-letschat</module>-->
-      <!--<module>hubot-notifier</module>-->
-      <!--<module>hubot-slack</module>-->
-      <!--<module>image-linker</module>-->
-      <!--<module>jenkins</module>-->
-      <!--<module>keycloak</module>-->
-      <!--<module>kibana</module>-->
-      <!--<module>kiwi-irc</module>-->
-      <!--<module>letschat</module>-->
-      <!--<module>nexus</module>-->
-      <!--<module>orion</module>-->
-      <!--<module>prometheus</module>-->
-      <!--<module>sonarqube</module>-->
-      <!--<module>taiga</module>-->
+      <module>brackets</module>
+      <module>chaos-monkey</module>
+      <module>cdelivery</module>
+      <module>elasticsearch</module>
+      <module>fabric8-forge</module>
+      <module>gerrit</module>
+      <module>gogs</module>
+      <module>grafana2</module>
+      <module>hubot-irc</module>
+      <module>hubot-letschat</module>
+      <module>hubot-notifier</module>
+      <module>hubot-slack</module>
+      <module>image-linker</module>
+      <module>jenkins</module>
+      <module>keycloak</module>
+      <module>kibana</module>
+      <module>kiwi-irc</module>
+      <module>letschat</module>
+      <module>nexus</module>
+      <module>orion</module>
+      <module>prometheus</module>
+      <module>sonarqube</module>
+      <module>taiga</module>
     </modules>
 
     <build>
@@ -341,15 +341,19 @@
             <id>release</id>
             <build>
                 <plugins>
-                  <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-gpg-plugin</artifactId>
-                    <configuration>
-                      <passphrase>${gpg.passphrase}</passphrase>
-                      <useAgent>true</useAgent>
-                    </configuration>
-                  </plugin>
-
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-enforcer-plugin</artifactId>
