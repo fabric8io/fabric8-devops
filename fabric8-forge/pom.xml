@@ -21,7 +21,7 @@
   <parent>
     <groupId>io.fabric8.apps.devops</groupId>
     <artifactId>fabric8-devops</artifactId>
-    <version>2.2.23.6</version>
+    <version>2.2.23.7</version>
   </parent>
 
   <artifactId>fabric8-forge</artifactId>
