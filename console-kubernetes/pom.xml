@@ -18,7 +18,7 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
-    <groupId>io.fabric8.apps.devops</groupId>
+    <groupId>io.fabric8.devops.apps</groupId>
     <artifactId>fabric8-devops</artifactId>
     <version>2.2.23.8</version>
   </parent>
@@ -39,14 +39,14 @@
 
   <dependencies>
     <dependency>
-      <groupId>io.fabric8.apps.devops</groupId>
+      <groupId>io.fabric8.devops.apps</groupId>
       <artifactId>console</artifactId>
       <version>${project.version}</version>
       <classifier>kubernetes</classifier>
       <type>json</type>
     </dependency>
     <dependency>
-      <groupId>io.fabric8.apps.devops</groupId>
+      <groupId>io.fabric8.devops.apps</groupId>
       <artifactId>templates</artifactId>
       <version>${project.version}</version>
       <classifier>kubernetes</classifier>

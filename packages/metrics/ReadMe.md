@@ -1,0 +1,1 @@
+Provides centralised historical [Metrics](http://fabric8.io/guide/metrics.html) using [InfluxDB](http://influxdb.com/) as the back end and [Grafana](http://grafana.org/) as the front end

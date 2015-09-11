@@ -20,7 +20,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>io.fabric8.apps.devops</groupId>
+    <groupId>io.fabric8.devops.apps</groupId>
     <artifactId>fabric8-devops</artifactId>
     <version>2.2.23.8</version>
   </parent>
@@ -38,6 +38,9 @@
     <docker.image>${fabric8.dockerPrefix}${fabric8.dockerUser}fabric8-console:${fabric8.console.version}</docker.image>
     <docker.port.container.http>9090</docker.port.container.http>
     <docker.port.container.jolokia />
+
+    <fabric8.service.name>fabric8</fabric8.service.name>
+    <fabric8.replicationController.name>fabric8</fabric8.replicationController.name>
 
     <fabric8.service.port>80</fabric8.service.port>
     <fabric8.service.containerPort>9090</fabric8.service.containerPort>
