@@ -149,6 +149,8 @@
       <module>brackets</module>
       <module>chaos-monkey</module>
       <module>cdelivery</module>
+      <module>console</module>
+      <module>console-kubernetes</module>
       <module>elasticsearch</module>
       <module>fabric8-forge</module>
       <module>gerrit</module>
@@ -169,6 +171,7 @@
       <module>prometheus</module>
       <module>sonarqube</module>
       <module>taiga</module>
+      <module>templates</module>
     </modules>
 
     <build>
