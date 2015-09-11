@@ -80,10 +80,10 @@
         <artifactId>docker-maven-plugin</artifactId>
         <version>${docker.maven.plugin.version}</version>
         <configuration>
-          <image>fabric8/elasticsearch-logstash-template:${project.version}</image>
+          <image>${fabric8.dockerPrefix}${fabric8.dockerUser}elasticsearch-logstash-template:${project.version}</image>
           <images>
             <image>
-              <name>fabric8/elasticsearch-logstash-template:${project.version}</name>
+              <name>${fabric8.dockerPrefix}${fabric8.dockerUser}elasticsearch-logstash-template:${project.version}</name>
               <build>
                 <from>centos:7</from>
                 <assembly>
