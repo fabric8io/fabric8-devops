@@ -35,7 +35,7 @@
   <properties>
     <fabric8.serviceAccount>metrics</fabric8.serviceAccount>
 
-    <docker.image>fabric8/prometheus-kubernetes:${project.version}</docker.image>
+    <docker.image>${fabric8.dockerPrefix}${fabric8.dockerUser}prometheus-kubernetes:${project.version}</docker.image>
     <docker.port.container.http>9090</docker.port.container.http>
     <docker.port.container.jolokia />
 
