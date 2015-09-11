@@ -27,7 +27,7 @@
   <artifactId>console-kubernetes</artifactId>
   <packaging>pom</packaging>
 
-  <name>Fabric8 :: Apps Groups :: Console Kubernetes</name>
+  <name>Fabric8 Console for Kubernetes</name>
 
   <properties>
     <fabric8.combineDependencies>true</fabric8.combineDependencies>
