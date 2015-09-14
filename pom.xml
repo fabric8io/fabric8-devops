@@ -164,7 +164,7 @@
       <module>jenkins</module>
       <module>keycloak</module>
       <module>kibana</module>
-      <module>kiwi-irc</module>
+      <module>kiwiirc</module>
       <module>letschat</module>
       <module>nexus</module>
       <module>orion</module>

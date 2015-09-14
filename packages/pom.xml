@@ -34,12 +34,14 @@
   </properties>
 
   <modules>
-    <module>cdelivery-core</module>
-    <module>cdelivery</module>
-    <module>chat</module>
+    <module>cd-pipeline</module>
+    <module>chat-irc</module>
+    <module>chat-letschat</module>
+    <module>chat-slack</module>
     <module>logging</module>
     <module>management</module>
     <module>metrics</module>
+    <module>social</module>
 
     <module>distro</module>
   </modules>

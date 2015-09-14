@@ -24,10 +24,10 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>chat</artifactId>
+  <artifactId>chat-irc</artifactId>
   <packaging>pom</packaging>
 
-  <name>Fabric8 DevOps :: Packages :: Chat</name>
+  <name>Fabric8 DevOps :: Packages :: Chat :: IRC</name>
 
   <properties>
     <fabric8.combineDependencies>true</fabric8.combineDependencies>
@@ -43,14 +43,7 @@
     </dependency>
     <dependency>
       <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>letschat</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>hubot-letschat</artifactId>
+      <artifactId>hubot-irc</artifactId>
       <version>${project.version}</version>
       <classifier>kubernetes</classifier>
       <type>json</type>

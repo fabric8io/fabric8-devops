@@ -24,60 +24,33 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>cdelivery-core</artifactId>
+  <artifactId>social</artifactId>
   <packaging>pom</packaging>
 
-  <name>Fabric8 DevOps :: Packages :: Continuous Delivery :: Core</name>
-  <description>Creates the core parts of Continuous Delivery; gogs, jenkins, nexus, sonaqube</description>
+  <name>Fabric8 DevOps :: Packages :: Social</name>
 
   <properties>
     <fabric8.combineDependencies>true</fabric8.combineDependencies>
   </properties>
 
   <dependencies>
+
+    <!-- CD social -->
     <dependency>
       <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>gerrit</artifactId>
+      <artifactId>taiga</artifactId>
       <version>${project.version}</version>
       <classifier>kubernetes</classifier>
       <type>json</type>
     </dependency>
     <dependency>
       <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>gogs</artifactId>
+      <artifactId>orion</artifactId>
       <version>${project.version}</version>
       <classifier>kubernetes</classifier>
       <type>json</type>
     </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>nexus</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>jenkins</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>sonarqube</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <!-- project wizard -->
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>fabric8-forge</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
+
   </dependencies>
 
 </project>

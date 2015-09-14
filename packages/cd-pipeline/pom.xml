@@ -24,114 +24,60 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>io.fabric8.devops.distro</groupId>
-  <artifactId>distro</artifactId>
+  <artifactId>cd-pipeline</artifactId>
   <packaging>pom</packaging>
 
-  <name>Fabric8 DevOps :: Packages :: Distro</name>
+  <name>Fabric8 DevOps :: Packages :: Continuous Delivery Pipeline</name>
+  <description>Creates the Continuous Delivery Pipeline via: gogs, jenkins, nexus, gerrit and sonaqube</description>
+
+  <properties>
+    <fabric8.combineDependencies>true</fabric8.combineDependencies>
+  </properties>
 
   <dependencies>
     <dependency>
-      <groupId>io.fabric8.devops.packages</groupId>
-      <artifactId>cd-pipeline</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.packages</groupId>
-      <artifactId>chat-irc</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.packages</groupId>
-      <artifactId>chat-letschat</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.packages</groupId>
-      <artifactId>chat-slack</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-
-
-    <dependency>
-      <groupId>io.fabric8.devops.packages</groupId>
-      <artifactId>social</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.packages</groupId>
-      <artifactId>management</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-
-    <!-- console -->
-    <dependency>
       <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>console</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-
-    <!-- individual apps -->
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>chaos-monkey</artifactId>
+      <artifactId>gerrit</artifactId>
       <version>${project.version}</version>
       <classifier>kubernetes</classifier>
       <type>json</type>
     </dependency>
     <dependency>
       <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>artifactory</artifactId>
+      <artifactId>gogs</artifactId>
       <version>${project.version}</version>
       <classifier>kubernetes</classifier>
       <type>json</type>
     </dependency>
     <dependency>
       <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>kiwiirc</artifactId>
+      <artifactId>nexus</artifactId>
+      <version>${project.version}</version>
+      <classifier>kubernetes</classifier>
+      <type>json</type>
+    </dependency>
+    <dependency>
+      <groupId>io.fabric8.devops.apps</groupId>
+      <artifactId>jenkins</artifactId>
+      <version>${project.version}</version>
+      <classifier>kubernetes</classifier>
+      <type>json</type>
+    </dependency>
+    <dependency>
+      <groupId>io.fabric8.devops.apps</groupId>
+      <artifactId>sonarqube</artifactId>
+      <version>${project.version}</version>
+      <classifier>kubernetes</classifier>
+      <type>json</type>
+    </dependency>
+    <!-- project wizard -->
+    <dependency>
+      <groupId>io.fabric8.devops.apps</groupId>
+      <artifactId>fabric8-forge</artifactId>
       <version>${project.version}</version>
       <classifier>kubernetes</classifier>
       <type>json</type>
     </dependency>
   </dependencies>
-
-  <build>
-    <plugins>
-      <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <version>2.5.4</version>
-        <configuration>
-          <descriptors>
-            <descriptor>src/main/assembly/templates.xml</descriptor>
-          </descriptors>
-        </configuration>
-        <executions>
-          <execution>
-            <id>make-assembly</id>
-            <!-- this is used for inheritance merges -->
-            <phase>package</phase>
-            <!-- bind to the packaging phase -->
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
 
 </project>
