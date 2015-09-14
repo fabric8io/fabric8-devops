@@ -47,7 +47,9 @@
         <fabric8.serviceAccount>gerrit</fabric8.serviceAccount>
 
         <!-- to access docker socket lets run in priviledged mode -->
-        <fabric8.containerPrivileged>true</fabric8.containerPrivileged>
+<!--
+        <fabric8.containerPrivileged>false</fabric8.containerPrivileged>
+-->
 
         <!--  ReplicationController  -->
         <fabric8.generateJson>true</fabric8.generateJson>
