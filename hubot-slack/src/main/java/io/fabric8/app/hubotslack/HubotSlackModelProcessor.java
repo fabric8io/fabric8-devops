@@ -7,6 +7,7 @@ import io.fabric8.openshift.api.model.TemplateBuilder;
 public class HubotSlackModelProcessor {
 
     private static final String NAME = "hubot-slack";
+    private static final String SERVICE = "hubot";
 
     @KubernetesProvider
     public Template create() {
@@ -57,7 +58,7 @@ public class HubotSlackModelProcessor {
 
                 .addNewServiceObject()
                     .withNewMetadata()
-                .withName(NAME)
+                .withName(SERVICE)
                     .endMetadata()
                 .withNewSpec()
                 .withType("LoadBalancer")
