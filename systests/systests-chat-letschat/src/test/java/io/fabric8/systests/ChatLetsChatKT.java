@@ -36,7 +36,7 @@ import static io.fabric8.jolokia.assertions.Assertions.assertThat;
  * System test for the <a href="http://fabric8.io/guide/cdelivery.html">CD Pipeline</a>
  */
 @RunWith(Arquillian.class)
-public class CDPipelineKT {
+public class ChatLetsChatKT {
 
     @ArquillianResource
     KubernetesClient client;
@@ -47,17 +47,16 @@ public class CDPipelineKT {
     @ArquillianResource
     JolokiaClients jolokiaClients;
 
-    String jenkinsName = "jenkins";
-    String nexusName = "nexus";
-    String gogsName = "nexus";
+    String letschat = "letschat";
+    //String hubot = "hubot";
+    String hubotLetsChat = "hubot-letschat";
 
     @Test
-    public void testMQConsumer() throws Exception {
+    public void testChat() throws Exception {
         String namespace = session.getNamespace();
 
-        assertThat(client).replicationController(jenkinsName, namespace).isNotNull();
-        assertThat(client).replicationController(nexusName, namespace).isNotNull();
-        assertThat(client).replicationController(gogsName, namespace).isNotNull();
+        assertThat(client).replicationController(letschat, namespace).isNotNull();
+        assertThat(client).replicationController(hubotLetsChat, namespace).isNotNull();
 
 
 /*
