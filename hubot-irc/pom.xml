@@ -33,7 +33,18 @@
     </description>
 
     <properties>
-        <fabric8.generateJson>false</fabric8.generateJson>
+        <docker.image>${fabric8.dockerPrefix}${fabric8.dockerUser}hubot-irc:latest</docker.image>
+
+        <fabric8.service.port>80</fabric8.service.port>
+        <fabric8.service.containerPort>8080</fabric8.service.containerPort>
+        <fabric8.service.name>hubot</fabric8.service.name>
+        <fabric8.service.type>LoadBalancer</fabric8.service.type>
+
+        <docker.port.container.http>8080</docker.port.container.http>
+        <docker.port.container.jolokia />
+
+        <fabric8.label.component>hubot-irc</fabric8.label.component>
+        <fabric8.label.provider>fabric8</fabric8.label.provider>
     </properties>
 
     <build>
