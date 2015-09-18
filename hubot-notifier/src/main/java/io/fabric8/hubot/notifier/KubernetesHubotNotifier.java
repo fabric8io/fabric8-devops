@@ -89,7 +89,7 @@ public class KubernetesHubotNotifier {
         this.consoleLink = consoleLink;
         this.roomExpression = roomExpression;
 
-        LOG.info("Starting watching Kubernetes namespace " + getNamespace() + " at " + client.getMasterUrl() + " using console link: " + consoleLink);
+        LOG.info("Starting watching Kubernetes namespace " + getNamespace() + " at " + client.getMasterUrl() + " using console link: " + consoleLink + " with roomExpression: " + roomExpression);
 
         addClient(client.services().watch(new WatcherSupport<Service>() {
             @Override
@@ -162,7 +162,7 @@ public class KubernetesHubotNotifier {
             }
         }
 
-        String message = actionText + " " + decapitalize(kind) + " " + name + postfix;
+        String message = actionText + " " + decapitalize(kind) + " " + namespace + " / " + name + postfix;
         notifier.notifyRoom(room, message);
     }
 }
