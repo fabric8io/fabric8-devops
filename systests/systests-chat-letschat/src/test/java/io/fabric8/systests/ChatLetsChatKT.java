@@ -16,11 +16,18 @@
 package io.fabric8.systests;
 
 import io.fabric8.arquillian.kubernetes.Session;
+import io.fabric8.kubernetes.api.model.DoneablePod;
+import io.fabric8.kubernetes.api.model.PodList;
+import io.fabric8.kubernetes.assertions.KubernetesAssert;
+import io.fabric8.kubernetes.assertions.KubernetesNamespaceAssert;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.api.model.Pod;
+import io.fabric8.kubernetes.client.dsl.ClientNonNamespaceOperation;
+import io.fabric8.kubernetes.client.dsl.ClientResource;
 import io.fabric8.kubernetes.jolokia.JolokiaClients;
 import io.fabric8.utils.Asserts;
 import io.fabric8.utils.Block;
+import io.fabric8.utils.Millis;
 import org.assertj.core.api.Condition;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -47,44 +54,46 @@ public class ChatLetsChatKT {
     @ArquillianResource
     JolokiaClients jolokiaClients;
 
+    String fabric8Console = "fabric8";
     String letschat = "letschat";
-    //String hubot = "hubot";
     String hubotLetsChat = "hubot-letschat";
+    String hubotNotifier = "hubot-notifier";
+
+    String hubotStartupText = "Now watching services, pods";
 
     @Test
     public void testChat() throws Exception {
         String namespace = session.getNamespace();
+        final KubernetesNamespaceAssert asserts = assertThat(client, namespace);
 
-        assertThat(client).replicationController(letschat, namespace).isNotNull();
-        assertThat(client).replicationController(hubotLetsChat, namespace).isNotNull();
-
-
-/*
-        assertThat(client).pods()
-                .runningStatus()
-                .filterNamespace(namespace)
-                .haveAtLeast(1, new Condition<Pod>() {
-                    @Override
-                    public boolean matches(Pod podSchema) {
-                        return true;
-                    }
-                });
-*/
+        asserts.replicationController(letschat).isNotNull();
+        asserts.replicationController(hubotLetsChat).isNotNull();
+        asserts.replicationController(hubotNotifier).isNotNull();
+        asserts.replicationController(fabric8Console).isNotNull();
 
 
-        Asserts.assertWaitFor(10 * 60 * 1000, new Block() {
+        Asserts.assertForPeriod(Millis.minutes(1), new Block() {
             @Override
             public void invoke() throws Exception {
-/*
-                J4pClient brokerClient = jolokiaClients.assertClientForReplicationController(jenkinsName);
-                J4pClient consumerClient = jolokiaClients.assertClientForReplicationController(nexusName);
-
-                assertThat(consumerClient).stringAttribute("org.apache.camel:context=camel-1,type=context,name=\"camel-1\"", "State").isEqualTo("Started");
-                assertThat(brokerClient).longAttribute("org.apache.activemq:type=Broker,brokerName=default,destinationType=Queue,destinationName=TEST.FOO", "EnqueueCount").isGreaterThan(1000);
-                assertThat(brokerClient).longAttribute("org.apache.activemq:type=Broker,brokerName=default,destinationType=Queue,destinationName=TEST.FOO", "DequeueCount").isGreaterThan(1000);
-*/
+                asserts.podsForReplicationController(letschat).logs(letschat).doesNotContainText("Exception", "Error");
+                asserts.podsForReplicationController(hubotNotifier).logs().afterText(hubotStartupText).doesNotContainText("Exception");
             }
         });
+
+        asserts.podsForReplicationController(hubotNotifier).logs().containsText(hubotStartupText);
+
+        // now lets scale up the console pods to force the notifier to send a message
+        client.replicationControllers().inNamespace(namespace).withName(fabric8Console).scale(2);
+
+        Asserts.assertWaitFor(Millis.minutes(1), new Block() {
+            @Override
+            public void invoke() throws Exception {
+                asserts.podsForReplicationController(hubotNotifier).logs().afterText(hubotStartupText).containsText("added pod ");
+            }
+        });
+
+        asserts.podsForReplicationController(letschat).logs(letschat).doesNotContainText("Exception", "Error");
+        asserts.podsForReplicationController(hubotNotifier).logs().afterText(hubotStartupText).doesNotContainText("Exception");
     }
 
 }
