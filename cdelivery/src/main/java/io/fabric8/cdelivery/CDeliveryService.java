@@ -15,7 +15,7 @@
  */
 package io.fabric8.cdelivery;
 
-import com.wordnik.swagger.annotations.Api;
+import io.swagger.annotations.Api;
 import io.fabric8.annotations.External;
 import io.fabric8.annotations.Protocol;
 import io.fabric8.annotations.ServiceName;
