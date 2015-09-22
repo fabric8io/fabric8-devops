@@ -53,8 +53,8 @@ public class CDPipelineKT {
     String fabric8Forge = "fabric8-forge";
 
     @Test
-    public void testCDPipeline() throws Exception {
-        String namespace = session.getNamespace();
+    public void testCreateCamelCDIProjectFromArchetype() throws Exception {
+        final String namespace = session.getNamespace();
         final KubernetesNamespaceAssert asserts = assertThat(client, namespace);
 
         asserts.replicationController(jenkinsName).isNotNull();
@@ -75,8 +75,10 @@ public class CDPipelineKT {
         SeleniumTests.assertWebDriverForService(client, namespace, fabric8Console, new Function<WebDriverFacade, String>() {
             @Override
             public String apply(WebDriverFacade facade) {
-                ProjectsPage projects = new ProjectsPage(facade);
-                projects.login();
+                ProjectsPage projects = new ProjectsPage(facade, namespace);
+                String projectName = "p" +  NameGenerator.generateName();
+                NewProjectFormData projectData = new NewProjectFormData(projectName, "java-camel-cdi-archetype", "maven/CanaryReleaseStageAndApprovePromote.groovy");
+                projects.createProject(projectData);
                 return null;
             }
         });

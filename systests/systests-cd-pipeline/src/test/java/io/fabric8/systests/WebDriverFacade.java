@@ -22,6 +22,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import static io.fabric8.systests.SeleniumTests.logError;
+import static io.fabric8.systests.SeleniumTests.logInfo;
 import static io.fabric8.systests.SeleniumTests.logPageLocation;
+import static io.fabric8.systests.SeleniumTests.logWait;
 import static io.fabric8.systests.SeleniumTests.logWarn;
 import static org.junit.Assert.fail;
 
@@ -103,18 +106,68 @@ public class WebDriverFacade {
         return untilLinkClicked(defaultTimeoutInSeconds, by);
     }
 
+
+    public boolean untilSelectedByVisibleText(By by, String value) {
+        return untilSelectedByVisibleText(defaultTimeoutInSeconds, by, value);
+    }
+
+
+    public boolean untilSelectedByVisibleText(long timeoutInSeconds, final By by, final String value) {
+        String message = "select " + by + " with value: " + value;
+        return new WebDriverWait(driver, timeoutInSeconds).withMessage(message).until(new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver webDriver) {
+                WebElement element = findOptionalElement(by);
+                if (element != null && element.isEnabled()) {
+                    Select select = new Select(element);
+                    try {
+                        select.selectByVisibleText(value);
+                        logInfo("" + by + " select " + select + " selected value: " + value + "  at " + driver.getCurrentUrl());
+                        return true;
+                    } catch (NoSuchElementException e) {
+                        logWait("" + by + " select " + select + " does not yet have value: " + value + "  at " + driver.getCurrentUrl());
+                        return false;
+                    }
+                } else {
+                    logWait("" + by + " not enabled at " + driver.getCurrentUrl());
+                    return false;
+                }
+            }
+        });
+    }
+
+    public boolean untilIsEnabled(final By by) {
+        return untilIsEnabled(defaultTimeoutInSeconds, by);
+    }
+
+    public boolean untilIsEnabled(long timeoutInSeconds, final By by) {
+        String message = "is " + by + " enabled";
+        return until(message, timeoutInSeconds, new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver driver) {
+                WebElement link = findOptionalElement(by);
+                if (link != null && link.isEnabled()) {
+                    logInfo("Element: " + by + " enabled at " + driver.getCurrentUrl());
+                    return true;
+                } else {
+                    logWait("" + by + " at " + driver.getCurrentUrl());
+                    return false;
+                }
+            }
+        });
+    }
+
     public boolean untilLinkClicked(long timeoutInSeconds, final By by) {
         String message = "click link " + by;
         return until(message, timeoutInSeconds, new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver driver) {
                 WebElement link = findOptionalElement(by);
                 if (link != null) {
-                    System.out.println("Clicking link: " + by + " at " + driver.getCurrentUrl());
+                    logInfo("Clicking link: " + by + " at " + driver.getCurrentUrl());
                     link.click();
-                    System.out.println("Clicked link: " + by + " now at " + driver.getCurrentUrl());
+                    logInfo("Clicked link: " + by + " now at " + driver.getCurrentUrl());
                     return true;
                 } else {
-                    System.out.println("Not found link " + by + " at " + driver.getCurrentUrl());
+                    logInfo("Not found link " + by + " at " + driver.getCurrentUrl());
                     return false;
                 }
             }
@@ -135,11 +188,11 @@ public class WebDriverFacade {
                 for (By by : bys) {
                     WebElement element = findOptionalElement(by);
                     if (element != null && element.isDisplayed() && element.isEnabled()) {
-                        System.out.println("Found " + element + " for " + by + " at " + driver.getCurrentUrl());
+                        logInfo("Found " + element + " for " + by + " at " + driver.getCurrentUrl());
                         return true;
                     }
                 }
-                System.out.println("Still not found any of " + byList + " at " + driver.getCurrentUrl());
+                logInfo("Still not found any of " + byList + " at " + driver.getCurrentUrl());
                 return false;
             }
         });
@@ -175,7 +228,7 @@ public class WebDriverFacade {
      * just in case
      */
     public void untilLinkClickedLoop(By by, String expectedUrl) {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 10; i++) {
             untilLinkClicked(by);
             sleep(Millis.seconds(10));
 
@@ -186,6 +239,14 @@ public class WebDriverFacade {
             }
         }
         assertCurrentUrlStartsWith(expectedUrl);
+    }
+
+    public long getDefaultTimeoutInSeconds() {
+        return defaultTimeoutInSeconds;
+    }
+
+    public void setDefaultTimeoutInSeconds(long defaultTimeoutInSeconds) {
+        this.defaultTimeoutInSeconds = defaultTimeoutInSeconds;
     }
 
 }
