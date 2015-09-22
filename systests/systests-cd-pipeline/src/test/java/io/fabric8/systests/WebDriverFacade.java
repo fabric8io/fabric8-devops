@@ -70,6 +70,23 @@ public class WebDriverFacade {
     }
 
     /**
+     * Find an optinoal element from a given element or return null
+     * @param element
+     * @param by
+     */
+    public WebElement findOptionalElement(WebElement element, By by) {
+        try {
+            return element.findElement(by);
+        } catch (NoSuchElementException e) {
+            return null;
+        } catch (Throwable e) {
+            logError("Failed to find " + by, e);
+            return null;
+        }
+    }
+
+
+    /**
      * Finds the element for the `by`, clears the field and sends the given text
      *
      * @return the element or null if it is not found
@@ -136,6 +153,33 @@ public class WebDriverFacade {
         });
     }
 
+
+    public boolean untilIsDisplayed(By firstBy, By secondBy) {
+        return untilIsDisplayed(defaultTimeoutInSeconds, firstBy, secondBy);
+    }
+
+    public boolean untilIsDisplayed(long timeoutInSeconds, final By firstBy, final By secondBy) {
+        String message = "" + firstBy + " then  " + secondBy + " is displayed";
+        return until(message, timeoutInSeconds, new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver driver) {
+                WebElement element = findOptionalElement(firstBy);
+                if (element == null) {
+                    logWait("" + firstBy + " at " + driver.getCurrentUrl());
+                    return false;
+                } else {
+                    WebElement link = findOptionalElement(element, secondBy);
+                    if (link != null && link.isDisplayed()) {
+                        logInfo("" + firstBy + " then " + secondBy + " displayed at " + driver.getCurrentUrl());
+                        return true;
+                    } else {
+                        logWait("" + firstBy + " then " + secondBy + " displayed at " + driver.getCurrentUrl());
+                        return false;
+                    }
+                }
+            }
+        });
+    }
+
     public boolean untilIsEnabled(final By by) {
         return untilIsEnabled(defaultTimeoutInSeconds, by);
     }
@@ -149,7 +193,7 @@ public class WebDriverFacade {
                     logInfo("Element: " + by + " enabled at " + driver.getCurrentUrl());
                     return true;
                 } else {
-                    logWait("" + by + " at " + driver.getCurrentUrl());
+                    logWait("" + by + " enabled at " + driver.getCurrentUrl());
                     return false;
                 }
             }
@@ -248,5 +292,4 @@ public class WebDriverFacade {
     public void setDefaultTimeoutInSeconds(long defaultTimeoutInSeconds) {
         this.defaultTimeoutInSeconds = defaultTimeoutInSeconds;
     }
-
 }

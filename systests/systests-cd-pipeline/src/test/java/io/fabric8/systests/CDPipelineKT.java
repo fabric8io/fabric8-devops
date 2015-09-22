@@ -77,7 +77,9 @@ public class CDPipelineKT {
             public String apply(WebDriverFacade facade) {
                 ProjectsPage projects = new ProjectsPage(facade, namespace);
                 String projectName = "p" +  NameGenerator.generateName();
-                NewProjectFormData projectData = new NewProjectFormData(projectName, "java-camel-cdi-archetype", "maven/CanaryReleaseStageAndApprovePromote.groovy");
+                //String archetypeFilter = "java-camel-cdi-archetype";
+                String archetypeFilter = "io.fabric8.archetypes:java-camel-cdi-archetype:" + Versions.getVersion("fabric8.archetypes.release.version");
+                NewProjectFormData projectData = new NewProjectFormData(projectName, archetypeFilter, "maven/CanaryReleaseStageAndApprovePromote.groovy");
                 projects.createProject(projectData);
                 return null;
             }

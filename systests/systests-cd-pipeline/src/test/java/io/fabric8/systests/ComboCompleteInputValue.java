@@ -21,6 +21,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
+import static io.fabric8.systests.SeleniumTests.logInput;
+
 /**
  * Used to input values into a completion based combo list where we enter text; pause for the smart
  * completion list to pop up and then tab out of the field to forge the selection
@@ -39,12 +41,22 @@ public class ComboCompleteInputValue extends InputValue {
     }
 
     @Override
-    protected void doInputOnElement(WebElement element) {
-        super.doInputOnElement(element);
+    public WebElement doInput() {
+        final WebDriverFacade facade = getFacade();
+        final By firstBy = getBy();
 
-        // now lets wait a little bit
-        getFacade().sleep(Millis.seconds(5));
+        facade.sleep(Millis.seconds(2));
+        WebElement element = facade.findOptionalElement(firstBy);
+        if (element == null) {
+            return null;
+        }
+        super.doInputOnElement(element);
+        logInput("" + firstBy + " value: " + getValue());
+
+        facade.sleep(Millis.seconds(2));
+
         element.sendKeys(Keys.TAB);
-        getFacade().sleep(Millis.seconds(2));
+        facade.sleep(Millis.seconds(2));
+        return element;
     }
 }
