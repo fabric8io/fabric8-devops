@@ -21,23 +21,30 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import static io.fabric8.systests.SeleniumTests.logWarn;
+import static io.fabric8.systests.SeleniumTests.logInfo;
+import static io.fabric8.systests.SeleniumTests.logWait;
 import static org.junit.Assert.fail;
 
 /**
  */
 public class ProjectsPage extends PageSupport {
+    private final By signInBy = By.linkText("Sign In");
+    private final By createProjectBy = By.partialLinkText("Create Project");
+    private final WebDriverFacade driverFacade;
+    private final String namespace;
 
-    public ProjectsPage(WebDriverFacade driverFacade) {
+
+    public ProjectsPage(WebDriverFacade driverFacade, String namespace) {
         super(driverFacade);
+        this.driverFacade = driverFacade;
+        this.namespace = namespace;
     }
 
-    public void login() {
-
+    public void loginAndGoToProjectsPage() {
         WebDriverFacade facade = getFacade();
         WebDriver driver = getDriver();
 
-        ConsoleTests.waitUntilLoggedIn(facade);
+        ConsoleTests.waitUntilLoggedIn(facade, namespace);
 
         String startUrl = driver.getCurrentUrl();
         String expectedUrl = relativeUrl(startUrl, "/kubernetes", "/kubernetes/buildConfigs");
@@ -45,23 +52,75 @@ public class ProjectsPage extends PageSupport {
         By by = By.linkText("Projects");
         facade.untilLinkClickedLoop(by, expectedUrl);
 
-
-        final By signInBy = By.linkText("Sign In");
-        final By createProjectBy = By.partialLinkText("Create Project");
-
         facade.untilOneOf(signInBy, createProjectBy);
 
         WebElement signIn = facade.findOptionalElement(signInBy);
         if (signIn != null && signIn.isDisplayed()) {
-            System.out.println("Waiting for signin button to be clicked at " + driver.getCurrentUrl());
+            logInfo("Waiting for signin button to be clicked at " + driver.getCurrentUrl());
             facade.untilLinkClicked(signInBy);
             signIntoGogs();
         } else {
-            System.out.println("Sign in button not present at " + driver.getCurrentUrl());
+            logInfo("Sign in button not present at " + driver.getCurrentUrl());
         }
 
-        System.out.println("Now waiting for the button: " + createProjectBy + " at " +  driver.getCurrentUrl());
+        logWait("button: " + createProjectBy + " at " + driver.getCurrentUrl());
+        facade.untilIsEnabled(createProjectBy);
+    }
+
+    /**
+     * Creates a new project using the create projects wizard
+     */
+    public void createProject(NewProjectFormData form) {
+        loginAndGoToProjectsPage();
+
+        WebDriverFacade facade = getFacade();
+        WebDriver driver = getDriver();
         facade.untilLinkClicked(createProjectBy);
+
+        By nextButton = By.xpath("//button[@ng-click='execute()']");
+
+
+        // it can take a while to load pages in the wizard to lets increase the wait time lots! :)
+        facade.setDefaultTimeoutInSeconds(60 * 3);
+
+        facade.form().
+                clearAndSendKeys(By.xpath("//input[@ng-model='entity.named']"), form.getNamed()).
+                // TODO enter Type
+                //clearAndSendKeys(By.xpath("//label[text() = 'Type']/following::input[@type='text']"), form.getNamed()).
+                submitButton(nextButton).
+                submit();
+
+        facade.form().
+                completeComboBox(By.xpath("//label[text() = 'Archetype']/following::input[@type='text']"), form.getArchetypeFilter()).
+                submitButton(nextButton).
+                submit();
+        untilNextWizardPage(facade, nextButton);
+
+        facade.form().
+                submitButton(nextButton).
+                submit();
+        untilNextWizardPage(facade, nextButton);
+
+        facade.form().
+                completeComboBox(By.xpath("//label[text() = 'Flow']/following::input[@type='text']"), form.getJenkinsFileFilter()).
+                submitButton(nextButton).
+                submit();
+
+        // TODO how to assert it worked?
+    }
+
+    protected void untilNextWizardPage(WebDriverFacade facade, By nextButton) {
+        facade.sleep(Millis.seconds(5));
+        facade.untilIsEnabled(nextButton);
+    }
+
+
+    public By getCreateProjectBy() {
+        return createProjectBy;
+    }
+
+    public By getSignInBy() {
+        return signInBy;
     }
 
     /**

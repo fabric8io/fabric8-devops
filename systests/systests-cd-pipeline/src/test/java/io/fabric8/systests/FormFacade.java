@@ -25,6 +25,8 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import java.util.ArrayList;
 import java.util.List;
 
+import static io.fabric8.systests.SeleniumTests.logInfo;
+import static io.fabric8.systests.SeleniumTests.logWait;
 import static org.junit.Assert.fail;
 
 /**
@@ -43,6 +45,10 @@ public class FormFacade extends PageSupport {
         return this;
     }
 
+    public FormFacade completeComboBox(By by, String value) {
+        inputValues.add(new ComboCompleteInputValue(getFacade(), by, value));
+        return this;
+    }
 
     public FormFacade submitButton(By submitBy) {
         this.submitBy = submitBy;
@@ -53,12 +59,12 @@ public class FormFacade extends PageSupport {
         getFacade().until("Form inputs: " + inputValues, new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver driver) {
-                System.out.println("Now waiting for the: " + inputValues + " on " + driver.getCurrentUrl());
+                logWait("" + inputValues + " on " + driver.getCurrentUrl());
                 WebElement submitElement = null;
                 for (InputValue inputValue : inputValues) {
-                    submitElement = inputValue.clearAndSendKeys();
+                    submitElement = inputValue.doInput();
                     if (submitElement == null) {
-                        System.out.println("Missing " + inputValue + " at " + driver.getCurrentUrl());
+                        logInfo("Missing " + inputValue + " at " + driver.getCurrentUrl());
                         return false;
                     }
                 }
@@ -73,11 +79,11 @@ public class FormFacade extends PageSupport {
                             fail("Could not find submit button " + submitBy + " at " + driver.getCurrentUrl());
                             return false;
                         } else {
-                            System.out.println("Submitting form: " + inputValues + " on " + submitElement + " at " + driver.getCurrentUrl());
+                            logInfo("Submitting form: " + inputValues + " on " + submitElement + " at " + driver.getCurrentUrl());
                             submitElement.click();
                         }
                     } else {
-                        System.out.println("Submitting form: " + inputValues + " on " + submitElement + " at " + driver.getCurrentUrl());
+                        logInfo("Submitting form: " + inputValues + " on " + submitElement + " at " + driver.getCurrentUrl());
                         submitElement.submit();
                     }
                     return true;

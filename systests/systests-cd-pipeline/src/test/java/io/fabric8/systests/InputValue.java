@@ -16,8 +16,13 @@
  */
 package io.fabric8.systests;
 
+import io.fabric8.utils.Millis;
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
+
+import static io.fabric8.systests.SeleniumTests.logError;
+import static io.fabric8.systests.SeleniumTests.logWarn;
 
 /**
  * Stores the {@link By} and value of an input field for a form
@@ -53,12 +58,25 @@ public class InputValue {
         return facade;
     }
 
-    public WebElement clearAndSendKeys() {
+    public WebElement doInput() {
         WebElement element = facade.findOptionalElement(by);
         if (element != null) {
-            element.clear();
-            element.sendKeys(value);
+            for (int i = 0; i < 10; i++) {
+                try {
+                    doInputOnElement(element);
+                    return element;
+                } catch (StaleElementReferenceException e) {
+                    logWarn("Caught: " + e);
+                    getFacade().sleep(Millis.seconds(5));
+                }
+            }
+            logWarn("Failed to perform input on " + by + " to due repeated StaleElementReferenceException!");
         }
-        return element;
+        return null;
+    }
+
+    protected void doInputOnElement(WebElement element) {
+        element.clear();
+        element.sendKeys(value);
     }
 }

@@ -18,31 +18,33 @@ package io.fabric8.systests;
 
 import io.fabric8.utils.Millis;
 import org.openqa.selenium.By;
-
-import static io.fabric8.systests.SeleniumTests.logInfo;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 
 /**
+ * Used to input values into a completion based combo list where we enter text; pause for the smart
+ * completion list to pop up and then tab out of the field to forge the selection
  */
-public class ConsoleTests {
-    public static void waitUntilLoggedIn(final WebDriverFacade facade, String namespace) {
-        facade.form().
-                clearAndSendKeys(By.id("inputUsername"), "admin").
-                clearAndSendKeys(By.id("inputPassword"), "admin").
-                submit();
-
-        logInfo("Logged in - waiting for the browser initialise the web app");
-        facade.sleep(Millis.seconds(5));
-        logInfo("Logged in!");
-
-        // now lets switch to the default namespace
-        By namespaceSelectBy = By.xpath("//select[@ng-model='namespace']");
-        facade.untilIsEnabled(namespaceSelectBy);
-        facade.untilSelectedByVisibleText(namespaceSelectBy, namespace);
-
-        facade.sleep(Millis.seconds(2));
-        logInfo("Viewing namespace: " + namespace);
-
-
+public class ComboCompleteInputValue extends InputValue {
+    public ComboCompleteInputValue(WebDriverFacade facade, By by, String value) {
+        super(facade, by, value);
     }
 
+    @Override
+    public String toString() {
+        return "ComboCompleteInputValue{" +
+                "by=" + getBy() +
+                ", value='" + getValue() + '\'' +
+                '}';
+    }
+
+    @Override
+    protected void doInputOnElement(WebElement element) {
+        super.doInputOnElement(element);
+
+        // now lets wait a little bit
+        getFacade().sleep(Millis.seconds(5));
+        element.sendKeys(Keys.TAB);
+        getFacade().sleep(Millis.seconds(2));
+    }
 }

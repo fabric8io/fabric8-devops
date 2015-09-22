@@ -50,7 +50,7 @@ public class SeleniumTests {
                     LOG.warn("System property " + WAIT_AFTER_SELENIUM_PROPERTY + " is not a long value: " + property + ". " + e, e);
                 }
                 if (millis > 0) {
-                    System.out.println("Sleeping for " + millis + " millis before tearning down the test case");
+                    logInfo("Sleeping for " + millis + " millis before tearning down the test case");
                     try {
                         Thread.sleep(millis);
                     } catch (InterruptedException e) {
@@ -76,6 +76,14 @@ public class SeleniumTests {
         }
     }
 
+    public static void logWait(String message) {
+        System.out.println("WAITING: " + message);
+    }
+
+    public static void logInfo(String message) {
+        System.out.println("INFO: " + message);
+    }
+
     public static void logWarn(String message) {
         System.out.println("WARN: " + message);
     }
@@ -92,7 +100,7 @@ public class SeleniumTests {
     public static WebDriver createWebDriverForService(KubernetesClient client, String namespace, String serviceName) {
         String url = KubernetesHelper.getServiceURL(client, serviceName, namespace, "http", true);
         assertNotNull("No external Service URL could be found for namespace: " + namespace + " and name: " + serviceName, url);
-        System.out.println("Connecting to service " + serviceName + " at " + url);
+        logInfo("Connecting to service " + serviceName + " at " + url);
 
         return createWebDriver(client, url);
     }
@@ -111,6 +119,6 @@ public class SeleniumTests {
     public static void logPageLocation(WebDriver d) {
         String currentUrl = d.getCurrentUrl();
         String title = d.getTitle();
-        System.out.println("At " + title + " : " + currentUrl);
+        logInfo("At " + title + " : " + currentUrl);
     }
 }
