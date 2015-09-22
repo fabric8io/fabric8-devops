@@ -80,6 +80,18 @@ public class SeleniumTests {
         System.out.println("WAITING: " + message);
     }
 
+    public static void logInput(String message) {
+        System.out.println("INPUT: " + message);
+    }
+
+    public static void logClick(String message) {
+        System.out.println("CLICK: " + message);
+    }
+
+    public static void logSubmit(String message) {
+        System.out.println("SUBMIT: " + message);
+    }
+
     public static void logInfo(String message) {
         System.out.println("INFO: " + message);
     }

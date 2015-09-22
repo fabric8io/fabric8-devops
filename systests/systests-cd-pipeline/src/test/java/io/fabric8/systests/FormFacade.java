@@ -27,6 +27,7 @@ import java.util.List;
 
 import static io.fabric8.systests.SeleniumTests.logInfo;
 import static io.fabric8.systests.SeleniumTests.logWait;
+import static io.fabric8.systests.SeleniumTests.logWarn;
 import static org.junit.Assert.fail;
 
 /**
@@ -74,11 +75,16 @@ public class FormFacade extends PageSupport {
                 } else {
                     getFacade().sleep(Millis.seconds(5));
                     if (submitBy != null) {
+                        getFacade().untilIsEnabled(submitBy);
                         submitElement = getFacade().findOptionalElement(submitBy);
                         if (submitElement == null) {
-                            fail("Could not find submit button " + submitBy + " at " + driver.getCurrentUrl());
+                            logWarn("Could not find submit button " + submitBy + " at " + driver.getCurrentUrl());
                             return false;
                         } else {
+                            if (!submitElement.isDisplayed() || !submitElement.isEnabled()) {
+                                logWarn("Submit button " + submitBy + " not enabled and visible at " + driver.getCurrentUrl());
+                                return false;
+                            }
                             logInfo("Submitting form: " + inputValues + " on " + submitElement + " at " + driver.getCurrentUrl());
                             submitElement.click();
                         }
