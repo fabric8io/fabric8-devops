@@ -2,12 +2,17 @@
 
 This runs the system tests for Fabric8 DevOps in a new kubernetes namespace.
 
-To be able to run the system tests you need to setup a namespace first using the [gofabric8 installer](https://github.com/fabric8io/gofabric8/):
+### Requirements
 
-    oc new-project myitest
-    oc project myitests
-    gofabric8 deploy -y --console=false --templates=false
+This test case requires a recent installation of [gofabric8 installer](https://github.com/fabric8io/gofabric8/) to be on your **PATH** environment variable.
+
+### How to run
 
 To run:
 
-    mvn clean install -DuseExistingNamespace=myitest
+    mvn clean install
+    
+Or to use a defined namespace name use:
+    
+    mvn clean install -DuseExistingNamespace=mysystest
+    

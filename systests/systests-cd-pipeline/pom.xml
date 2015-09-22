@@ -34,7 +34,7 @@
   </description>
 
   <properties>
-    <fabric8.combineDependencies>true</fabric8.combineDependencies>
+    <fabric8.combineDependencies>false</fabric8.combineDependencies>
     <fabric8.generateJson>false</fabric8.generateJson>
   </properties>
 
@@ -52,12 +52,23 @@
   </dependencyManagement>
 
   <dependencies>
+<!--
     <dependency>
       <groupId>io.fabric8.devops.apps</groupId>
       <artifactId>console</artifactId>
       <version>${project.version}</version>
       <classifier>kubernetes</classifier>
       <type>json</type>
+      <exclusions>
+        <exclusion>
+          <groupId>o.fabric8</groupId>
+          <artifactId>openshift-client</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>o.fabric8</groupId>
+          <artifactId>kubernetes-client</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>io.fabric8.devops.packages</groupId>
@@ -65,7 +76,19 @@
       <version>${fabric8.devops.version}</version>
       <classifier>kubernetes</classifier>
       <type>json</type>
+      <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>o.fabric8</groupId>
+          <artifactId>openshift-client</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>o.fabric8</groupId>
+          <artifactId>kubernetes-client</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
+-->
 
 
     <dependency>
@@ -91,6 +114,19 @@
       <artifactId>junit</artifactId>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-java</artifactId>
+      <version>${selenium.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.github.detro</groupId>
+      <artifactId>phantomjsdriver</artifactId>
+      <version>1.2.0</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
 
@@ -101,6 +137,12 @@
         <filtering>true</filtering>
       </resource>
     </resources>
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+        <filtering>true</filtering>
+      </testResource>
+    </testResources>
 
     <defaultGoal>clean integration-test verify</defaultGoal>
 

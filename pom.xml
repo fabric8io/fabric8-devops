@@ -29,7 +29,7 @@
     <version>2.2.29-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Fabric8 iPaaS Apps</name>
+    <name>Fabric8 DevOps</name>
 
     <url>http://fabric8.io/</url>
     <inceptionYear>2015</inceptionYear>
@@ -102,6 +102,7 @@
         <fabric8.archetypes.release.version>2.2.23.1</fabric8.archetypes.release.version>
         <maven.require.version>3.1.1</maven.require.version>
         <maven.enforcer.plugin.version>1.4</maven.enforcer.plugin.version>
+      <selenium.version>2.47.1</selenium.version>
     </properties>
         
     <distributionManagement>
