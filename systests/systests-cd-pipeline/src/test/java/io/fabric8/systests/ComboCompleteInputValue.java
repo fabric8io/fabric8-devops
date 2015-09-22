@@ -55,8 +55,12 @@ public class ComboCompleteInputValue extends InputValue {
 
         facade.sleep(Millis.seconds(2));
 
-        element.sendKeys(Keys.TAB);
-        facade.sleep(Millis.seconds(2));
+        element = facade.findOptionalElement(firstBy);
+        if (element != null) {
+            element.sendKeys(Keys.TAB);
+            facade.sleep(Millis.seconds(2));
+            element = facade.findOptionalElement(firstBy);
+        }
         return element;
     }
 }
