@@ -45,7 +45,7 @@ public class WebDriverFacade {
     private static final transient Logger LOG = LoggerFactory.getLogger(WebDriverFacade.class);
 
     private final WebDriver driver;
-    private long defaultTimeoutInSeconds = 10;
+    private long defaultTimeoutInSeconds = 60;
 
     public WebDriverFacade(WebDriver driver) {
         this.driver = driver;
