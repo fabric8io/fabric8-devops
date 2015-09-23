@@ -62,7 +62,7 @@
     <dependency>
       <groupId>io.fabric8.devops.packages</groupId>
       <artifactId>chat-letschat</artifactId>
-      <version>${fabric8.devops.version}</version>
+      <version>${fabric8.devops.release.version}</version>
       <classifier>kubernetes</classifier>
       <type>json</type>
     </dependency>

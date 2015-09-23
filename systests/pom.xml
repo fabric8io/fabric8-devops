@@ -36,8 +36,6 @@
   </description>
 
   <properties>
-    <fabric8.devops.version>2.2.28</fabric8.devops.version>
-
     <it.test>*KT</it.test>
   </properties>
 

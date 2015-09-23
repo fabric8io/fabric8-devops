@@ -72,6 +72,13 @@ public class ChatLetsChatKT {
         asserts.replicationController(fabric8Console).isNotNull();
 
 
+        Asserts.assertForPeriod(Millis.minutes(5), new Block() {
+            @Override
+            public void invoke() throws Exception {
+                asserts.podsForReplicationController(hubotNotifier).logs().containsText(hubotStartupText);
+            }
+        });
+
         Asserts.assertForPeriod(Millis.minutes(1), new Block() {
             @Override
             public void invoke() throws Exception {
@@ -79,8 +86,6 @@ public class ChatLetsChatKT {
                 asserts.podsForReplicationController(hubotNotifier).logs().afterText(hubotStartupText).doesNotContainText("Exception");
             }
         });
-
-        asserts.podsForReplicationController(hubotNotifier).logs().containsText(hubotStartupText);
 
         // now lets scale up the console pods to force the notifier to send a message
         client.replicationControllers().inNamespace(namespace).withName(fabric8Console).scale(2);

@@ -4,7 +4,7 @@
                http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
 
   <extension qualifier="kubernetes">
-    <property name="dependencies">mvn:io.fabric8.devops.apps/console/${fabric8.devops.version}/json/kubernetes mvn:io.fabric8.devops.packages/cd-pipeline/${fabric8.devops.version}/json/kubernetes</property>
+    <property name="dependencies">mvn:io.fabric8.devops.apps/console/${fabric8.devops.release.version}/json/kubernetes mvn:io.fabric8.devops.packages/cd-pipeline/${fabric8.devops.release.version}/json/kubernetes</property>
     <property name="useGoFabric8">true</property>
   </extension>
 </arquillian>
