@@ -30,27 +30,30 @@ import static org.junit.Assert.fail;
 public class ProjectsPage extends PageSupport {
     private final By signInBy = By.linkText("Sign In");
     private final By createProjectBy = By.partialLinkText("Create Project");
+    private final By projectsLinkBy = By.linkText("Projects");
+
     private final WebDriverFacade driverFacade;
     private final String namespace;
+    private String startUrl;
+    private String buildConfigsUrl;
 
 
-    public ProjectsPage(WebDriverFacade driverFacade, String namespace) {
-        super(driverFacade);
-        this.driverFacade = driverFacade;
+    public ProjectsPage(WebDriverFacade facade, String namespace) {
+        super(facade);
+        this.driverFacade = facade;
         this.namespace = namespace;
-    }
-
-    public void loginAndGoToProjectsPage() {
-        WebDriverFacade facade = getFacade();
-        WebDriver driver = getDriver();
 
         ConsoleTests.waitUntilLoggedIn(facade, namespace);
 
-        String startUrl = driver.getCurrentUrl();
-        String expectedUrl = relativeUrl(startUrl, "/kubernetes", "/kubernetes/buildConfigs");
+        startUrl = getDriver().getCurrentUrl();
+        buildConfigsUrl = relativeUrl(startUrl, "/kubernetes", "/kubernetes/buildConfigs");
+    }
 
-        By by = By.linkText("Projects");
-        facade.untilLinkClickedLoop(by, expectedUrl);
+    public void goToProjectsPage() {
+        WebDriverFacade facade = getFacade();
+        WebDriver driver = getDriver();
+
+        facade.untilLinkClickedLoop(projectsLinkBy, buildConfigsUrl);
 
         facade.untilOneOf(signInBy, createProjectBy);
 
@@ -71,7 +74,7 @@ public class ProjectsPage extends PageSupport {
      * Creates a new project using the create projects wizard
      */
     public void createProject(NewProjectFormData form) {
-        loginAndGoToProjectsPage();
+        goToProjectsPage();
 
         WebDriverFacade facade = getFacade();
         WebDriver driver = getDriver();
@@ -83,8 +86,9 @@ public class ProjectsPage extends PageSupport {
         // it can take a while to load pages in the wizard to lets increase the wait time lots! :)
         facade.setDefaultTimeoutInSeconds(60 * 3);
 
+        String named = form.getNamed();
         facade.form().
-                clearAndSendKeys(By.xpath("//input[@ng-model='entity.named']"), form.getNamed()).
+                clearAndSendKeys(By.xpath("//input[@ng-model='entity.named']"), named).
                 // TODO enter Type
                 //clearAndSendKeys(By.xpath("//label[text() = 'Type']/following::input[@type='text']"), form.getNamed()).
                 submitButton(nextButton).
@@ -106,7 +110,19 @@ public class ProjectsPage extends PageSupport {
                 submitButton(nextButton).
                 submit();
 
-        // TODO how to assert it worked?
+        facade.untilIsDisplayed(By.xpath("//a[@href='/forge/repos' and text()='Done']"));
+
+
+        logInfo("Created project: " + named);
+
+        goToProjectsPage();
+
+
+        // lets assert there's a link to the project page
+        facade.untilIsDisplayed(By.partialLinkText(named));
+
+
+        // TODO assert that jenkins build works and stages?
     }
 
     protected void untilNextWizardPage(WebDriverFacade facade, By nextButton) {

@@ -16,6 +16,7 @@
  */
 package io.fabric8.systests;
 
+import com.google.common.base.Function;
 import io.fabric8.utils.Millis;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -180,22 +181,64 @@ public class WebDriverFacade {
         });
     }
 
+    public boolean untilElementPredicate(final By by, final Function<WebElement, Boolean> elementPredicate) {
+        return untilElementPredicate(defaultTimeoutInSeconds, by, elementPredicate);
+    }
+
+    public boolean untilElementPredicate(long timeoutInSeconds, final By by, final Function<WebElement, Boolean> elementPredicate) {
+        String message = "" + by  + " matches  " + elementPredicate;
+        return until(message, timeoutInSeconds, new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver driver) {
+                WebElement element = findOptionalElement(by);
+                if (element == null) {
+                    logWait("" + by + " at " + driver.getCurrentUrl());
+                    return false;
+                } else {
+                    Boolean value = elementPredicate.apply(element);
+                    if (value != null && value.booleanValue()) {
+                        logInfo("" + by  + " matches  " + elementPredicate + " at " + driver.getCurrentUrl());
+                        return true;
+                    } else {
+                        logWait("" + by + " matches  " + elementPredicate + " at " + driver.getCurrentUrl());
+                        return false;
+                    }
+                }
+            }
+        });
+    }
+
+    public boolean untilIsDisplayed(final By by) {
+        return untilIsDisplayed(defaultTimeoutInSeconds, by);
+    }
+
+    public boolean untilIsDisplayed(long timeoutInSeconds, final By by) {
+        return untilElementPredicate(timeoutInSeconds, by, new Function<WebElement, Boolean>() {
+            @Override
+            public String toString() {
+                return "element.isDisplayed()";
+            }
+
+            @Override
+            public Boolean apply(WebElement element) {
+                return element.isDisplayed();
+            }
+        });
+    }
+
     public boolean untilIsEnabled(final By by) {
         return untilIsEnabled(defaultTimeoutInSeconds, by);
     }
 
     public boolean untilIsEnabled(long timeoutInSeconds, final By by) {
-        String message = "is " + by + " enabled";
-        return until(message, timeoutInSeconds, new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver driver) {
-                WebElement link = findOptionalElement(by);
-                if (link != null && link.isEnabled()) {
-                    logInfo("Element: " + by + " enabled at " + driver.getCurrentUrl());
-                    return true;
-                } else {
-                    logWait("" + by + " enabled at " + driver.getCurrentUrl());
-                    return false;
-                }
+        return untilElementPredicate(timeoutInSeconds, by, new Function<WebElement, Boolean>() {
+            @Override
+            public String toString() {
+                return "element.isEnabled()";
+            }
+
+            @Override
+            public Boolean apply(WebElement element) {
+                return element.isEnabled();
             }
         });
     }
