@@ -16,9 +16,15 @@
 package io.fabric8.systests;
 
 import io.fabric8.arquillian.kubernetes.Session;
+import io.fabric8.forge.NewProjectFormData;
+import io.fabric8.forge.ProjectsPage;
 import io.fabric8.kubernetes.assertions.KubernetesNamespaceAssert;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.jolokia.JolokiaClients;
+import io.fabric8.selenium.SeleniumTests;
+import io.fabric8.selenium.WebDriverFacade;
+import io.fabric8.selenium.support.NameGenerator;
+import io.fabric8.selenium.support.Versions;
 import io.fabric8.utils.Asserts;
 import io.fabric8.utils.Block;
 import io.fabric8.utils.Millis;
@@ -76,8 +82,7 @@ public class CDPipelineKT {
             @Override
             public String apply(WebDriverFacade facade) {
                 ProjectsPage projects = new ProjectsPage(facade, namespace);
-                String projectName = "p" +  NameGenerator.generateName();
-                //String archetypeFilter = "java-camel-cdi-archetype";
+                String projectName = "p" + NameGenerator.generateName();
                 String archetypeFilter = "io.fabric8.archetypes:java-camel-cdi-archetype:" + Versions.getVersion("fabric8.archetypes.release.version");
                 NewProjectFormData projectData = new NewProjectFormData(projectName, archetypeFilter, "maven/CanaryReleaseStageAndApprovePromote.groovy");
                 projects.createProject(projectData);
