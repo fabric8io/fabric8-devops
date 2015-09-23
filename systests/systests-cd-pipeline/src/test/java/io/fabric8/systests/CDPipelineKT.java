@@ -84,7 +84,7 @@ public class CDPipelineKT {
         SeleniumTests.assertWebDriverForService(client, namespace, fabric8Console, new Function<WebDriverFacade, String>() {
             @Override
             public String apply(WebDriverFacade facade) {
-                ProjectsPage projects = new ProjectsPage(facade, namespace);
+                ProjectsPage projects = new ProjectsPage(facade);
                 String projectName = "p" + NameGenerator.generateName();
                 String archetypeFilter = "io.fabric8.archetypes:java-camel-cdi-archetype:" + Versions.getVersion("fabric8.archetypes.release.version");
                 NewProjectFormData projectData = new NewProjectFormData(projectName, archetypeFilter, "maven/CanaryReleaseStageAndApprovePromote.groovy");
