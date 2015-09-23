@@ -15,9 +15,12 @@
  */
 package io.fabric8.systests;
 
+import com.google.common.base.Function;
+import com.offbytwo.jenkins.JenkinsServer;
 import io.fabric8.arquillian.kubernetes.Session;
 import io.fabric8.forge.NewProjectFormData;
 import io.fabric8.forge.ProjectsPage;
+import io.fabric8.kubernetes.api.ServiceNames;
 import io.fabric8.kubernetes.assertions.KubernetesNamespaceAssert;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.jolokia.JolokiaClients;
@@ -33,9 +36,9 @@ import org.jboss.arquillian.test.api.ArquillianResource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.function.Function;
-
 import static io.fabric8.kubernetes.assertions.Assertions.assertThat;
+import static io.fabric8.systests.JenkinsAsserts.assertJobLastBuildIsSuccessful;
+import static io.fabric8.systests.JenkinsAsserts.createJenkinsServer;
 
 /**
  * System test for the <a href="http://fabric8.io/guide/cdelivery.html">CD Pipeline</a>
@@ -52,11 +55,11 @@ public class CDPipelineKT {
     @ArquillianResource
     JolokiaClients jolokiaClients;
 
-    String jenkinsName = "jenkins";
-    String nexusName = "nexus";
-    String gogsName = "nexus";
-    String fabric8Console = "fabric8";
-    String fabric8Forge = "fabric8-forge";
+    String jenkinsName = ServiceNames.JENKINS;
+    String nexusName = ServiceNames.NEXUS;
+    String gogsName = ServiceNames.GOGS;
+    String fabric8Console = ServiceNames.FABRIC8_CONSOLE;
+    String fabric8Forge = ServiceNames.FABRIC8_FORGE;
 
     @Test
     public void testCreateCamelCDIProjectFromArchetype() throws Exception {
@@ -86,6 +89,16 @@ public class CDPipelineKT {
                 String archetypeFilter = "io.fabric8.archetypes:java-camel-cdi-archetype:" + Versions.getVersion("fabric8.archetypes.release.version");
                 NewProjectFormData projectData = new NewProjectFormData(projectName, archetypeFilter, "maven/CanaryReleaseStageAndApprovePromote.groovy");
                 projects.createProject(projectData);
+
+                // now lets assert that the jenkins build has been created etc
+                try {
+                    JenkinsServer jenkins = createJenkinsServer(facade.getServiceUrl(ServiceNames.JENKINS));
+                    assertJobLastBuildIsSuccessful(Millis.minutes(20), jenkins, projectName);
+
+                } catch (Exception e) {
+                    System.out.println("Failed: " + e);
+                    throw new AssertionError(e);
+                }
                 return null;
             }
         });
