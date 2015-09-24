@@ -34,7 +34,7 @@
   </description>
 
   <properties>
-    <fabric8.combineDependencies>true</fabric8.combineDependencies>
+    <fabric8.combineDependencies>false</fabric8.combineDependencies>
     <fabric8.generateJson>false</fabric8.generateJson>
   </properties>
 
@@ -52,22 +52,6 @@
   </dependencyManagement>
 
   <dependencies>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>console</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.packages</groupId>
-      <artifactId>chat-letschat</artifactId>
-      <version>${fabric8.devops.release.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-
-
     <dependency>
       <groupId>org.jboss.arquillian.junit</groupId>
       <artifactId>arquillian-junit-container</artifactId>
@@ -101,6 +85,12 @@
         <filtering>true</filtering>
       </resource>
     </resources>
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+        <filtering>true</filtering>
+      </testResource>
+    </testResources>
 
     <defaultGoal>clean integration-test verify</defaultGoal>
 

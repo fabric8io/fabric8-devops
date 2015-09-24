@@ -72,7 +72,7 @@ public class ChatLetsChatKT {
         asserts.replicationController(fabric8Console).isNotNull();
 
 
-        Asserts.assertForPeriod(Millis.minutes(5), new Block() {
+        Asserts.assertForPeriod(Millis.minutes(10), new Block() {
             @Override
             public void invoke() throws Exception {
                 asserts.podsForReplicationController(hubotNotifier).logs().containsText(hubotStartupText);
