@@ -84,17 +84,16 @@ public class CDPipelineKT {
         SeleniumTests.assertWebDriverForService(client, namespace, fabric8Console, new Function<WebDriverFacade, String>() {
             @Override
             public String apply(WebDriverFacade facade) {
-                ProjectsPage projects = new ProjectsPage(facade);
+                ProjectsPage projects = new ProjectsPage(facade, namespace);
                 String projectName = "p" + NameGenerator.generateName();
                 String archetypeFilter = "io.fabric8.archetypes:java-camel-cdi-archetype:" + Versions.getVersion("fabric8.archetypes.release.version");
-                NewProjectFormData projectData = new NewProjectFormData(projectName, archetypeFilter, "maven/CanaryReleaseAndStage.groovy");
+                NewProjectFormData projectData = new NewProjectFormData(projectName, archetypeFilter, "maven/CanaryReleaseStageAndApprovePromote.groovy");
                 projects.createProject(projectData);
 
                 // now lets assert that the jenkins build has been created etc
                 try {
                     JenkinsServer jenkins = createJenkinsServer(facade.getServiceUrl(ServiceNames.JENKINS));
-                    String jobName = projects.getGogsUserName() + "-" + projectName;
-                    assertJobLastBuildIsSuccessful(Millis.minutes(20), jenkins, jobName);
+                    assertJobLastBuildIsSuccessful(Millis.minutes(20), jenkins, projectName);
 
                 } catch (Exception e) {
                     System.out.println("Failed: " + e);
