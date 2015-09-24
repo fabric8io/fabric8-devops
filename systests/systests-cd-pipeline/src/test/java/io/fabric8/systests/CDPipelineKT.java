@@ -18,27 +18,32 @@ package io.fabric8.systests;
 import com.google.common.base.Function;
 import com.offbytwo.jenkins.JenkinsServer;
 import io.fabric8.arquillian.kubernetes.Session;
-import io.fabric8.forge.NewProjectFormData;
-import io.fabric8.forge.ProjectsPage;
+import io.fabric8.selenium.forge.NewProjectFormData;
+import io.fabric8.selenium.forge.ProjectsPage;
+import io.fabric8.kubernetes.api.KubernetesHelper;
 import io.fabric8.kubernetes.api.ServiceNames;
+import io.fabric8.kubernetes.api.model.Pod;
 import io.fabric8.kubernetes.assertions.KubernetesNamespaceAssert;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.jolokia.JolokiaClients;
 import io.fabric8.selenium.SeleniumTests;
 import io.fabric8.selenium.WebDriverFacade;
 import io.fabric8.selenium.support.NameGenerator;
-import io.fabric8.selenium.support.Versions;
 import io.fabric8.utils.Asserts;
 import io.fabric8.utils.Block;
 import io.fabric8.utils.Millis;
+import org.assertj.core.util.Strings;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static io.fabric8.kubernetes.assertions.Assertions.assertThat;
+import static io.fabric8.selenium.SeleniumTests.logInfo;
 import static io.fabric8.systests.JenkinsAsserts.assertJobLastBuildIsSuccessful;
 import static io.fabric8.systests.JenkinsAsserts.createJenkinsServer;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * System test for the <a href="http://fabric8.io/guide/cdelivery.html">CD Pipeline</a>
@@ -60,6 +65,7 @@ public class CDPipelineKT {
     String gogsName = ServiceNames.GOGS;
     String fabric8Console = ServiceNames.FABRIC8_CONSOLE;
     String fabric8Forge = ServiceNames.FABRIC8_FORGE;
+
 
     @Test
     public void testCreateCamelCDIProjectFromArchetype() throws Exception {
@@ -86,7 +92,15 @@ public class CDPipelineKT {
             public String apply(WebDriverFacade facade) {
                 ProjectsPage projects = new ProjectsPage(facade);
                 String projectName = "p" + NameGenerator.generateName();
-                String archetypeFilter = "io.fabric8.archetypes:java-camel-cdi-archetype:" + Versions.getVersion("fabric8.archetypes.release.version");
+
+                // lets find the archetype version to use from the forge pod
+                Pod forgePod = asserts.podForReplicationController(fabric8Forge);
+                String archetypesVersionEnvVar = "FABRIC8_ARCHETYPES_VERSION";
+                String archetypesVersion = KubernetesHelper.getPodEnvVar(forgePod, archetypesVersionEnvVar);
+                logInfo("the " + fabric8Forge + " pod is using the fabric8 archetypes version: " + archetypesVersion);
+                assertFalse("No value for $FABRIC8_ARCHETYPES_VERSION found in pod " + forgePod.getMetadata().getName(), Strings.isNullOrEmpty(archetypesVersion));
+
+                String archetypeFilter = "io.fabric8.archetypes:java-camel-cdi-archetype:" + archetypesVersion;
                 NewProjectFormData projectData = new NewProjectFormData(projectName, archetypeFilter, "maven/CanaryReleaseAndStage.groovy");
                 projects.createProject(projectData);
 
