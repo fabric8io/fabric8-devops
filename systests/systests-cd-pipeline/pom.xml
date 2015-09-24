@@ -23,7 +23,7 @@
   <parent>
     <groupId>io.fabric8.devops.systests</groupId>
     <artifactId>systests</artifactId>
-    <version>2.2.33-SNAPSHOT</version>
+    <version>2.2.35-SNAPSHOT</version>
   </parent>
 
   <artifactId>systests-cd-pipeline</artifactId>
@@ -52,45 +52,6 @@
   </dependencyManagement>
 
   <dependencies>
-<!--
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>console</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-      <exclusions>
-        <exclusion>
-          <groupId>o.fabric8</groupId>
-          <artifactId>openshift-client</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>o.fabric8</groupId>
-          <artifactId>kubernetes-client</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.packages</groupId>
-      <artifactId>cd-pipeline</artifactId>
-      <version>${fabric8.devops.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-      <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>o.fabric8</groupId>
-          <artifactId>openshift-client</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>o.fabric8</groupId>
-          <artifactId>kubernetes-client</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
--->
-
-
     <dependency>
       <groupId>org.jboss.arquillian.junit</groupId>
       <artifactId>arquillian-junit-container</artifactId>

@@ -26,7 +26,7 @@
 
     <groupId>io.fabric8.devops.apps</groupId>
     <artifactId>fabric8-devops</artifactId>
-    <version>2.2.33-SNAPSHOT</version>
+    <version>2.2.35-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Fabric8 DevOps</name>
@@ -79,7 +79,6 @@
         <docker.assemblyDescriptorRef>artifact-with-dependencies</docker.assemblyDescriptorRef>
         <docker.port.container.jolokia>8778</docker.port.container.jolokia>
 
-
         <jube.plugin.enabled>false</jube.plugin.enabled>
 
         <maven.compiler.source>1.7</maven.compiler.source>
@@ -97,9 +96,12 @@
         <maven.surefire.plugin.version>2.17</maven.surefire.plugin.version>
         <jube.version>2.2.0</jube.version>
         <junit.version>4.12</junit.version>
-        <fabric8.version>2.2.33</fabric8.version>
+
+        <fabric8.archetypes.release.version>2.2.34</fabric8.archetypes.release.version>
+        <fabric8.devops.release.version>2.2.32</fabric8.devops.release.version>
+        <fabric8.version>2.2.34</fabric8.version>
         <fabric8.release.version>${fabric8.version}</fabric8.release.version>
-        <fabric8.archetypes.release.version>2.2.32</fabric8.archetypes.release.version>
+
         <maven.require.version>3.1.1</maven.require.version>
         <maven.enforcer.plugin.version>1.4</maven.enforcer.plugin.version>
     </properties>
@@ -336,7 +338,7 @@
         <profile>
           <id>fabric8-snapshot</id>
           <properties>
-            <fabric8.version>2.2.34-SNAPSHOT</fabric8.version>
+            <fabric8.version>2.2.35-SNAPSHOT</fabric8.version>
             <fabric8.release.version>${fabric8.version}</fabric8.release.version>
             <fabric8.dockerPrefix />
           </properties>
