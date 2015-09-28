@@ -39,7 +39,6 @@
     <docker.port.container.jolokia />
 
     <fabric8.env.SERVICE_DNS>elasticsearch-cluster</fabric8.env.SERVICE_DNS>
-    <fabric8.env.KUBERNETES_TRUST_CERT>true</fabric8.env.KUBERNETES_TRUST_CERT>
 
     <fabric8.service.port>9200</fabric8.service.port>
     <fabric8.service.containerPort>9200</fabric8.service.containerPort>

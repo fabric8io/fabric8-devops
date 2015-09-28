@@ -56,8 +56,6 @@
     <docker.port.container.http>${http.port}</docker.port.container.http>
     <docker.port.container.jolokia>8778</docker.port.container.jolokia>
 
-    <fabric8.env.KUBERNETES_TRUST_CERT>true</fabric8.env.KUBERNETES_TRUST_CERT>
-    <fabric8.env.SKIP_TLS_VERIFY>true</fabric8.env.SKIP_TLS_VERIFY>
     <fabric8.env.JBPM_CONTEXT>/</fabric8.env.JBPM_CONTEXT>
     <fabric8.env.JBPM_DEPLOYMENT_ID>demo:Builds:1.0</fabric8.env.JBPM_DEPLOYMENT_ID>
 

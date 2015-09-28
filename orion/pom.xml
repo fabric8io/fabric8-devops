@@ -37,11 +37,6 @@
     <docker.port.container.http>8080</docker.port.container.http>
     <docker.port.container.jolokia />
 
-    <docker.env.KUBERNETES_TRUST_CERT>true</docker.env.KUBERNETES_TRUST_CERT>
-    <docker.env.SKIP_TLS_VERIFY>true</docker.env.SKIP_TLS_VERIFY>
-    <fabric8.env.KUBERNETES_TRUST_CERT>true</fabric8.env.KUBERNETES_TRUST_CERT>
-    <fabric8.env.SKIP_TLS_VERIFY>true</fabric8.env.SKIP_TLS_VERIFY>
-
     <fabric8.service.port>80</fabric8.service.port>
     <fabric8.service.containerPort>${docker.port.container.http}</fabric8.service.containerPort>
     <fabric8.service.type>LoadBalancer</fabric8.service.type>

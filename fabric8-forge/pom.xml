@@ -154,8 +154,6 @@
                 </assembly>
                 <env>
                   <FORGE_ADDON_DIRECTORY>${docker.env.FORGE_ADDON_DIRECTORY}</FORGE_ADDON_DIRECTORY>
-                  <KUBERNETES_TRUST_CERT>true</KUBERNETES_TRUST_CERT>
-                  <SKIP_TLS_VERIFY>true</SKIP_TLS_VERIFY>
                   <FABRIC8_ARCHETYPES_VERSION>${fabric8.env.FABRIC8_ARCHETYPES_VERSION}</FABRIC8_ARCHETYPES_VERSION>
                 </env>
                 <ports>
