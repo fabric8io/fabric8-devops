@@ -98,7 +98,7 @@
         <junit.version>4.12</junit.version>
 
         <fabric8.archetypes.release.version>2.2.34</fabric8.archetypes.release.version>
-        <fabric8.devops.release.version>2.2.34</fabric8.devops.release.version>
+        <fabric8.devops.release.version>2.2.35</fabric8.devops.release.version>
         <fabric8.version>2.2.35</fabric8.version>
         <fabric8.release.version>${fabric8.version}</fabric8.release.version>
 
