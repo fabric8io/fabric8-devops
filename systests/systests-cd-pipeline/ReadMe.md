@@ -4,7 +4,13 @@ This runs the system tests for Fabric8 DevOps in a new kubernetes namespace.
 
 ### Requirements
 
-This test case requires a recent installation of [gofabric8 installer](https://github.com/fabric8io/gofabric8/) to be on your **PATH** environment variable.
+This test case requires the following binaries to be installed on your **PATH**
+
+* [gofabric8 installer](https://github.com/fabric8io/gofabric8/) 
+* [oc](https://github.com/openshift/origin/releases) command line tool for OpenShift
+* [chrome driver](https://code.google.com/p/selenium/wiki/ChromeDriver)
+
+and [Google Chrome](https://www.google.com/chrome/browser/desktop/) browser to be installed
 
 ### How to run
 
