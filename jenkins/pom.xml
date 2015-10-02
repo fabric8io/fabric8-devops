@@ -38,9 +38,13 @@
         <docker.port.container.slave>50000</docker.port.container.slave>
         <docker.port.container.jolokia />
 
-        <fabric8.service.port>80</fabric8.service.port>
-        <fabric8.service.containerPort>${docker.port.container.http}</fabric8.service.containerPort>
-        <fabric8.service.type>LoadBalancer</fabric8.service.type>
+        <fabric8.service.port.http>80</fabric8.service.port.http>
+        <fabric8.service.containerPort.http>${docker.port.container.http}</fabric8.service.containerPort.http>
+        <fabric8.service.type.http>LoadBalancer</fabric8.service.type.http>
+
+        <fabric8.service.port.slave>50000</fabric8.service.port.slave>
+        <fabric8.service.containerPort.slave>${docker.port.container.slave}</fabric8.service.containerPort.slave>
+        <fabric8.service.type.slave>LoadBalancer</fabric8.service.type.slave>
 
         <fabric8.imagePullPolicy>IfNotPresent</fabric8.imagePullPolicy>
 
@@ -59,7 +63,6 @@
 
         <fabric8.volume.jenkins-workspace.emptyDir />
         <fabric8.volume.jenkins-workspace.mountPath>/var/jenkins_home</fabric8.volume.jenkins-workspace.mountPath>
-
 
         <fabric8.serviceAccount>jenkins</fabric8.serviceAccount>
 
