@@ -17,14 +17,15 @@
 package io.fabric8.apps.jenkins;
 
 import io.fabric8.kubernetes.api.model.ContainerBuilder;
-import io.fabric8.kubernetes.api.model.ReplicationControllerSpecBuilder;
 import io.fabric8.kubernetes.generator.annotation.KubernetesModelProcessor;
 import io.fabric8.openshift.api.model.TemplateBuilder;
 
-import java.util.Arrays;
+import javax.inject.Named;
 
 @KubernetesModelProcessor
 public class JenkinsModelProcessor {
+
+    @Named("jenkins")
     public void on(ContainerBuilder builder) {
         builder.withNewLifecycle()
                 .withNewPostStart()
@@ -34,5 +35,48 @@ public class JenkinsModelProcessor {
                 .endPostStart()
                 .endLifecycle()
                 .build();
+    }
+
+    public void on(TemplateBuilder builder) {
+        builder.addNewReplicationControllerObject()
+                .withNewMetadata()
+                    .withName("jenkins-swarm-client")
+                .endMetadata()
+                .withNewSpec()
+                    .withReplicas(1)
+                    .addToSelector("provider", "fabric8")
+                    .addToSelector("component", "jenkins-swarm-client")
+                    .withNewTemplate()
+                        .withNewMetadata()
+                            .addToLabels("provider", "fabric8")
+                            .addToLabels("component", "jenkins-swarm-client")
+                        .endMetadata()
+                        .withNewSpec()
+                            .addNewContainer()
+                                .withName("jenkins-swarm-client")
+                                .withImage("fabric8/jenkins-swarm-client")
+                                .withNewSecurityContext()
+                                    .withPrivileged(true)
+                                .endSecurityContext()
+                                .addNewVolumeMount()
+                                    .withName("jenkins-workspace")
+                                    .withMountPath("/var/jenkins_home/workspace")
+                                    .withReadOnly(false)
+                                .endVolumeMount()
+                                .addNewPort()
+                                    .withName("http")
+                                    .withContainerPort(8080)
+                                .endPort()
+                            .endContainer()
+                            .addNewVolume()
+                                .withName("jenkins-workspace")
+                                .withNewHostPath("/var/jenkins_home/workspace")
+                            .endVolume()
+                        .endSpec()
+                    .endTemplate()
+                .endSpec()
+                .and()
+                .build();
+
     }
 }
