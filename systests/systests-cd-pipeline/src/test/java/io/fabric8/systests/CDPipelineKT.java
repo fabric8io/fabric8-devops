@@ -100,7 +100,7 @@ public class CDPipelineKT {
                 logInfo("the " + fabric8Forge + " pod is using the fabric8 archetypes version: " + archetypesVersion);
                 assertFalse("No value for $FABRIC8_ARCHETYPES_VERSION found in pod " + forgePod.getMetadata().getName(), Strings.isNullOrEmpty(archetypesVersion));
 
-                String archetypeFilter = "io.fabric8.archetypes:java-camel-cdi-archetype:" + archetypesVersion;
+                String archetypeFilter = "io.fabric8.archetypes:cdi-camel-archetype:" + archetypesVersion;
                 NewProjectFormData projectData = new NewProjectFormData(projectName, archetypeFilter, "maven/CanaryReleaseAndStage.groovy");
                 projects.createProject(projectData);
 
