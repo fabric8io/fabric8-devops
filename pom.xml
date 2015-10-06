@@ -97,7 +97,7 @@
         <jube.version>2.2.0</jube.version>
         <junit.version>4.12</junit.version>
 
-        <fabric8.archetypes.release.version>2.2.42</fabric8.archetypes.release.version>
+        <fabric8.archetypes.release.version>2.2.43</fabric8.archetypes.release.version>
         <fabric8.devops.release.version>2.2.42</fabric8.devops.release.version>
         <fabric8.version>2.2.43</fabric8.version>
         <fabric8.release.version>${fabric8.version}</fabric8.release.version>
