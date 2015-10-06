@@ -42,10 +42,6 @@
         <fabric8.service.containerPort.http>${docker.port.container.http}</fabric8.service.containerPort.http>
         <fabric8.service.type.http>LoadBalancer</fabric8.service.type.http>
 
-        <fabric8.service.port.slave>50000</fabric8.service.port.slave>
-        <fabric8.service.containerPort.slave>${docker.port.container.slave}</fabric8.service.containerPort.slave>
-        <fabric8.service.type.slave>LoadBalancer</fabric8.service.type.slave>
-
         <fabric8.imagePullPolicy>IfNotPresent</fabric8.imagePullPolicy>
 
         <fabric8.label.component>jenkins</fabric8.label.component>

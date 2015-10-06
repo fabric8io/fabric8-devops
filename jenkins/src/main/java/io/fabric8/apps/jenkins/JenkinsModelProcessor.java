@@ -76,6 +76,25 @@ public class JenkinsModelProcessor {
                     .endTemplate()
                 .endSpec()
                 .and()
+
+                .addNewServiceObject()
+                .withNewMetadata()
+                    .withName("jenkins-swarm-client")
+                        .addToLabels("component", "jenkins-swarm-client")
+                        .addToLabels("provider", "fabric8")
+                    .endMetadata()
+                .withNewSpec()
+                .withType("LoadBalancer")
+                .addNewPort()
+                    .withProtocol("TCP")
+                    .withPort(50000)
+                    .withNewTargetPort(50000)
+                .endPort()
+                    .addToSelector("component", "jenkins")
+                    .addToSelector("provider", "fabric8")
+                .endSpec()
+                .endServiceObject()
+
                 .build();
 
     }
