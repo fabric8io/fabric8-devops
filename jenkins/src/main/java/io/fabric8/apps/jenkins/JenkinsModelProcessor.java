@@ -188,6 +188,7 @@ public class JenkinsModelProcessor {
                                 .withName("docker-socket")
                                 .withNewHostPath("/var/run/docker.sock")
                             .endVolume()
+                            .withServiceAccountName("jenkins")
                         .endSpec()
                     .endTemplate()
                 .endSpec()
