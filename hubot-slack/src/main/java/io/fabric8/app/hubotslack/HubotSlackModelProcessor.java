@@ -42,7 +42,7 @@ public class HubotSlackModelProcessor {
                         .withNewSpec()
                             .addNewContainer()
                                 .withName(NAME)
-                                .withImage("fabric8/hubot-slack")
+                                .withImage("fabric8/hubot-slack:"+System.getProperty("project.version"))
                                     .addNewPort()
                                     .withContainerPort(8080)
                                     .withProtocol("TCP")

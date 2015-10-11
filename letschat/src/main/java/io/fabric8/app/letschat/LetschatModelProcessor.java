@@ -43,7 +43,7 @@ public class LetschatModelProcessor {
                             .endContainer()
                             .addNewContainer()
                                 .withName(NAME)
-                                .withImage("fabric8/lets-chat")
+                                .withImage("fabric8/lets-chat:" + System.getProperty("project.version"))
                                     .addNewPort()
                                     .withContainerPort(5000)
                                     .withProtocol("TCP")

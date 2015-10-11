@@ -80,7 +80,7 @@ final String NAME = "taiga";
 
                 .addNewContainer()
                 .withName("taiga-backend")
-                .withImage("fabric8/taiga-back")
+                .withImage("fabric8/taiga-back:" + System.getProperty("project.version"))
                 .addNewPort()
                 .withContainerPort(8000)
                 .withProtocol("TCP")
@@ -96,7 +96,7 @@ final String NAME = "taiga";
 
                 .addNewContainer()
                 .withName("taiga-frontend")
-                .withImage("fabric8/taiga-front")
+                .withImage("fabric8/taiga-front:" + System.getProperty("project.version"))
                 .addNewPort()
                 .withContainerPort(80)
                 .withProtocol("TCP")

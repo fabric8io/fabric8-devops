@@ -61,7 +61,7 @@ public class JenkinsModelProcessor {
                                     .endPostStart()
                                 .endLifecycle()
                                 .withName("jenkins-swarm-client")
-                                .withImage("fabric8/jenkins-swarm-client")
+                                .withImage("fabric8/jenkins-swarm-client:" + System.getProperty("project.version"))
                                 .withNewSecurityContext()
                                     .withPrivileged(true)
                                 .endSecurityContext()

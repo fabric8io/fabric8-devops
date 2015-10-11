@@ -33,7 +33,7 @@
     </description>
 
     <properties>
-        <docker.image>${fabric8.dockerPrefix}${fabric8.dockerUser}hubot-irc:latest</docker.image>
+        <docker.image>${fabric8.dockerPrefix}${fabric8.dockerUser}hubot-irc:${project.version}</docker.image>
 
         <fabric8.service.port>80</fabric8.service.port>
         <fabric8.service.containerPort>8080</fabric8.service.containerPort>

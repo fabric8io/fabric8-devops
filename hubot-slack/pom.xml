@@ -42,6 +42,17 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
+        <plugins>
+          <plugin>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+              <fork>true</fork>
+              <compilerArgs>
+                <arg>-J-Dproject.version=${project.version}</arg>
+              </compilerArgs>
+            </configuration>
+          </plugin>
+        </plugins>
     </build>
 
     <dependencies>

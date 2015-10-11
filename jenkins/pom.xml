@@ -33,7 +33,7 @@
     </description>
 
     <properties>
-        <docker.image>fabric8/jenkernetes</docker.image>
+        <docker.image>fabric8/jenkernetes:${project.version}</docker.image>
         <docker.port.container.http>8080</docker.port.container.http>
         <docker.port.container.slave>50000</docker.port.container.slave>
         <docker.port.container.jolokia />
@@ -102,6 +102,17 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
+        <plugins>
+          <plugin>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+              <fork>true</fork>
+              <compilerArgs>
+                <arg>-J-Dproject.version=${project.version}</arg>
+              </compilerArgs>
+            </configuration>
+          </plugin>
+        </plugins>
     </build>
 
     <dependencies>
