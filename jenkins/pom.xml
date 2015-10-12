@@ -158,5 +158,11 @@
                 <fabric8.parameter.SEED_GIT_URL.value>https://github.com/fabric8io/jenkins-pipeline-dsl.git</fabric8.parameter.SEED_GIT_URL.value>
             </properties>
         </profile>
+      <profile>
+        <id>fabric8-snapshot</id>
+        <properties>
+          <docker.image>fabric8/jenkernetes</docker.image>
+        </properties>
+      </profile>
     </profiles>
 </project>

@@ -38,6 +38,12 @@ public class JenkinsModelProcessor {
     }
 
     public void on(TemplateBuilder builder) {
+        String version = System.getProperty("project.version");
+        String versionPostfix = "";
+        if (version != null && version.length() > 0 && !version.endsWith("SNAPSHOT")) {
+            versionPostfix = ":" + version;
+        }
+        String imageName = "fabric8/jenkins-swarm-client" + versionPostfix;
         builder.addNewReplicationControllerObject()
                 .withNewMetadata()
                     .withName("jenkins-swarm-client")
@@ -61,7 +67,7 @@ public class JenkinsModelProcessor {
                                     .endPostStart()
                                 .endLifecycle()
                                 .withName("jenkins-swarm-client")
-                                .withImage("fabric8/jenkins-swarm-client:" + System.getProperty("project.version"))
+                                .withImage(imageName)
                                 .withNewSecurityContext()
                                     .withPrivileged(true)
                                 .endSecurityContext()
