@@ -151,7 +151,7 @@
       <module>artifactory</module>
       <module>brackets</module>
       <module>chaos-monkey</module>
-      <module>cdelivery</module>
+      <!-- <module>cdelivery</module> -->
       <module>console</module>
       <module>console-kubernetes</module>
       <module>elasticsearch</module>
