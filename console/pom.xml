@@ -33,9 +33,7 @@
   </description>
 
   <properties>
-    <fabric8.console.version>v1.0.70</fabric8.console.version>
-
-    <docker.image>${fabric8.dockerPrefix}${fabric8.dockerUser}fabric8-console:${fabric8.console.version}</docker.image>
+    <docker.image>${fabric8.dockerPrefix}${fabric8.dockerUser}fabric8-console:${project.version}</docker.image>
     <docker.port.container.http>9090</docker.port.container.http>
     <docker.port.container.jolokia />
 
@@ -84,4 +82,14 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+  <profiles>
+    <profile>
+      <id>fabric8-snapshot</id>
+      <properties>
+        <docker.image>${fabric8.dockerUser}fabric8-console</docker.image>
+      </properties>
+    </profile>
+  </profiles>
+
 </project>
