@@ -50,6 +50,7 @@ public class HubotSlackModelProcessor {
                                 .addNewEnv().withName("HUBOT_SLACK_TOKEN").withValue("${HUBOT_SLACK_TOKEN}").endEnv()
                                 .addNewEnv().withName("HUBOT_GRAFANA_HOST").withValue("${HUBOT_SLACK_GRAFANA_HOST}").endEnv()
                                 .addNewEnv().withName("HUBOT_GRAFANA_API_KEY").withValue("${HUBOT_SLACK_GRAFANA_API_KEY}").endEnv()
+                                .addNewEnv().withName("HUBOT_JENKINS_URL").withValue("${HUBOT_JENKINS_URL}").endEnv()
                             .endContainer()
                 .endSpec()
                     .endTemplate()
