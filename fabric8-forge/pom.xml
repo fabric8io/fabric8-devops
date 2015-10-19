@@ -55,6 +55,10 @@
 
     <fabric8.env.FABRIC8_ARCHETYPES_VERSION>${fabric8.archetypes.release.version}</fabric8.env.FABRIC8_ARCHETYPES_VERSION>
 
+    <fabric8.readinessProbe.httpGet.path>/_ping</fabric8.readinessProbe.httpGet.path>
+    <fabric8.readinessProbe.httpGet.port>${fabric8.service.containerPort}</fabric8.readinessProbe.httpGet.port>
+    <fabric8.readinessProbe.initialDelaySeconds>30</fabric8.readinessProbe.initialDelaySeconds>
+
     <!-- allows you to work on different release versions of the forge plugins -->
     <fabric8.addon.release.version>${fabric8.release.version}</fabric8.addon.release.version>
     <camel.addon.release.version>${fabric8.release.version}</camel.addon.release.version>
