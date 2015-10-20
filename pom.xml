@@ -156,6 +156,7 @@
       <module>console-kubernetes</module>
       <module>elasticsearch</module>
       <module>fabric8-forge</module>
+      <module>fabric8-docker-registry</module>
       <module>gerrit</module>
       <module>gogs</module>
       <module>grafana2</module>
