@@ -3,7 +3,7 @@
   "description": "",
   "hits": 0,
   "columns": [
-    "kubernetes.namespace",
+    "kubernetes.namespace_name",
     "kubernetes.pod_name",
     "kubernetes.container_name",
     "log"
