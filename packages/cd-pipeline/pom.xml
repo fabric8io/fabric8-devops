@@ -70,13 +70,6 @@
       <classifier>kubernetes</classifier>
       <type>json</type>
     </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>sonarqube</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
     <!-- project wizard -->
     <dependency>
       <groupId>io.fabric8.devops.apps</groupId>
