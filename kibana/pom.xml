@@ -33,7 +33,7 @@
   </description>
 
   <properties>
-    <docker.image>${fabric8.dockerPrefix}${fabric8.dockerUser}kibana4:4.1.2</docker.image>
+    <docker.image>${fabric8.dockerUser}kibana4:4.1.2</docker.image>
     <docker.port.container.http>5601</docker.port.container.http>
     <docker.port.container.jolokia />
 
@@ -71,10 +71,10 @@
         <artifactId>docker-maven-plugin</artifactId>
         <version>${docker.maven.plugin.version}</version>
         <configuration>
-          <image>${fabric8.dockerPrefix}${fabric8.dockerUser}kibana-config:${project.version}</image>
+          <image>${fabric8.dockerUser}kibana-config:${project.version}</image>
           <images>
             <image>
-              <name>${fabric8.dockerPrefix}${fabric8.dockerUser}kibana-config:${project.version}</name>
+              <name>${fabric8.dockerUser}kibana-config:${project.version}</name>
               <build>
                 <from>centos:7</from>
                 <assembly>

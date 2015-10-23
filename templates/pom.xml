@@ -51,7 +51,7 @@
 
     <docker.from>fabric8/java</docker.from>
 
-    <docker.image>${fabric8.dockerPrefix}${fabric8.dockerUser}${project.artifactId}:${project.version}</docker.image>
+    <docker.image>${fabric8.dockerUser}${project.artifactId}:${project.version}</docker.image>
     <docker.assemblyDescriptorRef>artifact-with-dependencies</docker.assemblyDescriptorRef>
     <docker.env.MAIN>io.fabric8.templates.Main</docker.env.MAIN>
     <docker.env.DATA_DIR>${mountPath}/templates</docker.env.DATA_DIR>

@@ -49,7 +49,7 @@ public class ElasticsearchModelProcessor {
         PodSpec podSpec = new PodSpecBuilder(builder.getSpec())
                 .addNewContainer()
                 .withName("logstash-template")
-                .withImage(System.getProperty("fabric8.dockerPrefix", "docker.io/") + System.getProperty("fabric8.dockerUser", "fabric8/") + "elasticsearch-logstash-template:" + System.getProperty("project.version"))
+                .withImage(System.getProperty("fabric8.dockerUser", "fabric8/") + "elasticsearch-logstash-template:" + System.getProperty("project.version"))
                 .endContainer()
                 .build();
 
