@@ -141,13 +141,15 @@
       <classifier>kubernetes</classifier>
       <type>json</type>
     </dependency>
-    <dependency>
+
+    <!-- COMMENT OUT UNTIL SONARQUBE CONVERTED TO GENERATE VALID kubernetes.json -->
+    <!-- <dependency>
       <groupId>io.fabric8.devops.apps</groupId>
       <artifactId>sonarqube</artifactId>
       <version>${project.version}</version>
       <classifier>kubernetes</classifier>
       <type>json</type>
-    </dependency>
+    </dependency> -->
   </dependencies>
 
   <build>
