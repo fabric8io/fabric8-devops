@@ -2,14 +2,6 @@ global:
   scrape_interval:     15s
   evaluation_interval: 15s
 
-# A scrape configuration for running Prometheus on a Kubernetes cluster.
-# This uses separate scrape configs for cluster components (i.e. master, node)
-# and services to allow each to use different authentication configs.
-#
-# Kubernetes labels will be added as Prometheus labels on metrics via the
-# `labelmap` relabeling action.
-
-# Scrape config for cluster components.
 scrape_configs:
 - job_name: 'prometheus'
 
@@ -18,18 +10,17 @@ scrape_configs:
 
 - job_name: 'kubernetes-cluster'
 
-  # This TLS & bearer token file config is used to connect to the actual scrape
-  # endpoints for cluster components. This is separate to discovery auth
-  # configuration (`in_cluster` below) because discovery & scraping are two
-  # separate concerns in Prometheus.
   tls_config:
     ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
   bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+
+  scheme: https
 
   kubernetes_sd_configs:
   - masters:
     - 'https://kubernetes.default.svc'
     in_cluster: true
+    kubelet_port: 10250
 
   relabel_configs:
   - source_labels: [__meta_kubernetes_role]
@@ -44,17 +35,6 @@ scrape_configs:
     target_label: kubernetes_role
     replacement: $1
 
-# Scrape config for services.
-#
-# The relabeling allows the actual service scrape endpoint to be configured
-# via the following annotations:
-#
-# * `prometheus.io/scrape`: Only scrape services that have a value of `true`
-# * `prometheus.io/scheme`: If the metrics endpoint is secured then you will need
-# to set this to `https` & most likely set the `tls_config` of the scrape config.
-# * `prometheus.io/path`: If the metrics path is not `/metrics` override this.
-# * `prometheus.io/port`: If the metrics are exposed on a different port to the
-# service then set this appropriately.
 - job_name: 'kubernetes-services'
 
   kubernetes_sd_configs:
@@ -99,4 +79,3 @@ scrape_configs:
     regex: ^(.+)$
     target_label: kubernetes_name
     replacement: $1
-
