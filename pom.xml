@@ -98,7 +98,7 @@
 
         <fabric8.archetypes.release.version>2.2.58</fabric8.archetypes.release.version>
         <fabric8.devops.release.version>2.2.62</fabric8.devops.release.version>
-        <fabric8.version>2.2.55</fabric8.version>
+        <fabric8.version>2.2.56</fabric8.version>
         <fabric8.release.version>${fabric8.version}</fabric8.release.version>
 
         <maven.require.version>3.1.1</maven.require.version>
