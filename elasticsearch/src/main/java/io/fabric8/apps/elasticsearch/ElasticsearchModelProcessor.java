@@ -38,7 +38,7 @@ public class ElasticsearchModelProcessor {
                         .withPort(9300)
                         .withNewTargetPort(9300)
                     .endPort()
-                .addToSelector("component", "elasticsearch")
+                .addToSelector("project", "elasticsearch")
                 .addToSelector("provider", "fabric8")
                 .endSpec()
                 .and()

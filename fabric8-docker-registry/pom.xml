@@ -42,7 +42,7 @@
 
     <fabric8.imagePullPolicy>IfNotPresent</fabric8.imagePullPolicy>
 
-    <fabric8.label.component>${project.artifactId}</fabric8.label.component>
+    <fabric8.label.project>${project.artifactId}</fabric8.label.project>
     <fabric8.label.provider>fabric8</fabric8.label.provider>
 
     <!-- <fabric8.volume.registry-storage.mountPath>/var/lib/registry</fabric8.volume.registry-storage.mountPath> -->

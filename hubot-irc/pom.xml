@@ -43,7 +43,7 @@
         <docker.port.container.http>8080</docker.port.container.http>
         <docker.port.container.jolokia />
 
-        <fabric8.label.component>hubot-irc</fabric8.label.component>
+        <fabric8.label.project>hubot-irc</fabric8.label.project>
         <fabric8.label.provider>fabric8</fabric8.label.provider>
     </properties>
 

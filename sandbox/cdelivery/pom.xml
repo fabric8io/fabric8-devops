@@ -64,7 +64,7 @@
 
     <fabric8.service.port>9595</fabric8.service.port>
     <fabric8.service.containerPort>${http.port}</fabric8.service.containerPort>
-    <fabric8.label.component>CDelivery</fabric8.label.component>
+    <fabric8.label.project>CDelivery</fabric8.label.project>
     <fabric8.label.provider>fabric8</fabric8.label.provider>
   </properties>
 

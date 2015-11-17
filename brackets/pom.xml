@@ -43,7 +43,7 @@
 
     <fabric8.imagePullPolicy>IfNotPresent</fabric8.imagePullPolicy>
 
-    <fabric8.label.component>brackets</fabric8.label.component>
+    <fabric8.label.project>brackets</fabric8.label.project>
     <fabric8.label.provider>fabric8</fabric8.label.provider>
   </properties>
 
