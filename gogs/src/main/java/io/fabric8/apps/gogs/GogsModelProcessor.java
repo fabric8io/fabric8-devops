@@ -18,8 +18,11 @@ package io.fabric8.apps.gogs;
 
 import io.fabric8.kubernetes.generator.annotation.KubernetesModelProcessor;
 import io.fabric8.openshift.api.model.TemplateBuilder;
+import io.fabric8.utils.Base64Encoder;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 @KubernetesModelProcessor
 public class GogsModelProcessor {
@@ -27,6 +30,13 @@ public class GogsModelProcessor {
     private static final String NAME = "gogs";
 
     public void onList(TemplateBuilder builder) {
+        Map<String, String> secretData = new HashMap<>();
+
+        // TODO would be nice to be able to pass these in as expressions
+        // and have th base64 conversion get done automatically
+        secretData.put("username", Base64Encoder.encode("gogsadmin"));
+        secretData.put("password", Base64Encoder.encode("RedHat$1"));
+
         builder.addNewOAuthClientObject()
                 .withNewMetadata()
                 .withName(NAME)
@@ -71,6 +81,16 @@ public class GogsModelProcessor {
                 .addToSelector("provider", "fabric8")
                 .endSpec()
                 .endServiceObject()
+
+                // lets add a default user secret for the default user
+                .addNewSecretObject()
+                .withNewMetadata()
+                .withNamespace("user-secrets-source-${KUBERNETES_ADMIN_USER}")
+                .withName("gogs-https-${KUBERNETES_ADMIN_USER}")
+                .endMetadata()
+                .withData(secretData)
+                .endSecretObject()
+
                 .build();
     }
 }
