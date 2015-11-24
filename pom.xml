@@ -173,6 +173,7 @@
       <module>nexus</module>
       <module>orion</module>
       <module>prometheus</module>
+      <module>prometheus-blackbox-exporter</module>
       <module>sonarqube</module>
       <module>taiga</module>
       <module>templates</module>
