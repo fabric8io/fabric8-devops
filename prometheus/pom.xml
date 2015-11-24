@@ -102,14 +102,23 @@
                               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                               xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
                     <id>prometheus-conf</id>
-                    <files>
-                      <file>
-                        <source>${basedir}/src/main/resources/prometheus.yml</source>
+                    <fileSets>
+                      <fileSet>
+                        <directory>${basedir}/src/main/resources</directory>
                         <outputDirectory>.</outputDirectory>
-                      </file>
-                    </files>
+                      </fileSet>
+                    </fileSets>
                   </inline>
                 </assembly>
+                <cmd>
+                  <exec>
+                    <arg>-config.file=/etc/prometheus/prometheus.yml</arg>
+                    <arg>-storage.local.path=/prometheus</arg>
+                    <arg>-web.console.libraries=/etc/prometheus/console_libraries</arg>
+                    <arg>-web.console.templates=/etc/prometheus/consoles</arg>
+                    <arg>-alertmanager.url=http://alertmanager.default.svc</arg>
+                  </exec>
+                </cmd>
                 <ports>
                   <port>9090</port>
                 </ports>

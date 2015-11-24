@@ -1,0 +1,16 @@
+pod:memory_usage_bytes = sum(container_memory_usage_bytes{kubernetes_pod_name=~".+", kubernetes_role="node"}) by (kubernetes_pod_name, kubernetes_namespace)
+
+pod:network_receive_bytes:1m = sum(rate(container_network_receive_bytes_total{kubernetes_pod_name=~".+", kubernetes_role="node"}[1m])) by (kubernetes_pod_name, kubernetes_namespace)
+
+pod:network_transmit_bytes:1m = sum(rate(container_network_transmit_bytes_total{kubernetes_pod_name=~".+", kubernetes_role="node"}[1m])) by (kubernetes_pod_name, kubernetes_namespace)
+
+pod:cpu_usage_seconds:1m = sum(rate(container_cpu_usage_seconds_total{kubernetes_pod_name=~".+", kubernetes_role="node"}[1m])) by (kubernetes_pod_name, kubernetes_namespace)
+
+ALERT ServiceDown
+  IF probe_success{kubernetes_role="service"} == 0
+  FOR 10s
+  WITH {
+    severity="page"
+  }
+  SUMMARY "Service {{$labels.kubernetes_namespace}}/{{$labels.kubernetes_name}} down"
+  DESCRIPTION "Service {{$labels.kubernetes_namespace}}/{{$labels.kubernetes_name}} has been down for more than 10 seconds!"
