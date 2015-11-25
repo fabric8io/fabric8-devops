@@ -33,19 +33,26 @@
   </description>
 
   <properties>
+    <http.port>9115</http.port>
+
     <docker.image>${fabric8.dockerUser}prometheus-blackbox:${project.version}</docker.image>
-    <docker.port.container.http>9115</docker.port.container.http>
+    <docker.port.container.http>${http.port}</docker.port.container.http>
     <docker.port.container.jolokia />
 
     <fabric8.service.name>blackbox</fabric8.service.name>
     <fabric8.service.port>80</fabric8.service.port>
-    <fabric8.service.containerPort>9115</fabric8.service.containerPort>
+    <fabric8.service.containerPort>${http.port}</fabric8.service.containerPort>
     <fabric8.service.type>LoadBalancer</fabric8.service.type>
 
     <fabric8.label.component>prometheus</fabric8.label.component>
     <fabric8.label.provider>fabric8</fabric8.label.provider>
 
-    <fabric8.livenessProbe.port>9115</fabric8.livenessProbe.port>
+    <!-- Start Prometheus metrics stuff. -->
+    <fabric8.metrics.scrape>true</fabric8.metrics.scrape>
+    <fabric8.metrics.port>${http.port}</fabric8.metrics.port>
+    <!-- End Prometheus metrics stuff -->
+
+    <fabric8.livenessProbe.port>${http.port}</fabric8.livenessProbe.port>
   </properties>
 
   <dependencies>
