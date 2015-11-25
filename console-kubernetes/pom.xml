@@ -35,6 +35,8 @@
 
     <fabric8.apply.OAUTH_PROVIDER>basic</fabric8.apply.OAUTH_PROVIDER>
     <fabric8.apply.OAUTH_AUTHORIZE_URI />
+
+    <fabric8.helm.chart>fabric8-console-kubernetes</fabric8.helm.chart>
   </properties>
 
   <dependencies>

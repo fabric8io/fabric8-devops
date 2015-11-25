@@ -56,6 +56,7 @@
         <developer>
             <id>geeks</id>
             <name>Fabric8 Development Team</name>
+            <email>fabric8@googlegroups.com</email>
             <organization>fabric8</organization>
             <organizationUrl>http://fabric8.io/</organizationUrl>
         </developer>
@@ -218,6 +219,13 @@
               <phase>package</phase>
               <goals>
                 <goal>attach</goal>
+              </goals>
+            </execution>
+             <execution>
+              <id>helm</id>
+              <phase>package</phase>
+              <goals>
+                <goal>helm</goal>
               </goals>
             </execution>
           </executions>
