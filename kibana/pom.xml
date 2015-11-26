@@ -33,11 +33,11 @@
   </description>
 
   <properties>
-    <docker.image>${fabric8.dockerUser}kibana4:4.1.2</docker.image>
+    <docker.image>${fabric8.dockerUser}kibana4:4.3.0</docker.image>
     <docker.port.container.http>5601</docker.port.container.http>
     <docker.port.container.jolokia />
 
-    <fabric8.env.ELASTICSEARCH_SERVICE_NAME>ELASTICSEARCH</fabric8.env.ELASTICSEARCH_SERVICE_NAME>
+    <fabric8.env.ELASTICSEARCH_URL>http://elasticsearch:9200</fabric8.env.ELASTICSEARCH_URL>
 
     <fabric8.service.port>80</fabric8.service.port>
     <fabric8.service.containerPort>5601</fabric8.service.containerPort>
