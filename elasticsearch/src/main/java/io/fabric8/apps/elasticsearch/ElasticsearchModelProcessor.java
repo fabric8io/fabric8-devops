@@ -28,12 +28,11 @@ public class ElasticsearchModelProcessor {
     public void onTemplate(TemplateBuilder builder) {
         builder.addNewServiceObject()
                 .withNewMetadata()
-                    .withName("elasticsearch-cluster")
+                    .withName("elasticsearch-masters")
                     .endMetadata()
                 .withNewSpec()
                     .withClusterIP("None")
                     .addNewPort()
-                        .withName("")
                         .withProtocol("TCP")
                         .withPort(9300)
                         .withNewTargetPort(9300)
