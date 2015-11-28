@@ -57,6 +57,7 @@
         <fabric8.volume.jenkins-workspace.mountPath>/var/jenkins_home</fabric8.volume.jenkins-workspace.mountPath-->
 
         <fabric8.serviceAccount>jenkins</fabric8.serviceAccount>
+        <fabric8.service.type>LoadBalancer</fabric8.service.type>
 
         <fabric8.volume.jenkins-master-key.secret>jenkins-master-ssh</fabric8.volume.jenkins-master-key.secret>
         <fabric8.volume.jenkins-master-key.mountPath>/home/jenkins/ssh-keys</fabric8.volume.jenkins-master-key.mountPath>

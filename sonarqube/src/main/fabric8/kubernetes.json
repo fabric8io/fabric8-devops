@@ -19,7 +19,8 @@
         "selector": {
           "name": "sonarqube"
         }
-      }
+      },
+      "type": "LoadBalancer"
     },
     {
       "kind": "ReplicationController",
