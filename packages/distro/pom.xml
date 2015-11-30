@@ -18,145 +18,61 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
-    <groupId>io.fabric8.devops.packages</groupId>
+    <groupId>io.fabric8.ipaas.packages</groupId>
     <artifactId>packages</artifactId>
-    <version>2.2.81</version>
+    <version>2.2.72-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>io.fabric8.devops.distro</groupId>
+  <groupId>io.fabric8.ipaas.distro</groupId>
   <artifactId>distro</artifactId>
   <packaging>pom</packaging>
 
-  <name>Fabric8 DevOps :: Packages :: Distro</name>
+  <name>Fabric8 iPaas :: Packages :: Distro</name>
 
   <dependencies>
     <dependency>
-      <groupId>io.fabric8.devops.packages</groupId>
-      <artifactId>cd-pipeline</artifactId>
+      <groupId>io.fabric8.ipaas.packages</groupId>
+      <artifactId>apiman</artifactId>
       <version>${project.version}</version>
       <classifier>kubernetes</classifier>
       <type>json</type>
     </dependency>
     <dependency>
-      <groupId>io.fabric8.devops.packages</groupId>
-      <artifactId>chat-irc</artifactId>
+      <groupId>io.fabric8.ipaas.apps</groupId>
+      <artifactId>api-registry</artifactId>
       <version>${project.version}</version>
       <classifier>kubernetes</classifier>
       <type>json</type>
     </dependency>
     <dependency>
-      <groupId>io.fabric8.devops.packages</groupId>
-      <artifactId>chat-letschat</artifactId>
+      <groupId>io.fabric8.ipaas.apps</groupId>
+      <artifactId>fabric8mq-consumer</artifactId>
       <version>${project.version}</version>
       <classifier>kubernetes</classifier>
       <type>json</type>
     </dependency>
     <dependency>
-      <groupId>io.fabric8.devops.packages</groupId>
-      <artifactId>chat-slack</artifactId>
+      <groupId>io.fabric8.ipaas.apps</groupId>
+      <artifactId>fabric8mq-producer</artifactId>
       <version>${project.version}</version>
       <classifier>kubernetes</classifier>
       <type>json</type>
     </dependency>
     <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>fabric8-docker-registry</artifactId>
+      <groupId>io.fabric8.ipaas.apps</groupId>
+      <artifactId>fabric8mq</artifactId>
       <version>${project.version}</version>
       <classifier>kubernetes</classifier>
       <type>json</type>
     </dependency>
     <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>gitlab</artifactId>
+      <groupId>io.fabric8.ipaas.apps</groupId>
+      <artifactId>qpid-dispatch</artifactId>
       <version>${project.version}</version>
       <classifier>kubernetes</classifier>
       <type>json</type>
     </dependency>
-
-    <dependency>
-      <groupId>io.fabric8.devops.packages</groupId>
-      <artifactId>social</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.packages</groupId>
-      <artifactId>management</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-
-    <!-- console -->
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>console</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-
-    <!-- individual apps -->
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>chaos-monkey</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>artifactory</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>kiwiirc</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>jenkins</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>gogs</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>letschat</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>nexus</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-
-    <!-- COMMENT OUT UNTIL SONARQUBE CONVERTED TO GENERATE VALID kubernetes.json -->
-    <!-- <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>sonarqube</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency> -->
   </dependencies>
 
   <build>
