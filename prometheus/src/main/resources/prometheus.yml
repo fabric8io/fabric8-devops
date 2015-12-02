@@ -112,7 +112,7 @@ scrape_configs:
     regex: service;true
   - source_labels: []
     target_label: __address__
-    replacement: blackbox.default.svc
+    replacement: blackbox
   - source_labels: [__address__]
     regex: (.*)(:80)?
     target_label: __param_target

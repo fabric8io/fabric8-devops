@@ -123,7 +123,7 @@
                     <arg>-storage.local.path=/prometheus</arg>
                     <arg>-web.console.libraries=/etc/prometheus/console_libraries</arg>
                     <arg>-web.console.templates=/etc/prometheus/consoles</arg>
-                    <arg>-alertmanager.url=http://alertmanager.default.svc</arg>
+                    <arg>-alertmanager.url=http://alertmanager</arg>
                   </exec>
                 </cmd>
                 <ports>
