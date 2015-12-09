@@ -49,6 +49,7 @@
         <fabric8.includePodEnvVar>true</fabric8.includePodEnvVar>
 
         <fabric8.env.CGO_ENABLED>0</fabric8.env.CGO_ENABLED>
+	<fabric8.env.PROJECT_VERSION>${project.version}</fabric8.env.PROJECT_VERSION>
 
         <fabric8.volume.docker-socket.hostPath>/var/run/docker.sock</fabric8.volume.docker-socket.hostPath>
         <fabric8.volume.docker-socket.mountPath>/var/run/docker.sock</fabric8.volume.docker-socket.mountPath>
