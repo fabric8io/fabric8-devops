@@ -151,9 +151,6 @@
       <module>artifactory</module>
       <module>brackets</module>
       <module>chaos-monkey</module>
-      <!-- <module>cdelivery</module> -->
-      <module>console</module>
-      <module>console-kubernetes</module>
       <module>elasticsearch</module>
       <module>fabric8-forge</module>
       <module>fabric8-docker-registry</module>
@@ -177,8 +174,6 @@
       <module>prometheus-blackbox-exporter</module>
       <module>sonarqube</module>
       <module>taiga</module>
-      <module>templates</module>
-
       <module>packages</module>
     </modules>
 
