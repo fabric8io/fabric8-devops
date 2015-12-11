@@ -73,10 +73,30 @@
       <classifier>kubernetes</classifier>
       <type>json</type>
     </dependency>
-
+    <dependency>
+      <groupId>io.fabric8.devops.apps</groupId>
+      <artifactId>gerrit</artifactId>
+      <version>${project.version}</version>
+      <classifier>kubernetes</classifier>
+      <type>json</type>
+    </dependency>
     <dependency>
       <groupId>io.fabric8.devops.packages</groupId>
       <artifactId>social</artifactId>
+      <version>${project.version}</version>
+      <classifier>kubernetes</classifier>
+      <type>json</type>
+    </dependency>
+    <dependency>
+      <groupId>io.fabric8.devops.apps</groupId>
+      <artifactId>sonarqube</artifactId>
+      <version>${project.version}</version>
+      <classifier>kubernetes</classifier>
+      <type>json</type>
+    </dependency>
+    <dependency>
+      <groupId>io.fabric8.devops.apps</groupId>
+      <artifactId>taiga</artifactId>
       <version>${project.version}</version>
       <classifier>kubernetes</classifier>
       <type>json</type>
