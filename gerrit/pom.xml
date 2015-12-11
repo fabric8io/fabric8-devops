@@ -55,8 +55,9 @@
         <fabric8.generateJson>true</fabric8.generateJson>
 
         <!-- Volume mounted to backup gerrit site -->
-        <fabric8.volume.gerrit-workspace.hostPath>/home/gerrit-site</fabric8.volume.gerrit-workspace.hostPath>
-        <fabric8.volume.gerrit-workspace.mountPath>/home/gerrit/site</fabric8.volume.gerrit-workspace.mountPath>
+        <!-- disabled as this doesnt work on non vagrant setups https://github.com/fabric8io/fabric8/issues/5443 -->
+        <!-- <fabric8.volume.gerrit-workspace.hostPath>/home/gerrit-site</fabric8.volume.gerrit-workspace.hostPath>
+        <fabric8.volume.gerrit-workspace.mountPath>/home/gerrit/site</fabric8.volume.gerrit-workspace.mountPath> -->
 
         <!-- Volume mounted containing Users SSH Public Key (jenkins, sonar, ...) -->
         <!-- The keys should be imported within the Virtual Box of Vagrant if used -->
