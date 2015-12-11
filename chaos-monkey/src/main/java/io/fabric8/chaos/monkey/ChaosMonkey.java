@@ -45,7 +45,6 @@ import java.util.concurrent.CountDownLatch;
 @Eager
 public class ChaosMonkey {
     public static final String DEFAULT_ROOM_EXPRESSION = "#fabric8_${namespace}";
-    public static final String DEFAULT_INCLUDES = "";
     public static final String DEFAULT_EXCLUDES = "letschat*,gogs*";
 
     private static final transient Logger LOG = LoggerFactory.getLogger(ChaosMonkey.class);
@@ -67,7 +66,7 @@ public class ChaosMonkey {
      */
     public ChaosMonkey() {
         roomExpression = DEFAULT_ROOM_EXPRESSION;
-        includePatterns = DEFAULT_INCLUDES;
+        includePatterns = null;
         excludePatterns = DEFAULT_EXCLUDES;
         killFrequency = 60;
     }
@@ -75,7 +74,7 @@ public class ChaosMonkey {
     @Inject
     public ChaosMonkey(HubotNotifier notifier,
                        @ConfigProperty(name = "CHAOS_MONKEY_ROOM", defaultValue = DEFAULT_ROOM_EXPRESSION) String roomExpression,
-                       @ConfigProperty(name = "CHAOS_MONKEY_INCLUDES", defaultValue = DEFAULT_INCLUDES) String includePatterns,
+                       @ConfigProperty(name = "CHAOS_MONKEY_INCLUDES") String includePatterns,
                        @ConfigProperty(name = "CHAOS_MONKEY_EXCLUDES", defaultValue = DEFAULT_EXCLUDES) String excludePatterns,
                        @ConfigProperty(name = "CHAOS_MONKEY_KILL_FREQUENCY_SECONDS", defaultValue = "60") int killFrequency) throws Exception {
         this.notifier = notifier;
