@@ -1,72 +1,53 @@
-<!--
-
-     Copyright 2005-2015 Red Hat, Inc.
-
-     Red Hat licenses this file to you under the Apache License, version
-     2.0 (the "License"); you may not use this file except in compliance
-     with the License.  You may obtain a copy of the License at
-
-        http://www.apache.org/licenses/LICENSE-2.0
-
-     Unless required by applicable law or agreed to in writing, software
-     distributed under the License is distributed on an "AS IS" BASIS,
-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-     implied.  See the License for the specific language governing
-     permissions and limitations under the License.
-
--->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>io.fabric8.devops.apps</groupId>
     <artifactId>fabric8-devops</artifactId>
     <version>2.2.95-SNAPSHOT</version>
   </parent>
-
   <artifactId>fabric8-forge</artifactId>
-  <packaging>jar</packaging>
-
   <name>Fabric8 Forge</name>
   <description>Fabric8 Forge</description>
-
   <properties>
-    <version.maven-surefire-plugin>2.15</version.maven-surefire-plugin>
-    <guava.version>15.0</guava.version>
-
     <addon.repository>${project.build.directory}/addon-repository</addon.repository>
-
-    <docker.from>docker.io/fabric8/jetty-9:1.0.0</docker.from>
-    <docker.env.FORGE_ADDON_DIRECTORY>/forge-addon-repo</docker.env.FORGE_ADDON_DIRECTORY>
-
+    <camel.addon.release.version>${fabric8.release.version}</camel.addon.release.version>
     <docker.assemblyDescriptor>${basedir}/src/main/fabric8/assembly.xml</docker.assemblyDescriptor>
-
-    <fabric8.service.port>80</fabric8.service.port>
-    <fabric8.service.containerPort>8080</fabric8.service.containerPort>
-    <fabric8.service.type>LoadBalancer</fabric8.service.type>
-
-    <fabric8.label.project>fabric8Forge</fabric8.label.project>
-    <fabric8.label.provider>fabric8</fabric8.label.provider>
-    <fabric8.iconRef>icons/jbossforge.svg</fabric8.iconRef>
-
-
-    <!-- add certs -->
-    <fabric8.serviceAccount>fabric8</fabric8.serviceAccount>
-
+    <docker.assemblyDescriptorRef>artifact-with-dependencies</docker.assemblyDescriptorRef>
+    <docker.env.FORGE_ADDON_DIRECTORY>/forge-addon-repo</docker.env.FORGE_ADDON_DIRECTORY>
+    <docker.from>docker.io/fabric8/jetty-9:1.0.0</docker.from>
+    <docker.image>fabric8/${project.artifactId}:${project.version}</docker.image>
+    <docker.port.container.jolokia>8778</docker.port.container.jolokia>
+    <fabric8.addon.release.version>${fabric8.release.version}</fabric8.addon.release.version>
     <fabric8.env.FABRIC8_ARCHETYPES_VERSION>${fabric8.archetypes.release.version}</fabric8.env.FABRIC8_ARCHETYPES_VERSION>
-
+    <fabric8.iconRef>icons/camel</fabric8.iconRef>
+    <fabric8.label.project>fabric8-forge</fabric8.label.project>
+    <fabric8.label.provider>fabric8</fabric8.label.provider>
+    <fabric8.label.version>${project.version}</fabric8.label.version>
     <fabric8.readinessProbe.httpGet.path>/_ping</fabric8.readinessProbe.httpGet.path>
     <fabric8.readinessProbe.httpGet.port>${fabric8.service.containerPort}</fabric8.readinessProbe.httpGet.port>
     <fabric8.readinessProbe.initialDelaySeconds>30</fabric8.readinessProbe.initialDelaySeconds>
-
-    <!-- allows you to work on different release versions of the forge plugins -->
-    <fabric8.addon.release.version>${fabric8.release.version}</fabric8.addon.release.version>
-    <camel.addon.release.version>${fabric8.release.version}</camel.addon.release.version>
-
-    <jboss.forge.version>2.19.2.Final</jboss.forge.version>
+    <fabric8.service.containerPort>8080</fabric8.service.containerPort>
+    <fabric8.service.port>80</fabric8.service.port>
+    <fabric8.service.type>LoadBalancer</fabric8.service.type>
+    <fabric8.serviceAccount>fabric8</fabric8.serviceAccount>
     <furnace.version>2.22.0.Final</furnace.version>
+    <guava.version>15.0</guava.version>
+    <jboss.forge.version>2.19.2.Final</jboss.forge.version>
+    <version.maven-surefire-plugin>2.15</version.maven-surefire-plugin>
   </properties>
-
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.fabric8</groupId>
+        <artifactId>fabric8-project</artifactId>
+        <version>2.2.81</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>io.fabric8.forge</groupId>
@@ -74,9 +55,6 @@
       <version>${fabric8.version}</version>
       <type>war</type>
     </dependency>
-
-
-    <!-- trying to fix up CD builds -->
     <dependency>
       <groupId>io.fabric8.forge</groupId>
       <artifactId>camel</artifactId>
@@ -98,17 +76,85 @@
       <classifier>forge-addon</classifier>
       <scope>provided</scope>
     </dependency>
-
+    <dependency>
+      <groupId>io.fabric8.archetypes</groupId>
+      <artifactId>archetypes-catalog</artifactId>
+      <version>${fabric8.archetypes.release.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.forge.furnace</groupId>
+      <artifactId>furnace-se</artifactId>
+      <version>${furnace.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.forge.furnace.container</groupId>
+      <artifactId>simple-api</artifactId>
+      <version>${furnace.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.forge.addon</groupId>
+      <artifactId>templates-api</artifactId>
+      <version>${jboss.forge.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.forge.addon</groupId>
+      <artifactId>templates-freemarker</artifactId>
+      <version>${jboss.forge.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.forge.addon</groupId>
+      <artifactId>projects-api</artifactId>
+      <version>${jboss.forge.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.forge.addon</groupId>
+      <artifactId>maven-impl-projects</artifactId>
+      <version>${jboss.forge.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.forge.addon</groupId>
+      <artifactId>dependencies-api</artifactId>
+      <version>${jboss.forge.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.forge.addon</groupId>
+      <artifactId>parser-java-api</artifactId>
+      <version>${jboss.forge.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.forge.addon</groupId>
+      <artifactId>resources-api</artifactId>
+      <version>${jboss.forge.version}</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>facets-impl</artifactId>
+          <groupId>org.jboss.forge.addon</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>io.fabric8</groupId>
+      <artifactId>fabric8-arquillian</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
-
   <build>
     <resources>
       <resource>
-        <directory>src/main/resources</directory>
         <filtering>true</filtering>
+        <directory>src/main/resources</directory>
       </resource>
     </resources>
-
     <plugins>
       <plugin>
         <groupId>org.jboss.forge.furnace</groupId>
@@ -133,15 +179,16 @@
           </execution>
         </executions>
       </plugin>
-
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${version.maven-surefire-plugin}</version>
         <configuration>
           <forkMode>perTest</forkMode>
+          <systemPropertyVariables>
+            <fabric8ArchetypeVersion>${fabric8.archetypes.release.version}</fabric8ArchetypeVersion>
+          </systemPropertyVariables>
         </configuration>
       </plugin>
-
       <plugin>
         <groupId>org.jolokia</groupId>
         <artifactId>docker-maven-plugin</artifactId>
@@ -169,48 +216,30 @@
           </images>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>io.fabric8</groupId>
+        <artifactId>fabric8-maven-plugin</artifactId>
+        <version>2.2.81</version>
+        <executions>
+          <execution>
+            <id>json</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>json</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>attach</id>
+            <phase>package</phase>
+            <goals>
+              <goal>attach</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
-
   <profiles>
-<!--
-    TODO
-
-    <profile>
-      <id>jube</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>io.fabric8.jube</groupId>
-            <artifactId>jube-maven-plugin</artifactId>
-            <version>${jube.version}</version>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>build</goal>
-                </goals>
-                <phase>package</phase>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
--->
-    <!--
-    <profile>
-      <id>fabric8-snapshot</id>
-      <properties>
-        <fabric8.addon.release.version>2.3-SNAPSHOT</fabric8.addon.release.version>
-        <camel.addon.release.version>2.3-SNAPSHOT</camel.addon.release.version>
-      </properties>
-    </profile>
--->
-
-
     <profile>
       <id>docker-build</id>
       <build>
@@ -221,17 +250,16 @@
             <version>${docker.maven.plugin.version}</version>
             <executions>
               <execution>
+                <phase>package</phase>
                 <goals>
                   <goal>build</goal>
                 </goals>
-                <phase>package</phase>
               </execution>
             </executions>
           </plugin>
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>docker-push</id>
       <build>
@@ -242,24 +270,48 @@
             <version>${docker.maven.plugin.version}</version>
             <executions>
               <execution>
+                <phase>package</phase>
                 <goals>
                   <goal>build</goal>
                   <goal>push</goal>
                 </goals>
-                <phase>package</phase>
               </execution>
             </executions>
           </plugin>
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>debug</id>
       <properties>
-        <fabric8.env.JAVA_OPTIONS>-Xdebug -agentlib:jdwp=transport=dt_socket,address=9999,server=y,suspend=n</fabric8.env.JAVA_OPTIONS>
         <docker.port.container.debug>9999</docker.port.container.debug>
         <docker.port.host.debug>9999</docker.port.host.debug>
+        <fabric8.env.JAVA_OPTIONS>-Xdebug -agentlib:jdwp=transport=dt_socket,address=9999,server=y,suspend=n</fabric8.env.JAVA_OPTIONS>
+      </properties>
+    </profile>
+    <profile>
+      <id>f8-build</id>
+      <build>
+        <defaultGoal>clean install docker:build fabric8:json</defaultGoal>
+      </build>
+    </profile>
+    <profile>
+      <id>f8-deploy</id>
+      <build>
+        <defaultGoal>clean install docker:build docker:push fabric8:json fabric8:apply</defaultGoal>
+      </build>
+      <properties>
+        <fabric8.recreate>true</fabric8.recreate>
+        <fabric8.imagePullPolicySnapshot>Always</fabric8.imagePullPolicySnapshot>
+      </properties>
+    </profile>
+    <profile>
+      <id>f8-local-deploy</id>
+      <build>
+        <defaultGoal>clean install docker:build fabric8:json fabric8:apply</defaultGoal>
+      </build>
+      <properties>
+        <fabric8.recreate>true</fabric8.recreate>
       </properties>
     </profile>
   </profiles>

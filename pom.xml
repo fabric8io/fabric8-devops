@@ -353,7 +353,9 @@
           <id>fabric8-snapshot</id>
           <properties>
             <fabric8.version>2.2.82-SNAPSHOT</fabric8.version>
-            <fabric8.release.version>${fabric8.version}</fabric8.release.version>
+
+            <!-- this must be the last released version - cannot be a snapshot -->
+            <fabric8.release.version>2.2.81</fabric8.release.version>
             <fabric8.dockerPrefix />
           </properties>
         </profile>

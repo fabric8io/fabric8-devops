@@ -39,5 +39,9 @@
       <directory>${basedir}/src/main/resources</directory>
       <outputDirectory>/maven</outputDirectory>
     </fileSet>
+    <fileSet>
+      <directory>${basedir}/target/localMavenRepo</directory>
+      <outputDirectory>/root/.m2/repository</outputDirectory>
+    </fileSet>
   </fileSets>
 </assembly>
