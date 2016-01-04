@@ -34,7 +34,6 @@
   </properties>
 
   <modules>
-    <module>cd-pipeline</module>
     <module>chat-irc</module>
     <module>chat-letschat</module>
     <module>chat-slack</module>
@@ -42,8 +41,6 @@
     <module>management</module>
     <module>metrics</module>
     <module>social</module>
-
-    <module>distro</module>
   </modules>
 
     <build>
