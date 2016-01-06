@@ -43,7 +43,7 @@ public class JenkinsModelProcessor {
         if (version != null && version.length() > 0 && !version.endsWith("SNAPSHOT")) {
             versionPostfix = ":" + version;
         }
-        String imageName = "fabric8/jenkins-swarm-client" + versionPostfix;
+        
         builder.addNewServiceObject()
                 .withNewMetadata()
                      //The name of the service is referenced by the client image.

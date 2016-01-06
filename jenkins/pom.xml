@@ -38,48 +38,16 @@
         <docker.port.container.slave>50000</docker.port.container.slave>
         <docker.port.container.jolokia />
 
-        <fabric8.imagePullPolicy>IfNotPresent</fabric8.imagePullPolicy>
-
         <fabric8.label.project>jenkins</fabric8.label.project>
         <fabric8.label.provider>fabric8</fabric8.label.provider>
 
-        <!-- to access docker socket lets run in priviledged mode -->
-        <fabric8.containerPrivileged>true</fabric8.containerPrivileged>
+        <!-- <fabric8.includePodEnvVar>true</fabric8.includePodEnvVar> -->
 
-        <fabric8.includePodEnvVar>true</fabric8.includePodEnvVar>
-
-        <fabric8.env.CGO_ENABLED>0</fabric8.env.CGO_ENABLED>
-	<fabric8.env.PROJECT_VERSION>${project.version}</fabric8.env.PROJECT_VERSION>
-
-        <fabric8.volume.docker-socket.hostPath>/var/run/docker.sock</fabric8.volume.docker-socket.hostPath>
-        <fabric8.volume.docker-socket.mountPath>/var/run/docker.sock</fabric8.volume.docker-socket.mountPath>
-
-        <!--fabric8.volume.jenkins-workspace.emptyDir />
-        <fabric8.volume.jenkins-workspace.mountPath>/var/jenkins_home</fabric8.volume.jenkins-workspace.mountPath-->
+        <!-- <fabric8.env.CGO_ENABLED>0</fabric8.env.CGO_ENABLED>
+	      <fabric8.env.PROJECT_VERSION>${project.version}</fabric8.env.PROJECT_VERSION> -->
 
         <fabric8.serviceAccount>jenkins</fabric8.serviceAccount>
         <fabric8.service.type>LoadBalancer</fabric8.service.type>
-
-        <fabric8.volume.jenkins-master-key.secret>jenkins-master-ssh</fabric8.volume.jenkins-master-key.secret>
-        <fabric8.volume.jenkins-master-key.mountPath>/home/jenkins/ssh-keys</fabric8.volume.jenkins-master-key.mountPath>
-        <fabric8.volume.jenkins-master-key.readOnly>false</fabric8.volume.jenkins-master-key.readOnly>
-
-        <fabric8.volume.git-ssh.secret>jenkins-git-ssh</fabric8.volume.git-ssh.secret>
-        <fabric8.volume.git-ssh.mountPath>/var/jenkins/.ssh-git</fabric8.volume.git-ssh.mountPath>
-        <fabric8.volume.git-ssh.readOnly>false</fabric8.volume.git-ssh.readOnly>
-
-        <fabric8.volume.gpg-key.secret>jenkins-release-gpg</fabric8.volume.gpg-key.secret>
-        <fabric8.volume.gpg-key.mountPath>/root/.gnupg</fabric8.volume.gpg-key.mountPath>
-        <fabric8.volume.gpg-key.readOnly>false</fabric8.volume.gpg-key.readOnly>
-
-
-<!--
-        <fabric8.volume.jenkins-jobs.emptyDir></fabric8.volume.jenkins-jobs.emptyDir>
-        <fabric8.volume.jenkins-jobs.mountPath>/var/jenkins_home/jobs</fabric8.volume.jenkins-jobs.mountPath>
--->
-
-        <fabric8.parameter.SEED_GIT_URL.value>https://github.com/fabric8io/default-jenkins-dsl.git</fabric8.parameter.SEED_GIT_URL.value>
-        <fabric8.parameter.SEED_GIT_URL.description>The git URL of the seed build used to generate builds</fabric8.parameter.SEED_GIT_URL.description>
 
         <!-- liveness probe -->
 <!--
@@ -150,12 +118,6 @@
     </dependencies>
 
     <profiles>
-        <profile>
-            <id>fabric8-cd</id>
-            <properties>
-                <fabric8.parameter.SEED_GIT_URL.value>https://github.com/fabric8io/jenkins-pipeline-dsl.git</fabric8.parameter.SEED_GIT_URL.value>
-            </properties>
-        </profile>
       <profile>
         <id>fabric8-snapshot</id>
         <properties>
