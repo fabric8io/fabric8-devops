@@ -25,25 +25,6 @@ import io.fabric8.openshift.api.model.TemplateBuilder;
 @KubernetesModelProcessor
 public class ElasticsearchModelProcessor {
 
-    public void onTemplate(TemplateBuilder builder) {
-        builder.addNewServiceObject()
-                .withNewMetadata()
-                    .withName("elasticsearch-masters")
-                    .endMetadata()
-                .withNewSpec()
-                    .withClusterIP("None")
-                    .addNewPort()
-                        .withProtocol("TCP")
-                        .withPort(9300)
-                        .withNewTargetPort(9300)
-                    .endPort()
-                .addToSelector("project", "elasticsearch")
-                .addToSelector("provider", "fabric8")
-                .endSpec()
-                .and()
-                .build();
-    }
-
     public void on(PodTemplateSpecBuilder builder) {
         PodSpec podSpec = new PodSpecBuilder(builder.getSpec())
                 .addNewContainer()

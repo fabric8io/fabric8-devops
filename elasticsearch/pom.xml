@@ -44,6 +44,10 @@
     <fabric8.service.containerPort>9200</fabric8.service.containerPort>
     <fabric8.service.type>LoadBalancer</fabric8.service.type>
 
+    <fabric8.service.elasticsearch-masters.port>9300</fabric8.service.elasticsearch-masters.port>
+    <fabric8.service.elasticsearch-masters.containerPort>9300</fabric8.service.elasticsearch-masters.containerPort>
+    <fabric8.service.elasticsearch-masters.headless>true</fabric8.service.elasticsearch-masters.headless>
+
     <fabric8.label.project>elasticsearch</fabric8.label.project>
     <fabric8.label.provider>fabric8</fabric8.label.provider>
 
