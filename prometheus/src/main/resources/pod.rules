@@ -9,8 +9,11 @@ pod:cpu_usage_seconds:1m = sum(rate(container_cpu_usage_seconds_total{kubernetes
 ALERT ServiceDown
   IF probe_success{kubernetes_role="service"} == 0
   FOR 10s
-  WITH {
-    severity="page"
+  LABELS {
+    service = "{{$labels.kubernetes_namespace}}/{{$labels.kubernetes_name}}"
   }
-  SUMMARY "Service {{$labels.kubernetes_namespace}}/{{$labels.kubernetes_name}} down"
-  DESCRIPTION "Service {{$labels.kubernetes_namespace}}/{{$labels.kubernetes_name}} has been down for more than 10 seconds!"
+  ANNOTATIONS {
+    severity    ="page",
+    summary     ="Service {{$labels.kubernetes_namespace}}/{{$labels.kubernetes_name}} down",
+    description ="Service {{$labels.kubernetes_namespace}}/{{$labels.kubernetes_name}} has been down for more than 10 seconds!"
+  }
