@@ -48,6 +48,8 @@
 
         <fabric8.serviceAccount>jenkins</fabric8.serviceAccount>
         <fabric8.service.type>LoadBalancer</fabric8.service.type>
+	<fabric8.volume.data.hostPath>/var/run/docker.sock</fabric8.volume.data.hostPath>
+	<fabric8.volume.data.mountPath>/var/run/docker.sock</fabric8.volume.data.mountPath>
 
         <!-- liveness probe -->
 <!--
