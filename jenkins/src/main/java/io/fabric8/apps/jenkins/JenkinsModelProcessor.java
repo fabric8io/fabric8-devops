@@ -17,6 +17,9 @@
 package io.fabric8.apps.jenkins;
 
 import io.fabric8.kubernetes.api.model.ContainerBuilder;
+import io.fabric8.kubernetes.api.model.PodSpecBuilder;
+import io.fabric8.kubernetes.api.model.Volume;
+import io.fabric8.kubernetes.api.model.VolumeMount;
 import io.fabric8.kubernetes.generator.annotation.KubernetesModelProcessor;
 import io.fabric8.openshift.api.model.TemplateBuilder;
 
@@ -28,13 +31,34 @@ public class JenkinsModelProcessor {
     @Named("jenkins")
     public void on(ContainerBuilder builder) {
         builder.withNewLifecycle()
-                .withNewPostStart()
-                .withNewExec()
-                .addToCommand("/root/postStart.sh")
-                .endExec()
-                .endPostStart()
-                .endLifecycle()
-                .build();
+                    .withNewPostStart()
+                        .withNewExec()
+                            .addToCommand("/root/postStart.sh")
+                        .endExec()
+                    .endPostStart()
+                .endLifecycle().build();
+
+        for (VolumeMount volumeMount : builder.getVolumeMounts()) {
+            if (volumeMount.getName().equals("jenkins-docker-cfg")) {
+                return;
+            }
+        }
+        builder.addNewVolumeMount("/home/jenkins/.docker", "jenkins-docker-cfg", false).build();
+    }
+
+    public void on(PodSpecBuilder builder) {
+        if (builder.getVolumes() != null) {
+            for (Volume volume : builder.getVolumes()) {
+                if (volume.getName().equals("jenkins-docker-cfg")) {
+                    return;
+                }
+            }
+        }
+
+        builder.addNewVolume()
+                .withName("jenkins-docker-cfg")
+                .withNewSecret("jenkins-docker-cfg")
+        .endVolume().build();
     }
 
     public void on(TemplateBuilder builder) {
@@ -43,30 +67,30 @@ public class JenkinsModelProcessor {
         if (version != null && version.length() > 0 && !version.endsWith("SNAPSHOT")) {
             versionPostfix = ":" + version;
         }
-        
+
         builder.addNewServiceObject()
                 .withNewMetadata()
                      //The name of the service is referenced by the client image.
-                    .withName("jenkins")
-                        .addToLabels("project", "jenkins")
-                        .addToLabels("provider", "fabric8")
-                    .endMetadata()
+                .withName("jenkins")
+                .addToLabels("project", "jenkins")
+                .addToLabels("provider", "fabric8")
+                .endMetadata()
                 .withNewSpec()
                 .withType("LoadBalancer")
                 .addNewPort()
-                    .withName("http")
-                    .withProtocol("TCP")
-                    .withPort(80)
-                    .withNewTargetPort(8080)
+                .withName("http")
+                .withProtocol("TCP")
+                .withPort(80)
+                .withNewTargetPort(8080)
                 .endPort()
                 .addNewPort()
-                    .withName("agent")
-                    .withProtocol("TCP")
-                    .withPort(50000)
-                    .withNewTargetPort(50000)
+                .withName("agent")
+                .withProtocol("TCP")
+                .withPort(50000)
+                .withNewTargetPort(50000)
                 .endPort()
-                    .addToSelector("project", "jenkins")
-                    .addToSelector("provider", "fabric8")
+                .addToSelector("project", "jenkins")
+                .addToSelector("provider", "fabric8")
                 .endSpec()
                 .endServiceObject()
                 .build();
