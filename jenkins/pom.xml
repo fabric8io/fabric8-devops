@@ -33,7 +33,7 @@
     </description>
 
     <properties>
-        <docker.image>fabric8/jenkins-docker:${project.version}</docker.image>
+        <docker.image>fabric8/jenkins-docker:latest</docker.image>
         <docker.port.container.http>8080</docker.port.container.http>
         <docker.port.container.slave>50000</docker.port.container.slave>
         <docker.port.container.jolokia />
@@ -50,6 +50,7 @@
         <fabric8.service.type>LoadBalancer</fabric8.service.type>
 	<fabric8.volume.data.hostPath>/var/run/docker.sock</fabric8.volume.data.hostPath>
 	<fabric8.volume.data.mountPath>/var/run/docker.sock</fabric8.volume.data.mountPath>
+	<fabric8.containerPrivileged>true</fabric8.containerPrivileged>
 
         <!-- liveness probe -->
 <!--
