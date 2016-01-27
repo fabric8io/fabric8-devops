@@ -98,7 +98,7 @@
         <junit.version>4.12</junit.version>
 
         <fabric8.devops.release.version>2.2.95</fabric8.devops.release.version>
-        <fabric8.version>2.2.88</fabric8.version>
+        <fabric8.version>2.2.89</fabric8.version>
         <fabric8.release.version>${fabric8.version}</fabric8.release.version>
 
         <maven.require.version>3.1.1</maven.require.version>
@@ -350,7 +350,7 @@
         <profile>
           <id>fabric8-snapshot</id>
           <properties>
-            <fabric8.version>2.2.89-SNAPSHOT</fabric8.version>
+            <fabric8.version>2.2.90-SNAPSHOT</fabric8.version>
 
             <!-- this must be the last released version - cannot be a snapshot -->
             <fabric8.release.version>2.2.81</fabric8.release.version>
