@@ -78,7 +78,6 @@
 
         <docker.image>${fabric8.dockerUser}${project.artifactId}:${project.version}</docker.image>
         <docker.assemblyDescriptorRef>artifact-with-dependencies</docker.assemblyDescriptorRef>
-        <docker.port.container.jolokia>8778</docker.port.container.jolokia>
 
         <jube.plugin.enabled>false</jube.plugin.enabled>
 
