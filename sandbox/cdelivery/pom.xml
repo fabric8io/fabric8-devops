@@ -54,7 +54,6 @@
     <docker.assemblyDescriptorRef>artifact-with-dependencies</docker.assemblyDescriptorRef>
     <docker.env.MAIN>io.fabric8.cdelivery.Main</docker.env.MAIN>
     <docker.port.container.http>${http.port}</docker.port.container.http>
-    <docker.port.container.jolokia>8778</docker.port.container.jolokia>
 
     <fabric8.env.JBPM_CONTEXT>/</fabric8.env.JBPM_CONTEXT>
     <fabric8.env.JBPM_DEPLOYMENT_ID>demo:Builds:1.0</fabric8.env.JBPM_DEPLOYMENT_ID>
@@ -231,10 +230,6 @@
                   <MAIN>${docker.env.MAIN}</MAIN>
                   <HTTP_PORT>${http.port}</HTTP_PORT>
                 </env>
-                <ports>
-                  <port>8778</port>
-                  <port>${http.port}</port>
-                </ports>
               </build>
             </image>
           </images>
