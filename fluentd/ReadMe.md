@@ -1,5 +1,4 @@
-[SonarQube](http://www.sonarqube.org/) is an open platform to manage code quality
+[Fluentd](http://www.fluentd.org/) is an open source data collector for unified logging layer.
 
-SonarQube is installed as two separate containers in a Pod. One container provides the database (MySQL), and the other the actual SonarQube Application. The default administration credentials (admin:admin) are used.
-
-Sonar Docker Containers provided by https://github.com/tpires/docker-sonar
+Fluentd is deployed as a DaemonSet to run on every node, collect logs and feed them to various destinations.
+This configuration will send logs to Elasticsearch.
