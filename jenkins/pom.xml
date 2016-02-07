@@ -51,7 +51,7 @@
 	<fabric8.volume.data.hostPath>/var/run/docker.sock</fabric8.volume.data.hostPath>
 	<fabric8.volume.data.mountPath>/var/run/docker.sock</fabric8.volume.data.mountPath>
 	<fabric8.containerPrivileged>true</fabric8.containerPrivileged>
-
+	<fabric8.imagePullPolicy>IfNotPresent</fabric8.imagePullPolicy>
         <!-- liveness probe -->
 <!--
         TODO lets disable for now...
