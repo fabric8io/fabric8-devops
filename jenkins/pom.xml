@@ -43,8 +43,8 @@
 
         <!-- <fabric8.includePodEnvVar>true</fabric8.includePodEnvVar> -->
 
-        <!-- <fabric8.env.CGO_ENABLED>0</fabric8.env.CGO_ENABLED>
-	      <fabric8.env.PROJECT_VERSION>${project.version}</fabric8.env.PROJECT_VERSION> -->
+        <!-- <fabric8.env.CGO_ENABLED>0</fabric8.env.CGO_ENABLED-->
+	<fabric8.env.PROJECT_VERSION>${project.version}</fabric8.env.PROJECT_VERSION>
 
         <fabric8.serviceAccount>jenkins</fabric8.serviceAccount>
         <fabric8.service.type>LoadBalancer</fabric8.service.type>
