@@ -1,0 +1,1 @@
+Git Collector will watch all apps in the current project and for all git based projects it will watch and capture all the git commit events into Elasticsearch for reporting.

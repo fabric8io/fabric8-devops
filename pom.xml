@@ -154,6 +154,7 @@
       <module>fluentd</module>
       <module>gerrit</module>
       <module>gitlab</module>
+      <module>git-collector</module>
       <module>gogs</module>
       <module>grafana2</module>
       <module>hubot-irc</module>
