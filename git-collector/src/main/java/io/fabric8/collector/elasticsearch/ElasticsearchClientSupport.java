@@ -48,6 +48,7 @@ public abstract class ElasticsearchClientSupport {
     private static final transient Logger LOG = LoggerFactory.getLogger(ElasticsearchClientSupport.class);
     private final String username;
     private final String password;
+    private String elasticsearchPort;
     private String elasticsearchUrl;
     private boolean initalised;
 
@@ -62,9 +63,13 @@ public abstract class ElasticsearchClientSupport {
 
     public ElasticsearchClientSupport(String elasticsearchHost, String elasticsearchPort, String username, String password) {
         this(username, password);
+        this.elasticsearchPort = elasticsearchPort;
         this.elasticsearchUrl = Strings.stripSuffix(Strings.stripSuffix(elasticsearchHost, ":"), "/");
         if (Strings.isNotBlank(elasticsearchPort)) {
-            elasticsearchUrl += ":" + elasticsearchPort + "/";
+            elasticsearchUrl += ":" + elasticsearchPort;
+        }
+        if (!elasticsearchUrl.endsWith("/")) {
+            elasticsearchUrl = elasticsearchUrl + "/";
         }
     }
 
@@ -75,7 +80,13 @@ public abstract class ElasticsearchClientSupport {
                 LOG.info("Communicating with Elasticsearch at address: " + elasticsearchUrl);
             } else {
                 //LOG.warn("No kubernetes service found for " + ELASTICSEARCH_SERVICE_NAME);
-                elasticsearchUrl = "http://" + ELASTICSEARCH_SERVICE_NAME + ":9200";
+                elasticsearchUrl = "http://" + ELASTICSEARCH_SERVICE_NAME;
+                if (Strings.isNullOrBlank(elasticsearchPort)) {
+                    elasticsearchUrl += ":" + elasticsearchPort;
+                }
+                if (!elasticsearchUrl.endsWith("/")) {
+                    elasticsearchUrl = elasticsearchUrl + "/";
+                }
             }
         }
         return elasticsearchUrl;

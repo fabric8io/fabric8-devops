@@ -31,8 +31,8 @@ public class ElasticsearchClient extends ElasticsearchClientSupport implements E
     }
 
     @Inject
-    public ElasticsearchClient(@ConfigProperty(name = "GIT_COLLECTOR_ELASTICSEARCH_HOST", defaultValue = "http://elasticsearch") String elasticsearchHost,
-                               @ConfigProperty(name = "ELASTICSEARCH_SERVICE_PORT", defaultValue = "http://elasticsearch") String elasticsearchPort,
+    public ElasticsearchClient(@ConfigProperty(name = "ELASTICSEARCH_HOST", defaultValue = "http://elasticsearch") String elasticsearchHost,
+                               @ConfigProperty(name = "ELASTICSEARCH_SERVICE_PORT") String elasticsearchPort,
                                @ConfigProperty(name = "GIT_COLLECTOR_USERNAME") String username,
                                @ConfigProperty(name = "GIT_COLLECTOR_PASSWORD") String password) {
         super(elasticsearchHost, elasticsearchPort, username, password);

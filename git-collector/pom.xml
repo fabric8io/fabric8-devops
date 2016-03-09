@@ -56,7 +56,7 @@
     <fabric8.label.provider>fabric8</fabric8.label.provider>
 
     <fabric8.serviceAccount>fabric8</fabric8.serviceAccount>
-    <elasticsearch.url>http://elasticsearch.vagrant.f8/</elasticsearch.url>
+    <elasticsearch.host>http://elasticsearch.vagrant.f8</elasticsearch.host>
   </properties>
 
   <dependencyManagement>
@@ -227,8 +227,8 @@
               <value>${basedir}/target/gitCollectorWorkDir</value>
             </systemProperty>
             <systemProperty>
-              <key>GIT_COLLECTOR_ELASTICSEARCH_URL</key>
-              <value>${elasticsearch.url}</value>
+              <key>ELASTICSEARCH_HOST</key>
+              <value>${elasticsearch.host}</value>
             </systemProperty>
           </systemProperties>
         </configuration>
