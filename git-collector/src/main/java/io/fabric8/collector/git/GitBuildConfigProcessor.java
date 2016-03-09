@@ -180,7 +180,7 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
         }
         List<RevCommit> commits = filter.getCommits();
         for (RevCommit entry : commits) {
-            processCommit(name, entry, buildConfig, uri, branch);
+            processCommit(name, git, entry, buildConfig, uri, branch);
         }
         if (commits.size() == 0) {
             // TODO
@@ -188,8 +188,8 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
         }
     }
 
-    protected void processCommit(NamespaceName projectName, RevCommit commit, BuildConfig buildConfig, String uri, String branch) throws JsonProcessingException {
-        CommitDTO dto = new CommitDTO(projectName, commit, uri, branch);
+    protected void processCommit(NamespaceName projectName, Git git, RevCommit commit, BuildConfig buildConfig, String uri, String branch) throws JsonProcessingException {
+        CommitDTO dto = new CommitDTO(git, projectName, commit, uri, branch);
         String sha = dto.getSha();
 
         LOG.info("Processing commit " + dto.getName() + " message: " + dto.getShortMessage());
