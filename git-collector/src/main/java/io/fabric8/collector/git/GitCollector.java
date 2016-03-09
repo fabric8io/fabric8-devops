@@ -41,12 +41,12 @@ public class GitCollector {
      * Note this constructor is only added to help CDI work with the {@link Eager} extension
      */
     public GitCollector() throws Exception {
-        this("gitCollectorWorkDir", 10000, 100, null);
+        this("gitCollectorWorkDir", 60000, 100, null);
     }
 
     @Inject
     public GitCollector(@ConfigProperty(name = "GIT_COLLECTOR_WORK_DIRECTORY", defaultValue = "gitCollectorWorkDir") String cloneFolder,
-                        @ConfigProperty(name = "GIT_COLLECTOR_SLEEP_PERIOD_MILLIS", defaultValue = "10000") long sleepPeriodMillis,
+                        @ConfigProperty(name = "GIT_COLLECTOR_SLEEP_PERIOD_MILLIS", defaultValue = "60000") long sleepPeriodMillis,
                         @ConfigProperty(name = "GIT_COLLECTOR_COMMIT_LIMIT_PER_POLL", defaultValue = "100") int commitLimitPerPoll,
                         ElasticsearchClient elasticsearchClient) throws Exception {
         this.processor = new GitBuildConfigProcessor(elasticsearchClient, new File(cloneFolder), commitLimitPerPoll);

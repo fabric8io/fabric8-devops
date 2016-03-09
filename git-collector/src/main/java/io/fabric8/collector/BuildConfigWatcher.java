@@ -78,5 +78,7 @@ public class BuildConfigWatcher {
             }
         }
 
+        // now we should have the initial set of BuildConfigs to start polling on at least
+        collector.start();
     }
 }

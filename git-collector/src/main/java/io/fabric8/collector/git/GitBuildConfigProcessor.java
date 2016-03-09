@@ -78,7 +78,7 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
                 setCloneAllBranches(cloneAll).setURI(cloneUrl).setDirectory(projectFolder).setRemote(remote);
 
         try {
-            Git git = command.call();
+            command.call();
         } catch (Throwable e) {
             LOG.error("Failed to command remote repo " + cloneUrl + " due: " + e.getMessage(), e);
             throw new RuntimeException("Failed to command remote repo " + cloneUrl + " due: " + e.getMessage());
@@ -136,11 +136,8 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
 
         Repository r = git.getRepository();
 
-        String head = null;
-
         try {
-            head = getHEAD(git);
-            System.out.println("Head is " + head);
+            getHEAD(git);
         } catch (Exception e) {
             LOG.error("Cannot find HEAD of the git repository for " + name + ": " + e, e);
             return;
@@ -150,11 +147,8 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
         CommitListFilter filter = new CommitListFilter();
         finder.setFilter(filter);
 
-        //int limit = commitLimit;
-        int limit = 0;
-        if (limit > 0) {
-            System.out.println("Using commit limit " + limit);
-            finder.setFilter(new CommitLimitFilter(limit).setStop(true));
+        if (commitLimit > 0) {
+            finder.setFilter(new CommitLimitFilter(commitLimit).setStop(true));
         }
 
         // TODO lets load the latest firstObjectId written to Elasticsearch
@@ -192,13 +186,14 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
         CommitDTO dto = new CommitDTO(git, projectName, commit, uri, branch);
         String sha = dto.getSha();
 
-        LOG.info("Processing commit " + dto.getName() + " message: " + dto.getShortMessage());
-
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Processing commit " + dto.getName() + " message: " + dto.getShortMessage());
+        }
         String index = "git";
         String type = "commit";
 
         ResultsDTO results = elasticsearchClient.storeCommit(index, type, sha, dto);
-        System.out.println("Results: " + JsonHelper.toJson(results));
+        LOG.info("Results: " + JsonHelper.toJson(results));
     }
 
     protected ObjectId getBranchObjectId(Git git, String branch) {
@@ -241,15 +236,6 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
         return gitFolder;
     }
 
-    public File cloneRepoIfNotExist(UserDetails userDetails, File projectFolder, String cloneUrl) {
-        File gitFolder = new File(projectFolder, ".git");
-        CredentialsProvider credentialsProvider = userDetails.createCredentialsProvider();
-        if (!Files.isDirectory(gitFolder) || !Files.isDirectory(projectFolder)) {
-            // lets clone the git repository!
-            cloneRepo(projectFolder, cloneUrl, credentialsProvider, userDetails.getSshPrivateKey(), userDetails.getSshPublicKey(), userDetails.getRemote());
-        }
-        return projectFolder;
-    }
 
     protected void doPull(File gitFolder, CredentialsProvider cp, String branch, PersonIdent personIdent, UserDetails userDetails) {
         try {
@@ -275,7 +261,7 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
                 //return;
             }
 
-            LOG.info("Performing a pull in git repository " + projectFolder.getCanonicalPath() + " on remote URL: " + url);
+            LOG.debug("Performing a pull in git repository " + projectFolder.getCanonicalPath() + " on remote URL: " + url);
             PullCommand pull = git.pull();
             GitHelpers.configureCommand(pull, userDetails);
             pull.setRebase(true).call();
