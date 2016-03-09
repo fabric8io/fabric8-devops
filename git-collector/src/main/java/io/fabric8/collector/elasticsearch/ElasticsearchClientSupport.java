@@ -60,9 +60,12 @@ public abstract class ElasticsearchClientSupport {
         this.password = password;
     }
 
-    public ElasticsearchClientSupport(String elasticsearchUrl, String username, String password) {
+    public ElasticsearchClientSupport(String elasticsearchHost, String elasticsearchPort, String username, String password) {
         this(username, password);
-        this.elasticsearchUrl = elasticsearchUrl;
+        this.elasticsearchUrl = Strings.stripSuffix(Strings.stripSuffix(elasticsearchHost, ":"), "/");
+        if (Strings.isNotBlank(elasticsearchPort)) {
+            elasticsearchUrl += ":" + elasticsearchPort + "/";
+        }
     }
 
     public String getElasticsearchUrl() {
