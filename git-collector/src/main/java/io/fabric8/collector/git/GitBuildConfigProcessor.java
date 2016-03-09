@@ -173,7 +173,7 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
         for (RevCommit entry : commits) {
             if (commitLimit > 0) {
                 if (++counter > commitLimit) {
-                    return;
+                    break;
                 }
             }
             processCommit(name, git, entry, buildConfig, uri, branch);
@@ -181,6 +181,9 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
         if (commits.size() == 0) {
             // TODO
             // lets try find older commits from before our last entry!
+        }
+        if (counter > 0) {
+            LOG.info(name + " Processed " + counter + " commit(s)");
         }
     }
 
@@ -195,7 +198,9 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
         String type = "commit";
 
         ResultsDTO results = elasticsearchClient.storeCommit(index, type, sha, dto);
-        LOG.info("Results: " + JsonHelper.toJson(results));
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Results: " + JsonHelper.toJson(results));
+        }
     }
 
     protected ObjectId getBranchObjectId(Git git, String branch) {

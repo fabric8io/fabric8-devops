@@ -83,7 +83,7 @@ public class BuildConfigCollectors {
     }
 
     protected void pollBuildConfig(NamespaceName name, BuildConfig buildConfig) {
-        LOG.info("Processing " + name);
+        LOG.info("" + name + " processing started");
         try {
             buildConfigProcessor.process(name, buildConfig);
         } catch (Exception e) {
