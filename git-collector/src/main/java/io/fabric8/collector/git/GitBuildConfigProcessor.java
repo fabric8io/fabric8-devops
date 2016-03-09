@@ -60,7 +60,7 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
 
     private final ElasticsearchClient elasticsearchClient;
     private final File cloneFolder;
-    private final int commitLimit;
+    private int commitLimit;
 
     public GitBuildConfigProcessor(ElasticsearchClient elasticsearchClient, File cloneFolder, int commitLimit) {
         this.elasticsearchClient = elasticsearchClient;
@@ -147,10 +147,6 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
         CommitListFilter filter = new CommitListFilter();
         finder.setFilter(filter);
 
-        if (commitLimit > 0) {
-            finder.setFilter(new CommitLimitFilter(commitLimit).setStop(true));
-        }
-
         // TODO lets load the latest firstObjectId written to Elasticsearch
         // along with the earliest!
 
@@ -173,7 +169,13 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
             }
         }
         List<RevCommit> commits = filter.getCommits();
+        int counter = 0;
         for (RevCommit entry : commits) {
+            if (commitLimit > 0) {
+                if (++counter > commitLimit) {
+                    return;
+                }
+            }
             processCommit(name, git, entry, buildConfig, uri, branch);
         }
         if (commits.size() == 0) {
