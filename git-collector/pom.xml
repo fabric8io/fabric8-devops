@@ -141,6 +141,46 @@
 
     <!-- testing -->
     <dependency>
+    	<groupId>org.elasticsearch</groupId>
+    	<artifactId>elasticsearch</artifactId>
+    	<version>2.2.0</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- TODO no idea why the lucene dependencies are ancient for elasticsearch - lets override them! -->
+    <dependency>
+    	<groupId>org.apache.lucene</groupId>
+    	<artifactId>lucene-core</artifactId>
+    	<version>5.4.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+    	<groupId>org.apache.lucene</groupId>
+    	<artifactId>lucene-queryparser</artifactId>
+    	<version>5.4.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+    	<groupId>org.apache.lucene</groupId>
+    	<artifactId>lucene-sandbox</artifactId>
+    	<version>5.4.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+    	<groupId>org.apache.lucene</groupId>
+    	<artifactId>lucene-analyzers-common</artifactId>
+    	<version>5.4.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.java.dev.jna</groupId>
+      <artifactId>jna</artifactId>
+      <version>4.1.0</version>
+      <scope>test</scope>
+    </dependency>
+
+
+    <dependency>
       <groupId>org.jboss.arquillian.junit</groupId>
       <artifactId>arquillian-junit-container</artifactId>
       <scope>test</scope>
@@ -163,7 +203,11 @@
       <artifactId>junit</artifactId>
       <scope>test</scope>
     </dependency>
-
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>

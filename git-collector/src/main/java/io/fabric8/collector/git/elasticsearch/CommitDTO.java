@@ -23,8 +23,6 @@ import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.diff.DiffFormatter;
 import org.eclipse.jgit.diff.RawTextComparator;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.patch.FileHeader;
-import org.eclipse.jgit.patch.HunkHeader;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
@@ -44,7 +42,7 @@ public class CommitDTO extends DTOSupport {
     private static final transient Logger LOG = LoggerFactory.getLogger(CommitDTO.class);
 
     private final String namespace;
-    private final String project;
+    private final String app;
     private final String repoUrl;
     private final String branch;
     private final String sha;
@@ -59,7 +57,7 @@ public class CommitDTO extends DTOSupport {
 
     public CommitDTO(Git git, NamespaceName projectNamespaceName, RevCommit commit, String repoUrl, String branch) {
         this.namespace = projectNamespaceName.getNamespace();
-        this.project = projectNamespaceName.getName();
+        this.app = projectNamespaceName.getName();
         this.repoUrl = repoUrl;
         this.branch = branch;
         this.sha = commit.getId().getName();
@@ -173,8 +171,8 @@ public class CommitDTO extends DTOSupport {
         return namespace;
     }
 
-    public String getProject() {
-        return project;
+    public String getApp() {
+        return app;
     }
 
     public String getSha() {

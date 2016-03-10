@@ -15,28 +15,29 @@
  */
 package io.fabric8.collector.elasticsearch;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.jaxrs.cfg.Annotations;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
-import io.fabric8.annotations.Protocol;
-import io.fabric8.annotations.ServiceName;
+import io.fabric8.utils.Function;
 import io.fabric8.utils.Objects;
 import io.fabric8.utils.Strings;
 import io.fabric8.utils.cxf.ExceptionResponseMapper;
 import io.fabric8.utils.cxf.JsonHelper;
+import io.fabric8.utils.cxf.WebClients;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.enterprise.inject.Instance;
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import static io.fabric8.utils.cxf.WebClients.configureUserAndPassword;
-import static io.fabric8.utils.cxf.WebClients.createProviders;
 import static io.fabric8.utils.cxf.WebClients.disableSslChecks;
 
 /**
@@ -92,6 +93,95 @@ public abstract class ElasticsearchClientSupport {
         return elasticsearchUrl;
     }
 
+    public ObjectNode search(String index, String type, SearchDTO search) {
+        return getElasticsearchAPI().search(index, type, search);
+    }
+
+    public ObjectNode getIndex(String index) {
+        return getElasticsearchAPI().getIndex(index);
+    }
+
+
+    public ObjectNode createIndex(String index, ObjectNode metadata) {
+        return getElasticsearchAPI().createIndex(index, metadata);
+    }
+
+    public ObjectNode updateIndex(String index, ObjectNode metadata) {
+        return getElasticsearchAPI().updateIndex(index, metadata);
+    }
+
+    public ObjectNode createIndexMapping(String index, String type, ObjectNode metadata) {
+        return getElasticsearchAPI().createIndexMapping(index, type, metadata);
+    }
+
+    public ObjectNode updateIndexMapping(String index, String type, ObjectNode metadata) {
+        return getElasticsearchAPI().updateIndexMapping(index, type, metadata);
+    }
+
+    public ObjectNode getIndexMapping(String index, String type) {
+        return getElasticsearchAPI().getIndexMapping(index, type);
+    }
+
+    public ObjectNode createIndexIfMissing(final String index, final String type, Function<ObjectNode, Boolean> updater) {
+        ObjectNode metadata = WebClients.handle404ByReturningNull(new Callable<ObjectNode>() {
+            @Override
+            public ObjectNode call() throws Exception {
+                return getIndex(index);
+            }
+        });
+        boolean create = false;
+        JsonNodeFactory nodeFactory = JsonNodeFactory.instance;
+        if (metadata == null) {
+            metadata = nodeFactory.objectNode();
+/*
+            ObjectNode properties = JsonNodes.setObjects(metadata, index, "mappings", type, "properties");
+            if (properties == null) {
+                LOG.warn("Failed to create object path!");
+            }
+*/
+        }
+        if (!updater.apply(metadata)) {
+            return null;
+        }
+        if (create) {
+            return getElasticsearchAPI().createIndex(index, metadata);
+        } else {
+            return null;
+        }
+    }
+
+
+
+    public ObjectNode createIndexMappingIfMissing(final String index, final String type, Function<ObjectNode, Boolean> updater) {
+        ObjectNode metadata = WebClients.handle404ByReturningNull(new Callable<ObjectNode>() {
+            @Override
+            public ObjectNode call() throws Exception {
+                return getIndexMapping(index, type);
+            }
+        });
+        boolean create = false;
+        JsonNodeFactory nodeFactory = JsonNodeFactory.instance;
+        if (metadata == null) {
+            metadata = nodeFactory.objectNode();
+        }
+        ObjectNode properties = JsonNodes.setObjects(metadata, "properties");
+        if (properties == null) {
+            LOG.warn("Failed to create object path!");
+        }
+        if (!updater.apply(metadata)) {
+            return null;
+        }
+        if (create) {
+            return getElasticsearchAPI().updateIndexMapping(index, type, metadata);
+        } else {
+            return null;
+        }
+    }
+
+
+
+    protected abstract ElasticsearchAPI getElasticsearchAPI();
+
     /**
      * Returns a REST client for the given API
      */
@@ -132,4 +222,5 @@ public abstract class ElasticsearchClientSupport {
         providers.add(new ExceptionResponseMapper());
         return providers;
     }
+
 }

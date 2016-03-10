@@ -53,7 +53,7 @@ public class BuildConfigCollectors {
     }
 
     public void start() {
-        executor.submit(task);
+        schedulePollOfAllBuildConfigs();
     }
 
     public void addBuildConfig(BuildConfig buildConfig) {
@@ -83,7 +83,7 @@ public class BuildConfigCollectors {
     }
 
     protected void pollBuildConfig(NamespaceName name, BuildConfig buildConfig) {
-        LOG.info("" + name + " processing started");
+        LOG.debug("" + name + " processing started");
         try {
             buildConfigProcessor.process(name, buildConfig);
         } catch (Exception e) {

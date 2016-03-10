@@ -19,7 +19,7 @@ package io.fabric8.collector.git;
 import io.fabric8.annotations.Eager;
 import io.fabric8.collector.BuildConfigCollectors;
 import io.fabric8.collector.BuildConfigWatcher;
-import io.fabric8.collector.git.elasticsearch.ElasticsearchClient;
+import io.fabric8.collector.git.elasticsearch.GitElasticsearchClient;
 import org.apache.deltaspike.core.api.config.ConfigProperty;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -48,7 +48,7 @@ public class GitCollector {
     public GitCollector(@ConfigProperty(name = "GIT_COLLECTOR_WORK_DIRECTORY", defaultValue = "gitCollectorWorkDir") String cloneFolder,
                         @ConfigProperty(name = "GIT_COLLECTOR_SLEEP_PERIOD_MILLIS", defaultValue = "60000") long sleepPeriodMillis,
                         @ConfigProperty(name = "GIT_COLLECTOR_COMMIT_LIMIT_PER_POLL", defaultValue = "100") int commitLimitPerPoll,
-                        ElasticsearchClient elasticsearchClient) throws Exception {
+                        GitElasticsearchClient elasticsearchClient) throws Exception {
         this.processor = new GitBuildConfigProcessor(elasticsearchClient, new File(cloneFolder), commitLimitPerPoll);
         this.collectors = new BuildConfigCollectors(processor, sleepPeriodMillis);
         this.watcher = new BuildConfigWatcher(collectors);

@@ -15,10 +15,10 @@
  */
 package io.fabric8.collector.git.elasticsearch;
 
+import io.fabric8.collector.elasticsearch.ElasticsearchAPI;
 import io.fabric8.collector.elasticsearch.ResultsDTO;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -28,7 +28,7 @@ import javax.ws.rs.Produces;
  * Represents the REST API for talking to Hubot
  */
 @Produces("application/json")
-public interface ElasticsearchAPI {
+public interface GitElasticsearchAPI extends ElasticsearchAPI {
     @PUT
     @Path("/{index}/{type}/{sha}")
     @Consumes("application/json")
@@ -36,4 +36,5 @@ public interface ElasticsearchAPI {
                            @PathParam("type") String type,
                            @PathParam("sha") String sha,
                            CommitDTO commitDto);
+
 }
