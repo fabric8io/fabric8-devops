@@ -47,6 +47,10 @@
     <fabric8.label.provider>fabric8</fabric8.label.provider>
 
     <fabric8.livenessProbe.port>5601</fabric8.livenessProbe.port>
+    <fabric8.livenessProbe.initialDelaySeconds>60</fabric8.livenessProbe.initialDelaySeconds>
+    <fabric8.readinessProbe.httpGet.port>5601</fabric8.readinessProbe.httpGet.port>
+    <fabric8.readinessProbe.httpGet.path>/</fabric8.readinessProbe.httpGet.path>
+    <fabric8.readinessProbe.initialDelaySeconds>5</fabric8.readinessProbe.initialDelaySeconds>
   </properties>
 
   <build>

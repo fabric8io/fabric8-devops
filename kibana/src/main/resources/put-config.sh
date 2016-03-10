@@ -16,6 +16,7 @@ until $(curl -s -f -o /dev/null --connect-timeout 1 -m 1 --head ${ELASTICSEARCH_
 done
 
 if ! [ $(curl -s -f -o /dev/null ${ELASTICSEARCH_URL}/.kibana) ]; then
+    curl -s -f -XPUT -d@/kibana-template.json "${ELASTICSEARCH_URL}/_template/kibana"
     curl -s -f -XPUT -d@/index-pattern.json "${ELASTICSEARCH_URL}/.kibana/index-pattern/logstash-*"
     curl -s -f -XPUT -d@/fabric8-search.json "${ELASTICSEARCH_URL}/.kibana/search/Fabric8"
     curl -s -f -XPUT -d@/git-commits-search.json "${ELASTICSEARCH_URL}/.kibana/search/git-commits"
