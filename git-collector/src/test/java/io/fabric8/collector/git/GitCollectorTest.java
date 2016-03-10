@@ -19,11 +19,14 @@ package io.fabric8.collector.git;
 import io.fabric8.collector.NamespaceName;
 import io.fabric8.collector.elasticsearch.EmbeddedElasticsearchTestSupport;
 import io.fabric8.collector.git.elasticsearch.GitElasticsearchClient;
+import io.fabric8.utils.Files;
+import org.eclipse.jgit.api.Git;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
 
+import static io.fabric8.collector.git.GitHelpers.gitFromGitFolder;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -38,7 +41,8 @@ public class GitCollectorTest extends EmbeddedElasticsearchTestSupport {
     @Test
     public void testCollectionPopulatesElasticSearch() throws Exception {
         GitElasticsearchClient elasticsearchClient = new GitElasticsearchClient("http://127.0.0.1/", elasticsearchPort, null, null);
-        File cloneFolder = new File(getBaseDir(), "test-git-clone/sample");
+        File cloneFolder = new File(getBaseDir(), "target/test-git-clone/sample");
+        Files.recursiveDelete(cloneFolder);
         cloneFolder.getParentFile().mkdirs();
 
         GitBuildConfigProcessor processor = new GitBuildConfigProcessor(elasticsearchClient, cloneFolder, commitLimit);
@@ -47,10 +51,27 @@ public class GitCollectorTest extends EmbeddedElasticsearchTestSupport {
         assertProcessGitrepoCommits(processor, 2, true);
         assertProcessGitrepoCommits(processor, 1, true);
         assertProcessGitrepoCommits(processor, 0, true);
+
+
+        // now lets make a commit and check we get a new item pushed to ES
+        File projectDir = new File(cloneFolder, namespaceName.getNamespace() + "/" + namespaceName.getName());
+
+        Files.writeToFile(new File(projectDir, "README.md"), "Dummy-commit!".getBytes());
+        Git git = gitFromGitFolder(new File(projectDir, ".git"));
+        git.commit().setMessage("Dummy test commit").call();
+
+        System.out.println("Just done a commit!");
+
+        assertProcessGitrepoCommits(processor, 1, true);
+        assertProcessGitrepoCommits(processor, 0, true);
     }
 
+
+
     protected void assertProcessGitrepoCommits(GitBuildConfigProcessor processor, int expectedCount, boolean sleep) throws IOException, InterruptedException {
-        assertEquals("number of commits", expectedCount, processor.processGitRepo(namespaceName, gitUrl, branch));
+        int actual = processor.processGitRepo(namespaceName, gitUrl, branch);
+        System.out.println("Processed " + actual + " commit(s)");
+        assertEquals("number of commits", expectedCount, actual);
         if (sleep) {
             Thread.sleep(pollPeriod);
         }

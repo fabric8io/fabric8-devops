@@ -16,8 +16,6 @@
  */
 package io.fabric8.collector.elasticsearch;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,7 +24,7 @@ import java.util.Map;
  */
 public class FilterDTO extends DTOSupport {
     private BoolDTO bool;
-    private Map<String,String> matchAll;
+    private Map<String, String> matchAll;
 
     public BoolDTO bool() {
         if (bool == null) {

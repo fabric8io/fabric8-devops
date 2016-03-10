@@ -15,7 +15,6 @@
  */
 package io.fabric8.collector.elasticsearch;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
@@ -74,6 +73,21 @@ public abstract class ElasticsearchClientSupport {
         }
     }
 
+    public static List<Object> createProviders() {
+        ObjectMapper objectMapper = JsonHelper.createObjectMapper();
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        return createProviders(objectMapper);
+    }
+
+    // TODO we can move to the helper function in fabric8-utils when the next release is out!
+    public static List<Object> createProviders(ObjectMapper objectMapper) {
+        ArrayList providers = new ArrayList();
+        Annotations[] annotationsToUse = JacksonJaxbJsonProvider.DEFAULT_ANNOTATIONS;
+        providers.add(new JacksonJaxbJsonProvider(objectMapper, annotationsToUse));
+        providers.add(new ExceptionResponseMapper());
+        return providers;
+    }
+
     public String getElasticsearchUrl() {
         if (!initalised) {
             initalised = true;
@@ -100,7 +114,6 @@ public abstract class ElasticsearchClientSupport {
     public ObjectNode getIndex(String index) {
         return getElasticsearchAPI().getIndex(index);
     }
-
 
     public ObjectNode createIndex(String index, ObjectNode metadata) {
         return getElasticsearchAPI().createIndex(index, metadata);
@@ -150,8 +163,6 @@ public abstract class ElasticsearchClientSupport {
         }
     }
 
-
-
     public ObjectNode createIndexMappingIfMissing(final String index, final String type, Function<ObjectNode, Boolean> updater) {
         ObjectNode metadata = WebClients.handle404ByReturningNull(new Callable<ObjectNode>() {
             @Override
@@ -178,8 +189,6 @@ public abstract class ElasticsearchClientSupport {
         }
     }
 
-
-
     protected abstract ElasticsearchAPI getElasticsearchAPI();
 
     /**
@@ -205,22 +214,6 @@ public abstract class ElasticsearchClientSupport {
         disableSslChecks(webClient);
         configureUserAndPassword(webClient, username, password);
         return JAXRSClientFactory.fromClient(webClient, clientType);
-    }
-
-
-    public static List<Object> createProviders() {
-        ObjectMapper objectMapper = JsonHelper.createObjectMapper();
-        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        return createProviders(objectMapper);
-    }
-
-    // TODO we can move to the helper function in fabric8-utils when the next release is out!
-    public static List<Object> createProviders(ObjectMapper objectMapper) {
-        ArrayList providers = new ArrayList();
-        Annotations[] annotationsToUse = JacksonJaxbJsonProvider.DEFAULT_ANNOTATIONS;
-        providers.add(new JacksonJaxbJsonProvider(objectMapper, annotationsToUse));
-        providers.add(new ExceptionResponseMapper());
-        return providers;
     }
 
 }

@@ -16,7 +16,6 @@
 package io.fabric8.collector.elasticsearch;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +25,7 @@ import java.util.Map;
  */
 public class SearchDTO extends DTOSupport {
     private FilterDTO filter = new FilterDTO();
-    private List<Map<String,SortDTO>> sort;
+    private List<Map<String, SortDTO>> sort;
     private Long size;
 
 
@@ -43,7 +42,7 @@ public class SearchDTO extends DTOSupport {
         if (sort == null) {
             sort = new ArrayList<>();
         }
-        Map<String,SortDTO> map = new LinkedHashMap<>();
+        Map<String, SortDTO> map = new LinkedHashMap<>();
         map.put(name, sortDto);
         sort.add(map);
     }

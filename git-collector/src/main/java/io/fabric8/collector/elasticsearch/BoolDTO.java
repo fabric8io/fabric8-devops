@@ -17,9 +17,7 @@
 package io.fabric8.collector.elasticsearch;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Represents a <code>bool</code> expression in an Elasticsearch query

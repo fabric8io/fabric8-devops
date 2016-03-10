@@ -21,19 +21,19 @@ package io.fabric8.collector.elasticsearch;
 public class SortDTO extends DTOSupport {
     private String order;
 
+    public SortDTO() {
+    }
+
+    public SortDTO(String order) {
+        this.order = order;
+    }
+
     public static SortDTO createAscending() {
         return new SortDTO("asc");
     }
 
     public static SortDTO createDescending() {
         return new SortDTO("desc");
-    }
-
-    public SortDTO() {
-    }
-
-    public SortDTO(String order) {
-        this.order = order;
     }
 
     public String getOrder() {

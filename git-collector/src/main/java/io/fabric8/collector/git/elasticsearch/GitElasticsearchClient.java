@@ -16,17 +16,11 @@
  */
 package io.fabric8.collector.git.elasticsearch;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.fabric8.collector.elasticsearch.ElasticsearchClientSupport;
 import io.fabric8.collector.elasticsearch.ResultsDTO;
-import io.fabric8.collector.elasticsearch.SearchDTO;
 import org.apache.deltaspike.core.api.config.ConfigProperty;
 
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
 
 /**
  */

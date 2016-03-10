@@ -17,7 +17,6 @@
 package io.fabric8.collector.elasticsearch;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import io.fabric8.collector.elasticsearch.SearchDTO;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;

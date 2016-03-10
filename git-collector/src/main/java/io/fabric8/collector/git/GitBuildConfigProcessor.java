@@ -45,8 +45,6 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevSort;
-import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.gitective.core.CommitFinder;
@@ -112,6 +110,23 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
             }
         }
         return git;
+    }
+
+    /**
+     * A helper method to handle REST APIs which throw a 404 by just returning null
+     */
+    public static <T> T handle404ByReturningNull(Callable<T> callable) {
+        try {
+            return callable.call();
+        } catch (WebApplicationException e) {
+            if (e.getResponse().getStatus() == 404) {
+                return null;
+            } else {
+                throw e;
+            }
+        } catch (Exception e) {
+            throw new WebApplicationException(e);
+        }
     }
 
     @Override
@@ -210,13 +225,7 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
      * Lets process the commit history going back in time until we have persisted all the commits into Elasticsearch
      */
     protected int processHistory(NamespaceName name, File gitFolder, BuildConfig buildConfig, String uri, String branch) throws IOException {
-        FileRepositoryBuilder builder = new FileRepositoryBuilder();
-        Repository repository = builder.setGitDir(gitFolder)
-                .readEnvironment() // scan environment GIT_* variables
-                .findGitDir() // scan up the file system tree
-                .build();
-
-        Git git = new Git(repository);
+        Git git = GitHelpers.gitFromGitFolder(gitFolder);
 
         Repository r = git.getRepository();
 
@@ -258,7 +267,7 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
      * using the newest and oldest commit sha in Elasticsearch.
      * Any newer commits we process in reverse order, oldest first - so that we keep a continuous
      * range of commits in Elasticsearch at all times - to avoid repeatedly posting data.
-     *
+     * <p/>
      * When we catch up, there should be no need to post any more data; just a query now and again to see
      * if any newer or older commits are available.
      */
@@ -292,7 +301,7 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
             String sha = commit.getName();
             if (Objects.equals(sha, newestSha)) {
                 foundNewest = true;
-            } else             if (Objects.equals(sha, oldsetSha)) {
+            } else if (Objects.equals(sha, oldsetSha)) {
                 foundOldset = true;
             } else {
                 if (foundNewest) {
@@ -337,30 +346,11 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
         });
     }
 
-
-    /**
-     * A helper method to handle REST APIs which throw a 404 by just returning null
-     */
-    public static <T> T handle404ByReturningNull(Callable<T> callable) {
-        try {
-            return callable.call();
-        } catch (WebApplicationException e) {
-            if (e.getResponse().getStatus() == 404) {
-                return null;
-            } else {
-                throw e;
-            }
-        } catch (Exception e) {
-            throw new WebApplicationException(e);
-        }
-    }
-
     protected void processCommit(NamespaceName projectName, Git git, RevCommit commit, BuildConfig buildConfig, String uri, String branch) throws JsonProcessingException {
         CommitDTO dto = new CommitDTO(git, projectName, commit, uri, branch);
         String sha = dto.getSha();
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug(projectName + " processing commit: " + sha + " time: " + dto.getCommitTime() + " message: " + dto.getShortMessage());
             LOG.debug(projectName + " processing commit: " + sha + " time: " + dto.getCommitTime() + " message: " + dto.getShortMessage());
         }
 
