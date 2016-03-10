@@ -119,6 +119,13 @@
     </dependency>
     <dependency>
       <groupId>io.fabric8.devops.apps</groupId>
+      <artifactId>git-collector</artifactId>
+      <version>${project.version}</version>
+      <classifier>kubernetes</classifier>
+      <type>json</type>
+    </dependency>
+    <dependency>
+      <groupId>io.fabric8.devops.apps</groupId>
       <artifactId>jenkins</artifactId>
       <version>${project.version}</version>
       <classifier>kubernetes</classifier>
