@@ -255,9 +255,7 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
         }
 
         if (counter > 0) {
-            if (LOG.isDebugEnabled()) {
-                LOG.debug(name + " Processed " + counter + " commit(s)");
-            }
+            LOG.info(name + " Processed " + counter + " commit(s)");
         }
         return counter;
     }
