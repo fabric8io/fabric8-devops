@@ -33,6 +33,7 @@
   <description>Collects events from git repositories from projects in OpenShift</description>
 
   <properties>
+    <fabric8.generateJson>false</fabric8.generateJson>
     <elasticsearch.host>http://elasticsearch.vagrant.f8</elasticsearch.host>
   </properties>
 

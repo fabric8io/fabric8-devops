@@ -161,20 +161,20 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
         // now lets update mappings
         results = elasticsearchClient.createIndexMappingIfMissing(esIndex, esType, new Function<ObjectNode, Boolean>() {
             @Override
-            public Boolean apply(ObjectNode metadata) {
-                JsonNode properties = metadata.path("properties");
-                if (!properties.isObject()) {
-                    LOG.warn("Could not find properties for index " + esIndex + " type " + esType + " in json: " + metadata);
-                    return false;
-                } else {
-                    String[] notAnalysed = {"app", "namespace", "branch", "name", "sha"};
-                    for (String propertyName : notAnalysed) {
-                        ObjectNode property = JsonNodes.setObjects(properties, propertyName);
-                        JsonNodes.set(property, "index", "not_analyzed");
-                        if (!property.has("type")) {
-                            JsonNodes.set(property, "type", "string");
-                        }
+            public Boolean apply(ObjectNode properties) {
+                String[] notAnalysed = {"app", "namespace", "branch", "name", "sha", "repo_url"};
+                for (String propertyName : notAnalysed) {
+                    ObjectNode property = JsonNodes.setObjects(properties, propertyName);
+                    JsonNodes.set(property, "index", "not_analyzed");
+                    if (!property.has("type")) {
+                        JsonNodes.set(property, "type", "string");
                     }
+                }
+                String[] timeProperties = {"commit_time"};
+                for (String propertyName : timeProperties) {
+                    ObjectNode property = JsonNodes.setObjects(properties, propertyName);
+                    JsonNodes.set(property, "type", "date");
+                    JsonNodes.set(property, "format", "strict_date_optional_time||epoch_millis");
                 }
                 return true;
             }
@@ -288,7 +288,6 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
         if (LOG.isDebugEnabled()) {
             LOG.debug("" + name + " found newest SHA: " + newestSha + " oldest SHA: " + oldsetSha);
         }
-        LOG.info("" + name + " found newest SHA: " + newestSha + " oldest SHA: " + oldsetSha);
 
         List<RevCommit> newCommits = new ArrayList<>();
         List<RevCommit> oldCommits = new ArrayList<>();
@@ -330,15 +329,20 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
             @Override
             public String call() throws Exception {
                 ObjectNode results = elasticsearchClient.search(esIndex, esType, search);
-                JsonNode idNode = results.path("hits").path("hits").path(0).path("_id");
+                JsonNode hitsArray = results.path("hits").path("hits");
+                JsonNode idNode = hitsArray.path(0).path("_id");
                 String latestSha = null;
                 if (idNode.isTextual()) {
                     latestSha = idNode.textValue();
                 }
+                if (LOG.isDebugEnabled()) {
+                    LOG.debug("Searching for " + JsonHelper.toJson(search) + " => " + latestSha);
+                    LOG.debug("Found hits " + hitsArray.size());
 /*
-                System.out.println("Searching for " + JsonHelper.toJson(search) + " => " + latestSha);
-                System.out.println("JSON: " + JsonHelper.toJson(results));
+                    LOG.debug("JSON: " + JsonHelper.toJson(results));
 */
+
+                }
                 return latestSha;
             }
         });
