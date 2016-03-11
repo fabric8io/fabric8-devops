@@ -29,10 +29,14 @@ public class KibanaModelProcessor {
 
     public void on(PodTemplateSpecBuilder builder) {
         List<EnvVar> currentEnvVars = builder.getSpec().getContainers().iterator().next().getEnv();
+        String imageVersion = System.getProperty("docker.image.version", System.getProperty("project.version"));
+        if (imageVersion == null) {
+            throw new AssertionError("No `docker.image.version` or `project.version` system properties defined so can't default the docker image version!");
+        }
         PodSpec podSpec = new PodSpecBuilder(builder.getSpec())
                 .addNewContainer()
                 .withName("kibana-config")
-                .withImage("fabric8/kibana-config:" + System.getProperty("project.version"))
+                .withImage("fabric8/kibana-config:" + imageVersion)
                 .withEnv(currentEnvVars)
                 .endContainer()
                 .build();

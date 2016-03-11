@@ -33,7 +33,7 @@
   </description>
 
   <properties>
-    <docker.image>${fabric8.dockerUser}kibana4:v4.4.0_01</docker.image>
+    <docker.image>${fabric8.dockerUser}kibana4:v4.4.2</docker.image>
     <docker.port.container.http>5601</docker.port.container.http>
     <docker.port.container.jolokia />
 
@@ -52,7 +52,9 @@
     <fabric8.readinessProbe.httpGet.path>/</fabric8.readinessProbe.httpGet.path>
     <fabric8.readinessProbe.initialDelaySeconds>5</fabric8.readinessProbe.initialDelaySeconds>
 
-    <elasticsearch.host>http://elasticsearch.vagrant.f8</elasticsearch.host>
+    <elasticsearch.url>http://elasticsearch.vagrant.f8/</elasticsearch.url>
+
+    <docker.image.version>${project.version}</docker.image.version>
   </properties>
 
   <build>
@@ -68,7 +70,7 @@
         <configuration>
           <fork>true</fork>
           <compilerArgs>
-            <arg>-J-Dproject.version=${project.version}</arg>
+            <arg>-J-Ddocker.image.version=${docker.image.version}</arg>
           </compilerArgs>
         </configuration>
       </plugin>
@@ -77,10 +79,10 @@
         <artifactId>docker-maven-plugin</artifactId>
         <version>${docker.maven.plugin.version}</version>
         <configuration>
-          <image>${fabric8.dockerUser}kibana-config:${project.version}</image>
+          <image>${fabric8.dockerUser}kibana-config:${docker.image.version}</image>
           <images>
             <image>
-              <name>${fabric8.dockerUser}kibana-config:${project.version}</name>
+              <name>${fabric8.dockerUser}kibana-config:${docker.image.version}</name>
               <build>
                 <from>centos:7</from>
                 <assembly>
@@ -93,7 +95,7 @@
                         <directory>${basedir}/src/main/resources</directory>
                         <outputDirectory>/</outputDirectory>
                         <includes>
-                          <include>*</include>
+                          <include>**/*</include>
                         </includes>
                         <fileMode>0755</fileMode>
                       </fileSet>
@@ -117,8 +119,8 @@
           <includePluginDependencies>false</includePluginDependencies>
           <classpathScope>test</classpathScope>
           <arguments>
-            <argument>${elasticsearch.host}</argument>
-            <argument>${basedir}/target/kibana-objects</argument>
+            <argument>${elasticsearch.url}</argument>
+            <argument>${basedir}/src/main/resources/kibana-objects</argument>
           </arguments>
         </configuration>
       </plugin>
@@ -205,6 +207,19 @@
           </plugin>
         </plugins>
       </build>
+    </profile>
+
+    <!-- generates a unique timestamped image each build for easier development on snapshots -->
+    <profile>
+      <id>docker-snapshot</id>
+      <properties>
+        <docker.image.version>${maven.build.timestamp}</docker.image.version>
+        <maven.build.timestamp.format>yyyy-MM-dd-HH-mm-ss</maven.build.timestamp.format>
+
+        <!-- lets use verbose logging and disable the build cache -->
+        <docker.verbose>true</docker.verbose>
+        <docker.nocache>true</docker.nocache>
+      </properties>
     </profile>
   </profiles>
 </project>
