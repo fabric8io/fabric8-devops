@@ -42,26 +42,27 @@ import static io.fabric8.utils.cxf.WebClients.disableSslChecks;
 /**
  * A base client for communicating with Elasticsearch
  */
-public abstract class ElasticsearchClientSupport {
+public class ElasticsearchClient {
     public static final String ELASTICSEARCH_SERVICE_NAME = "elasticsearch";
 
-    private static final transient Logger LOG = LoggerFactory.getLogger(ElasticsearchClientSupport.class);
-    private final String username;
-    private final String password;
+    private static final transient Logger LOG = LoggerFactory.getLogger(ElasticsearchClient.class);
+    private String username;
+    private String password;
     private String elasticsearchPort;
     private String elasticsearchUrl;
     private boolean initalised;
+    private ElasticsearchAPI api;
 
-    public ElasticsearchClientSupport() {
+    public ElasticsearchClient() {
         this(null, null);
     }
 
-    public ElasticsearchClientSupport(String username, String password) {
+    public ElasticsearchClient(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
-    public ElasticsearchClientSupport(String elasticsearchHost, String elasticsearchPort, String username, String password) {
+    public ElasticsearchClient(String elasticsearchHost, String elasticsearchPort, String username, String password) {
         this(username, password);
         this.elasticsearchPort = elasticsearchPort;
         this.elasticsearchUrl = Strings.stripSuffix(Strings.stripSuffix(elasticsearchHost, ":"), "/");
@@ -71,6 +72,10 @@ public abstract class ElasticsearchClientSupport {
         if (!elasticsearchUrl.endsWith("/")) {
             elasticsearchUrl = elasticsearchUrl + "/";
         }
+    }
+
+    public ElasticsearchClient(String elasticsearchUrl) {
+        this.elasticsearchUrl = elasticsearchUrl;
     }
 
     public static List<Object> createProviders() {
@@ -189,7 +194,12 @@ public abstract class ElasticsearchClientSupport {
         }
     }
 
-    protected abstract ElasticsearchAPI getElasticsearchAPI();
+    protected ElasticsearchAPI getElasticsearchAPI() {
+        if (api == null) {
+            api = getElasticsearchAPIForType(ElasticsearchAPI.class);
+        }
+        return api;
+    }
 
     /**
      * Returns a REST client for the given API

@@ -16,7 +16,7 @@
  */
 package io.fabric8.collector.git.elasticsearch;
 
-import io.fabric8.collector.elasticsearch.ElasticsearchClientSupport;
+import io.fabric8.collector.elasticsearch.ElasticsearchClient;
 import io.fabric8.collector.elasticsearch.ResultsDTO;
 import org.apache.deltaspike.core.api.config.ConfigProperty;
 
@@ -24,7 +24,7 @@ import javax.inject.Inject;
 
 /**
  */
-public class GitElasticsearchClient extends ElasticsearchClientSupport implements GitElasticsearchAPI {
+public class GitElasticsearchClient extends ElasticsearchClient implements GitElasticsearchAPI {
     private GitElasticsearchAPI api;
 
     public GitElasticsearchClient() {
