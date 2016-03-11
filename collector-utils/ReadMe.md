@@ -1,0 +1,1 @@
+This library contains a set of reusable classes and functions for writing Elasticsearch based collectors of information

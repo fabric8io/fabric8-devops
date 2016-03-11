@@ -14,22 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.fabric8.collector.git.elasticsearch;
+package io.fabric8.collector.elasticsearch;
 
-import io.fabric8.collector.elasticsearch.FilterDTO;
-import io.fabric8.collector.elasticsearch.SearchDTO;
+import io.fabric8.utils.cxf.JsonHelper;
+import org.junit.Test;
 
 /**
  */
-public class Searches {
-    public static SearchDTO createMinMaxGitCommitSearch(String namespace, String app, String branch, boolean ascending) {
+public class SearchDTOTest {
+    @Test
+    public void testFirstMatchAllWithMaxValue() throws Exception {
         SearchDTO search = new SearchDTO();
-        FilterDTO filter = search.getFilter();
-        filter.bool().mustTerm("namespace", namespace);
-        filter.bool().mustTerm("app", app);
-        filter.bool().mustTerm("branch", branch);
+        search.matchAll();
         search.setSize(1L);
-        search.addSort("commit_time", ascending);
-        return search;
+        search.addSort("run_id", false);
+
+        System.out.println("Have created JSON: " + JsonHelper.toJson(search));
     }
+
 }

@@ -14,8 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.fabric8.collector.elasticsearch;
+package io.fabric8.collector.git;
 
+import io.fabric8.collector.elasticsearch.SearchDTO;
 import io.fabric8.collector.git.elasticsearch.Searches;
 import io.fabric8.utils.cxf.JsonHelper;
 import org.junit.Test;
@@ -25,22 +26,14 @@ import static org.junit.Assert.assertEquals;
 /**
  */
 public class SearchDTOTest {
-    @Test
-    public void testFirstMatchAllWithMaxValue() throws Exception {
-        SearchDTO search = new SearchDTO();
-        search.matchAll();
-        search.setSize(1L);
-        search.addSort("run_id", false);
-
-        System.out.println("Have created JSON: " + JsonHelper.toJson(search));
-    }
 
     @Test
     public void testFirstMatchMaxValue() throws Exception {
         String namespace = "default";
         String app = "kubeflix";
+        String branch = "master";
         boolean ascending = false;
-        SearchDTO search = Searches.createMinMaxGitCommitSearch(namespace, app, ascending);
+        SearchDTO search = Searches.createMinMaxGitCommitSearch(namespace, app, branch, ascending);
 
         String json = JsonHelper.toJson(search);
         System.out.println("Have created JSON: " + json);
@@ -55,6 +48,10 @@ public class SearchDTOTest {
                 "      }, {\n" +
                 "        \"term\" : {\n" +
                 "          \"app\" : \"kubeflix\"\n" +
+                "        }\n" +
+                "      }, {\n" +
+                "        \"term\" : {\n" +
+                "          \"branch\" : \"master\"\n" +
                 "        }\n" +
                 "      } ]\n" +
                 "    }\n" +

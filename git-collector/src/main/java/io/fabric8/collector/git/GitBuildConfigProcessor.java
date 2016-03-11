@@ -242,7 +242,7 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
 
         finder.find();
         List<RevCommit> commits = filter.getCommits();
-        commits = filterAndSortCommits(name, commits);
+        commits = filterAndSortCommits(name, branch, commits);
 
         int counter = 0;
         for (RevCommit commit : commits) {
@@ -269,26 +269,26 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
      * When we catch up, there should be no need to post any more data; just a query now and again to see
      * if any newer or older commits are available.
      */
-    protected List<RevCommit> filterAndSortCommits(NamespaceName name, List<RevCommit> commits) {
+    protected List<RevCommit> filterAndSortCommits(NamespaceName name, String branch, List<RevCommit> commits) {
         String namespace = name.getNamespace();
         String app = name.getName();
 
         if (commits.size() == 0) {
             return commits;
         }
-        String newestSha = findFirstId(createMinMaxGitCommitSearch(namespace, app, false));
+        String newestSha = findFirstId(createMinMaxGitCommitSearch(namespace, app, branch, false));
         String oldsetSha = null;
         if (newestSha != null) {
-            oldsetSha = findFirstId(createMinMaxGitCommitSearch(namespace, app, true));
+            oldsetSha = findFirstId(createMinMaxGitCommitSearch(namespace, app, branch, true));
         }
 
         if (oldsetSha == null || newestSha == null) {
             return commits;
         }
         if (LOG.isDebugEnabled()) {
-            LOG.debug("" + name + " found newest SHA: " + newestSha);
-            LOG.debug("" + name + " found oldset SHA: " + oldsetSha);
+            LOG.debug("" + name + " found newest SHA: " + newestSha + " oldest SHA: " + oldsetSha);
         }
+        LOG.info("" + name + " found newest SHA: " + newestSha + " oldest SHA: " + oldsetSha);
 
         List<RevCommit> newCommits = new ArrayList<>();
         List<RevCommit> oldCommits = new ArrayList<>();
