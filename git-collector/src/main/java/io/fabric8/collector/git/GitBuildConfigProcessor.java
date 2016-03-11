@@ -17,18 +17,24 @@
 package io.fabric8.collector.git;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.fabric8.collector.BuildConfigProcessor;
 import io.fabric8.collector.NamespaceName;
+import io.fabric8.collector.elasticsearch.JsonNodes;
 import io.fabric8.collector.elasticsearch.ResultsDTO;
+import io.fabric8.collector.elasticsearch.SearchDTO;
 import io.fabric8.collector.git.elasticsearch.CommitDTO;
-import io.fabric8.collector.git.elasticsearch.ElasticsearchClient;
+import io.fabric8.collector.git.elasticsearch.GitElasticsearchClient;
 import io.fabric8.openshift.api.model.BuildConfig;
 import io.fabric8.openshift.api.model.BuildConfigSpec;
 import io.fabric8.openshift.api.model.BuildSource;
 import io.fabric8.openshift.api.model.GitBuildSource;
 import io.fabric8.utils.Files;
+import io.fabric8.utils.Function;
 import io.fabric8.utils.Strings;
 import io.fabric8.utils.cxf.JsonHelper;
+import io.fabric8.utils.cxf.WebClients;
 import org.eclipse.jgit.api.CloneCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.PullCommand;
@@ -43,26 +49,35 @@ import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.gitective.core.CommitFinder;
 import org.gitective.core.CommitUtils;
-import org.gitective.core.filter.commit.CommitLimitFilter;
 import org.gitective.core.filter.commit.CommitListFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ws.rs.WebApplicationException;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.Callable;
+
+import static io.fabric8.collector.git.elasticsearch.Searches.createMinMaxGitCommitSearch;
 
 /**
  */
 public class GitBuildConfigProcessor implements BuildConfigProcessor {
     private static final transient Logger LOG = LoggerFactory.getLogger(GitBuildConfigProcessor.class);
 
-    private final ElasticsearchClient elasticsearchClient;
+    private final GitElasticsearchClient elasticsearchClient;
     private final File cloneFolder;
-    private final int commitLimit;
+    private int commitLimit;
+    private String esIndex = "git";
+    private String esType = "commit";
+    private boolean initialised;
 
-    public GitBuildConfigProcessor(ElasticsearchClient elasticsearchClient, File cloneFolder, int commitLimit) {
+
+    public GitBuildConfigProcessor(GitElasticsearchClient elasticsearchClient, File cloneFolder, int commitLimit) {
         this.elasticsearchClient = elasticsearchClient;
         this.cloneFolder = cloneFolder;
         this.commitLimit = commitLimit;
@@ -78,7 +93,7 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
                 setCloneAllBranches(cloneAll).setURI(cloneUrl).setDirectory(projectFolder).setRemote(remote);
 
         try {
-            Git git = command.call();
+            command.call();
         } catch (Throwable e) {
             LOG.error("Failed to command remote repo " + cloneUrl + " due: " + e.getMessage(), e);
             throw new RuntimeException("Failed to command remote repo " + cloneUrl + " due: " + e.getMessage());
@@ -97,6 +112,23 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
         return git;
     }
 
+    /**
+     * A helper method to handle REST APIs which throw a 404 by just returning null
+     */
+    public static <T> T handle404ByReturningNull(Callable<T> callable) {
+        try {
+            return callable.call();
+        } catch (WebApplicationException e) {
+            if (e.getResponse().getStatus() == 404) {
+                return null;
+            } else {
+                throw e;
+            }
+        } catch (Exception e) {
+            throw new WebApplicationException(e);
+        }
+    }
+
     @Override
     public void process(NamespaceName name, BuildConfig buildConfig) throws Exception {
         GitBuildSource git = gitBuildSource(buildConfig);
@@ -108,7 +140,74 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
         }
     }
 
-    protected void processGitRepo(NamespaceName name, BuildConfig buildConfig, GitBuildSource git, String uri) throws IOException {
+    protected void checkInitialised() throws JsonProcessingException {
+        if (!initialised) {
+            configureMappings();
+            initialised = true;
+        }
+    }
+
+    protected void configureMappings() throws JsonProcessingException {
+        ObjectNode results = elasticsearchClient.createIndexIfMissing(esIndex, esType, new Function<ObjectNode, Boolean>() {
+            @Override
+            public Boolean apply(ObjectNode index) {
+                return true;
+            }
+        });
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Updated index results: " + JsonHelper.toJson(results));
+        }
+
+        // now lets update mappings
+        results = elasticsearchClient.createIndexMappingIfMissing(esIndex, esType, new Function<ObjectNode, Boolean>() {
+            @Override
+            public Boolean apply(ObjectNode metadata) {
+                JsonNode properties = metadata.path("properties");
+                if (!properties.isObject()) {
+                    LOG.warn("Could not find properties for index " + esIndex + " type " + esType + " in json: " + metadata);
+                    return false;
+                } else {
+                    String[] notAnalysed = {"app", "namespace", "branch", "name", "sha"};
+                    for (String propertyName : notAnalysed) {
+                        ObjectNode property = JsonNodes.setObjects(properties, propertyName);
+                        JsonNodes.set(property, "index", "not_analyzed");
+                        if (!property.has("type")) {
+                            JsonNodes.set(property, "type", "string");
+                        }
+                    }
+                }
+                return true;
+            }
+        });
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Updated mapping results: " + JsonHelper.toJson(results));
+        }
+    }
+
+    /**
+     * This method is public for easier unit testing
+     */
+    public int processGitRepo(NamespaceName name, String gitUrl, String gitRef) throws IOException {
+        BuildConfig buildConfig = new BuildConfig();
+        BuildConfigSpec buildConfigSpec = new BuildConfigSpec();
+        buildConfig.setSpec(buildConfigSpec);
+        BuildSource buildSource = new BuildSource();
+        buildSource.setType("Git");
+        GitBuildSource gitSource = new GitBuildSource();
+        gitSource.setUri(gitUrl);
+        if (Strings.isNullOrBlank(gitRef)) {
+            gitRef = "master";
+        }
+        gitSource.setRef(gitRef);
+        buildSource.setGit(gitSource);
+        buildConfigSpec.setSource(buildSource);
+        return processGitRepo(name, buildConfig, gitSource, gitUrl);
+    }
+
+    protected int processGitRepo(NamespaceName name, BuildConfig buildConfig, GitBuildSource git, String uri) throws IOException {
+        // we may need to modify the schema now!
+        checkInitialised();
+
         File namespaceFolder = new File(cloneFolder, name.getNamespace());
         File nameFolder = new File(namespaceFolder, name.getName());
         nameFolder.mkdirs();
@@ -119,86 +218,144 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
         }
         File gitFolder = cloneOrPullRepository(userDetails, nameFolder, uri, branch);
 
-        processHistory(name, gitFolder, buildConfig, uri, branch);
+        return processHistory(name, gitFolder, buildConfig, uri, branch);
     }
 
     /**
      * Lets process the commit history going back in time until we have persisted all the commits into Elasticsearch
      */
-    protected void processHistory(NamespaceName name, File gitFolder, BuildConfig buildConfig, String uri, String branch) throws IOException {
-        FileRepositoryBuilder builder = new FileRepositoryBuilder();
-        Repository repository = builder.setGitDir(gitFolder)
-                .readEnvironment() // scan environment GIT_* variables
-                .findGitDir() // scan up the file system tree
-                .build();
-
-        Git git = new Git(repository);
+    protected int processHistory(NamespaceName name, File gitFolder, BuildConfig buildConfig, String uri, String branch) throws IOException {
+        Git git = GitHelpers.gitFromGitFolder(gitFolder);
 
         Repository r = git.getRepository();
 
-        String head = null;
-
         try {
-            head = getHEAD(git);
-            System.out.println("Head is " + head);
+            getHEAD(git);
         } catch (Exception e) {
             LOG.error("Cannot find HEAD of the git repository for " + name + ": " + e, e);
-            return;
+            return 0;
         }
 
         CommitFinder finder = new CommitFinder(r);
         CommitListFilter filter = new CommitListFilter();
         finder.setFilter(filter);
 
-        //int limit = commitLimit;
-        int limit = 0;
-        if (limit > 0) {
-            System.out.println("Using commit limit " + limit);
-            finder.setFilter(new CommitLimitFilter(limit).setStop(true));
-        }
+        finder.find();
+        List<RevCommit> commits = filter.getCommits();
+        commits = filterAndSortCommits(name, branch, commits);
 
-        // TODO lets load the latest firstObjectId written to Elasticsearch
-        // along with the earliest!
-
-        // load the last found object id?
-        String firstObjectId = null;
-        if (Strings.isNotBlank(firstObjectId)) {
-            finder.findFrom(firstObjectId);
-        } else {
-            boolean findFromBranch = false;
-            if (findFromBranch) {
-                ObjectId branchObjectId = getBranchObjectId(git, branch);
-                System.out.println("Finding from branchObjectId: " + branchObjectId + " for branch: " + branch);
-                if (branchObjectId != null) {
-                    finder = finder.findUntil(branchObjectId);
-                } else {
-                    finder = finder.findInBranches();
+        int counter = 0;
+        for (RevCommit commit : commits) {
+            processCommit(name, git, commit, buildConfig, uri, branch);
+            if (commitLimit > 0) {
+                if (++counter >= commitLimit) {
+                    break;
                 }
-            } else {
-                finder.find();
             }
         }
-        List<RevCommit> commits = filter.getCommits();
-        for (RevCommit entry : commits) {
-            processCommit(name, entry, buildConfig, uri, branch);
+
+        if (counter > 0) {
+            LOG.info(name + " Processed " + counter + " commit(s)");
         }
-        if (commits.size() == 0) {
-            // TODO
-            // lets try find older commits from before our last entry!
-        }
+        return counter;
     }
 
-    protected void processCommit(NamespaceName projectName, RevCommit commit, BuildConfig buildConfig, String uri, String branch) throws JsonProcessingException {
-        CommitDTO dto = new CommitDTO(projectName, commit, uri, branch);
+    /**
+     * Lets filter and sort the commits to filter out any commits we have already processed
+     * using the newest and oldest commit sha in Elasticsearch.
+     * Any newer commits we process in reverse order, oldest first - so that we keep a continuous
+     * range of commits in Elasticsearch at all times - to avoid repeatedly posting data.
+     * <p/>
+     * When we catch up, there should be no need to post any more data; just a query now and again to see
+     * if any newer or older commits are available.
+     */
+    protected List<RevCommit> filterAndSortCommits(NamespaceName name, String branch, List<RevCommit> commits) {
+        String namespace = name.getNamespace();
+        String app = name.getName();
+
+        if (commits.size() == 0) {
+            return commits;
+        }
+        String newestSha = findFirstId(createMinMaxGitCommitSearch(namespace, app, branch, false));
+        String oldsetSha = null;
+        if (newestSha != null) {
+            oldsetSha = findFirstId(createMinMaxGitCommitSearch(namespace, app, branch, true));
+        }
+
+        if (oldsetSha == null || newestSha == null) {
+            return commits;
+        }
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("" + name + " found newest SHA: " + newestSha + " oldest SHA: " + oldsetSha);
+        }
+        LOG.info("" + name + " found newest SHA: " + newestSha + " oldest SHA: " + oldsetSha);
+
+        List<RevCommit> newCommits = new ArrayList<>();
+        List<RevCommit> oldCommits = new ArrayList<>();
+
+        boolean foundNewest = false;
+        boolean foundOldset = false;
+        for (RevCommit commit : commits) {
+            String sha = commit.getName();
+            if (Objects.equals(sha, newestSha)) {
+                foundNewest = true;
+            } else if (Objects.equals(sha, oldsetSha)) {
+                foundOldset = true;
+            } else {
+                if (foundNewest) {
+                    if (foundOldset) {
+                        oldCommits.add(commit);
+                    } else {
+                        // lets ignore this old commit which is >= newest and <= oldest
+                    }
+                } else {
+                    newCommits.add(commit);
+                }
+            }
+        }
+
+        // lets reverse the order of any new commits so we processes the oldest first
+        // so we keep a continnuous block of commits between oldest <-> newest
+        Collections.reverse(newCommits);
+        newCommits.addAll(oldCommits);
+
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("" + name + " found " + newCommits.size() + " commit(s)");
+        }
+        return newCommits;
+    }
+
+    protected String findFirstId(final SearchDTO search) {
+        return WebClients.handle404ByReturningNull(new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+                ObjectNode results = elasticsearchClient.search(esIndex, esType, search);
+                JsonNode idNode = results.path("hits").path("hits").path(0).path("_id");
+                String latestSha = null;
+                if (idNode.isTextual()) {
+                    latestSha = idNode.textValue();
+                }
+/*
+                System.out.println("Searching for " + JsonHelper.toJson(search) + " => " + latestSha);
+                System.out.println("JSON: " + JsonHelper.toJson(results));
+*/
+                return latestSha;
+            }
+        });
+    }
+
+    protected void processCommit(NamespaceName projectName, Git git, RevCommit commit, BuildConfig buildConfig, String uri, String branch) throws JsonProcessingException {
+        CommitDTO dto = new CommitDTO(git, projectName, commit, uri, branch);
         String sha = dto.getSha();
 
-        LOG.info("Processing commit " + dto.getName() + " message: " + dto.getShortMessage());
+        if (LOG.isDebugEnabled()) {
+            LOG.debug(projectName + " processing commit: " + sha + " time: " + dto.getCommitTime() + " message: " + dto.getShortMessage());
+        }
 
-        String index = "git";
-        String type = "commit";
-
-        ResultsDTO results = elasticsearchClient.storeCommit(index, type, sha, dto);
-        System.out.println("Results: " + JsonHelper.toJson(results));
+        ResultsDTO results = elasticsearchClient.storeCommit(esIndex, esType, sha, dto);
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Results: " + JsonHelper.toJson(results));
+        }
     }
 
     protected ObjectId getBranchObjectId(Git git, String branch) {
@@ -241,15 +398,6 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
         return gitFolder;
     }
 
-    public File cloneRepoIfNotExist(UserDetails userDetails, File projectFolder, String cloneUrl) {
-        File gitFolder = new File(projectFolder, ".git");
-        CredentialsProvider credentialsProvider = userDetails.createCredentialsProvider();
-        if (!Files.isDirectory(gitFolder) || !Files.isDirectory(projectFolder)) {
-            // lets clone the git repository!
-            cloneRepo(projectFolder, cloneUrl, credentialsProvider, userDetails.getSshPrivateKey(), userDetails.getSshPublicKey(), userDetails.getRemote());
-        }
-        return projectFolder;
-    }
 
     protected void doPull(File gitFolder, CredentialsProvider cp, String branch, PersonIdent personIdent, UserDetails userDetails) {
         try {
@@ -275,7 +423,7 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
                 //return;
             }
 
-            LOG.info("Performing a pull in git repository " + projectFolder.getCanonicalPath() + " on remote URL: " + url);
+            LOG.debug("Performing a pull in git repository " + projectFolder.getCanonicalPath() + " on remote URL: " + url);
             PullCommand pull = git.pull();
             GitHelpers.configureCommand(pull, userDetails);
             pull.setRebase(true).call();

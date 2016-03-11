@@ -51,6 +51,8 @@
     <fabric8.readinessProbe.httpGet.port>5601</fabric8.readinessProbe.httpGet.port>
     <fabric8.readinessProbe.httpGet.path>/</fabric8.readinessProbe.httpGet.path>
     <fabric8.readinessProbe.initialDelaySeconds>5</fabric8.readinessProbe.initialDelaySeconds>
+
+    <elasticsearch.host>http://elasticsearch.vagrant.f8</elasticsearch.host>
   </properties>
 
   <build>
@@ -106,16 +108,30 @@
           </images>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.2.1</version>
+        <configuration>
+          <mainClass>io.fabric8.apps.kibana.ExportKibanaObjects</mainClass>
+          <includePluginDependencies>false</includePluginDependencies>
+          <classpathScope>test</classpathScope>
+          <arguments>
+            <argument>${elasticsearch.host}</argument>
+            <argument>${basedir}/target/kibana-objects</argument>
+          </arguments>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
   <dependencies>
-
     <dependency>
       <groupId>io.fabric8</groupId>
       <artifactId>kubernetes-generator</artifactId>
     </dependency>
 
+    <!-- testing -->
     <dependency>
       <groupId>org.jboss.arquillian.junit</groupId>
       <artifactId>arquillian-junit-container</artifactId>
@@ -137,6 +153,13 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>io.fabric8.devops.apps</groupId>
+      <artifactId>collector-utils</artifactId>
+      <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

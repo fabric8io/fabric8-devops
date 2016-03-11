@@ -16,7 +16,7 @@
  */
 package io.fabric8.collector.git.elasticsearch;
 
-import io.fabric8.collector.elasticsearch.ElasticsearchClientSupport;
+import io.fabric8.collector.elasticsearch.ElasticsearchClient;
 import io.fabric8.collector.elasticsearch.ResultsDTO;
 import org.apache.deltaspike.core.api.config.ConfigProperty;
 
@@ -24,17 +24,18 @@ import javax.inject.Inject;
 
 /**
  */
-public class ElasticsearchClient extends ElasticsearchClientSupport implements ElasticsearchAPI {
-    private ElasticsearchAPI api;
+public class GitElasticsearchClient extends ElasticsearchClient implements GitElasticsearchAPI {
+    private GitElasticsearchAPI api;
 
-    public ElasticsearchClient() {
+    public GitElasticsearchClient() {
     }
 
     @Inject
-    public ElasticsearchClient(@ConfigProperty(name = "GIT_COLLECTOR_ELASTICSEARCH_URL", defaultValue = "http://elasticsearch/") String elasticsearchHost,
-                               @ConfigProperty(name = "GIT_COLLECTOR_USERNAME") String username,
-                               @ConfigProperty(name = "GIT_COLLECTOR_PASSWORD") String password) {
-        super(elasticsearchHost, username, password);
+    public GitElasticsearchClient(@ConfigProperty(name = "ELASTICSEARCH_HOST", defaultValue = "http://elasticsearch") String elasticsearchHost,
+                                  @ConfigProperty(name = "ELASTICSEARCH_SERVICE_PORT") String elasticsearchPort,
+                                  @ConfigProperty(name = "GIT_COLLECTOR_USERNAME") String username,
+                                  @ConfigProperty(name = "GIT_COLLECTOR_PASSWORD") String password) {
+        super(elasticsearchHost, elasticsearchPort, username, password);
     }
 
     @Override
@@ -42,9 +43,10 @@ public class ElasticsearchClient extends ElasticsearchClientSupport implements E
         return getElasticsearchAPI().storeCommit(namespace, name, sha, commitDto);
     }
 
-    protected ElasticsearchAPI getElasticsearchAPI() {
+    @Override
+    protected GitElasticsearchAPI getElasticsearchAPI() {
         if (api == null) {
-            api = getElasticsearchAPIForType(ElasticsearchAPI.class);
+            api = getElasticsearchAPIForType(GitElasticsearchAPI.class);
         }
         return api;
     }

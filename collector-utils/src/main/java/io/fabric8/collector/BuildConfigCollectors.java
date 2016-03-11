@@ -42,7 +42,7 @@ public class BuildConfigCollectors {
     private final Runnable task = new Runnable() {
         @Override
         public void run() {
-            pollLoop();
+            pollAllBuildConfigs();
         }
     };
 
@@ -50,39 +50,57 @@ public class BuildConfigCollectors {
         this.buildConfigProcessor = buildConfigProcessor;
         this.sleepPeriodMillis = sleepPeriodMillis;
         Objects.notNull(buildConfigProcessor, "buildConfigProcessor");
-        schedulePoll();
+    }
+
+    public void start() {
+        schedulePollOfAllBuildConfigs();
     }
 
     public void addBuildConfig(BuildConfig buildConfig) {
-        map.put(NamespaceName.create(buildConfig), buildConfig);
+        NamespaceName namespaceName = NamespaceName.create(buildConfig);
+        map.put(namespaceName, buildConfig);
+        scheduleBuildConfigPoll(namespaceName, buildConfig);
     }
 
     public void updateBuildConfig(BuildConfig buildConfig) {
-        map.put(NamespaceName.create(buildConfig), buildConfig);
+        NamespaceName namespaceName = NamespaceName.create(buildConfig);
+        map.put(namespaceName, buildConfig);
+        scheduleBuildConfigPoll(namespaceName, buildConfig);
     }
 
     public void removeBuildConfig(BuildConfig buildConfig) {
         map.remove(NamespaceName.create(buildConfig));
     }
 
-    protected void pollLoop() {
+    protected void pollAllBuildConfigs() {
         Set<Map.Entry<NamespaceName, BuildConfig>> entries = map.entrySet();
         for (Map.Entry<NamespaceName, BuildConfig> entry : entries) {
             NamespaceName name = entry.getKey();
             BuildConfig buildConfig = entry.getValue();
-
-            LOG.info("Processing " + name + " with " + buildConfigProcessor);
-
-            try {
-                buildConfigProcessor.process(name, buildConfig);
-            } catch (Exception e) {
-                LOG.error("Failed to process BuildConfig " + name + " due to: " + e, e);
-            }
+            pollBuildConfig(name, buildConfig);
         }
-        schedulePoll();
+        schedulePollOfAllBuildConfigs();
     }
 
-    protected ScheduledFuture<?> schedulePoll() {
+    protected void pollBuildConfig(NamespaceName name, BuildConfig buildConfig) {
+        LOG.debug("" + name + " processing started");
+        try {
+            buildConfigProcessor.process(name, buildConfig);
+        } catch (Exception e) {
+            LOG.error("Failed to process BuildConfig " + name + " due to: " + e, e);
+        }
+    }
+
+    protected void scheduleBuildConfigPoll(final NamespaceName namespaceName, final BuildConfig buildConfig) {
+        executor.submit(new Runnable() {
+            @Override
+            public void run() {
+                pollBuildConfig(namespaceName, buildConfig);
+            }
+        });
+    }
+
+    protected ScheduledFuture<?> schedulePollOfAllBuildConfigs() {
         return executor.schedule(task, sleepPeriodMillis, TimeUnit.MILLISECONDS);
     }
 }

@@ -33,18 +33,6 @@
   <description>Collects events from git repositories from projects in OpenShift</description>
 
   <properties>
-    <gitective-version>0.9.11</gitective-version>
-    <jcraft-jzlib-version>1.1.3</jcraft-jzlib-version>
-
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <version.compiler.plugin>2.3.1</version.compiler.plugin>
-    <maven.compiler.target>1.7</maven.compiler.target>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <version.maven-surefire-plugin>2.15</version.maven-surefire-plugin>
-    <version.maven-bundle-plugin>2.3.7</version.maven-bundle-plugin>
-    <maven-resources-plugin.version>2.6</maven-resources-plugin.version>
-    <skipTests>false</skipTests>
-
     <docker.from>fabric8/java</docker.from>
 
     <docker.image>${fabric8.dockerUser}${project.artifactId}:${project.version}</docker.image>
@@ -56,7 +44,7 @@
     <fabric8.label.provider>fabric8</fabric8.label.provider>
 
     <fabric8.serviceAccount>fabric8</fabric8.serviceAccount>
-    <elasticsearch.url>http://elasticsearch.vagrant.f8/</elasticsearch.url>
+    <elasticsearch.host>http://elasticsearch.vagrant.f8</elasticsearch.host>
   </properties>
 
   <dependencyManagement>
@@ -74,19 +62,13 @@
 
   <dependencies>
     <dependency>
-      <groupId>io.fabric8</groupId>
-      <artifactId>kubernetes-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8</groupId>
-      <artifactId>fabric8-cdi</artifactId>
+      <groupId>io.fabric8.devops.apps</groupId>
+      <artifactId>collector-utils</artifactId>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jgit</groupId>
       <artifactId>org.eclipse.jgit</artifactId>
-<!--
-      <version>${jgit.version}</version>
--->
     </dependency>
     <dependency>
       <groupId>io.fabric8</groupId>
@@ -106,30 +88,6 @@
     </dependency>
 
     <dependency>
-      <groupId>io.fabric8</groupId>
-      <artifactId>cxf-utils</artifactId>
-    </dependency>
-
-<!--
-    <dependency>
-      <groupId>com.fasterxml.jackson.module</groupId>
-      <artifactId>jackson-module-jaxb-annotations</artifactId>
-    </dependency>
--->
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-databind</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.jaxrs</groupId>
-      <artifactId>jackson-jaxrs-json-provider</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.cxf</groupId>
-      <artifactId>cxf-rt-rs-client</artifactId>
-    </dependency>
-
-    <dependency>
       <groupId>org.jboss.weld.se</groupId>
       <artifactId>weld-se</artifactId>
     </dependency>
@@ -140,6 +98,46 @@
 
 
     <!-- testing -->
+    <dependency>
+    	<groupId>org.elasticsearch</groupId>
+    	<artifactId>elasticsearch</artifactId>
+    	<version>2.2.0</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- TODO no idea why the lucene dependencies are ancient for elasticsearch - lets override them! -->
+    <dependency>
+    	<groupId>org.apache.lucene</groupId>
+    	<artifactId>lucene-core</artifactId>
+    	<version>5.4.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+    	<groupId>org.apache.lucene</groupId>
+    	<artifactId>lucene-queryparser</artifactId>
+    	<version>5.4.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+    	<groupId>org.apache.lucene</groupId>
+    	<artifactId>lucene-sandbox</artifactId>
+    	<version>5.4.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+    	<groupId>org.apache.lucene</groupId>
+    	<artifactId>lucene-analyzers-common</artifactId>
+    	<version>5.4.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.java.dev.jna</groupId>
+      <artifactId>jna</artifactId>
+      <version>4.1.0</version>
+      <scope>test</scope>
+    </dependency>
+
+
     <dependency>
       <groupId>org.jboss.arquillian.junit</groupId>
       <artifactId>arquillian-junit-container</artifactId>
@@ -163,7 +161,6 @@
       <artifactId>junit</artifactId>
       <scope>test</scope>
     </dependency>
-
   </dependencies>
 
   <build>
@@ -227,8 +224,8 @@
               <value>${basedir}/target/gitCollectorWorkDir</value>
             </systemProperty>
             <systemProperty>
-              <key>GIT_COLLECTOR_ELASTICSEARCH_URL</key>
-              <value>${elasticsearch.url}</value>
+              <key>ELASTICSEARCH_HOST</key>
+              <value>${elasticsearch.host}</value>
             </systemProperty>
           </systemProperties>
         </configuration>

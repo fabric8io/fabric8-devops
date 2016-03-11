@@ -24,4 +24,5 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 @JsonNaming(value = PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public abstract class DTOSupport {
+
 }
