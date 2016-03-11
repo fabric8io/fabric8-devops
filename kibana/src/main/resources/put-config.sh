@@ -17,12 +17,30 @@ done
 
 if ! [ $(curl -s -f -o /dev/null ${ELASTICSEARCH_URL}/.kibana) ]; then
     curl -s -f -XPUT -d@/kibana-template.json "${ELASTICSEARCH_URL}/_template/kibana"
-    curl -s -f -XPUT -d@/index-pattern.json "${ELASTICSEARCH_URL}/.kibana/index-pattern/logstash-*"
-    curl -s -f -XPUT -d@/fabric8-search.json "${ELASTICSEARCH_URL}/.kibana/search/Fabric8"
-    curl -s -f -XPUT -d@/git-commits-search.json "${ELASTICSEARCH_URL}/.kibana/search/git-commits"
-#    curl -s -f -XPUT -d@/git-commits-per-project-visualisation.json "${ELASTICSEARCH_URL}/.kibana/visualization/git-commits-per-project"
-    curl -s -f -XPUT -d@/fabric8-dashboard.json "${ELASTICSEARCH_URL}/.kibana/dashboard/Fabric8"
-    curl -s -f -XPUT -d@/kibana-config.json "${ELASTICSEARCH_URL}/.kibana/config/4.4.0"
+
+
+    declare -a arr=("index-pattern" "search" "visualization" "dashboard" "config")
+
+    #cwd=`pwd`
+    for type in "${arr[@]}"
+    do
+      typefolder="kibana-objects/${type}"
+
+      echo "Processing type $type"
+      for fullfile in $typefolder/*.json; do
+        filename=$(basename "$fullfile")
+        name="${filename%.*}"
+
+        if [ "$name" != "*" ]; then
+          echo "Processing file $fullfile with name: $name"
+          #cd $typefolder
+          #pwd
+          #curl -vvv -H "Content-Type: application/json" -s -f -XPUT -d@/${name}.json "${ELASTICSEARCH_URL}/.kibana/${type}/${name}"
+          curl -vvv -H "Content-Type: application/json" -s -f -XPUT -d@/${fullfile} "${ELASTICSEARCH_URL}/.kibana/${type}/${name}"
+          #cd $cwd
+        fi
+      done
+    done
 fi
 
 sleep infinity

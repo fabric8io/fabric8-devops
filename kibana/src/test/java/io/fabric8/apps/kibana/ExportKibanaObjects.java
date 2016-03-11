@@ -77,9 +77,10 @@ public class ExportKibanaObjects {
                 if (item != null) {
                     JsonNode idNode = item.get("_id");
                     String id = idNode.asText();
-                    if (Strings.isNotBlank(id)) {
+                    JsonNode source = item.get("_source");
+                    if (Strings.isNotBlank(id) && source.isObject()) {
                         File file = new File(dir, id + ".json");
-                        String json = JsonHelper.toJson(item);
+                        String json = JsonHelper.toJson(source);
                         Files.writeToFile(file, json.getBytes());
                     }
                 }
