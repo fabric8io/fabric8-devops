@@ -15,6 +15,7 @@
  */
 package io.fabric8.collector.elasticsearch;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
@@ -150,6 +151,7 @@ public class ElasticsearchClient {
         boolean create = false;
         JsonNodeFactory nodeFactory = JsonNodeFactory.instance;
         if (metadata == null) {
+            create = true;
             metadata = nodeFactory.objectNode();
 /*
             ObjectNode properties = JsonNodes.setObjects(metadata, index, "mappings", type, "properties");
@@ -178,17 +180,27 @@ public class ElasticsearchClient {
         boolean create = false;
         JsonNodeFactory nodeFactory = JsonNodeFactory.instance;
         if (metadata == null) {
+            create = true;
             metadata = nodeFactory.objectNode();
         }
-        ObjectNode properties = JsonNodes.setObjects(metadata, "properties");
+        ObjectNode properties = null;
+        JsonNode propertiesNode = metadata.path(index).path("mappings").path(type).path("properties");
+        if (propertiesNode.isObject()) {
+            properties = (ObjectNode) propertiesNode;
+        }
+        else {
+            create = true;
+            properties = JsonNodes.setObjects(metadata, index, "mappings", type, "properties");
+        }
         if (properties == null) {
             LOG.warn("Failed to create object path!");
         }
-        if (!updater.apply(metadata)) {
+        if (!updater.apply(properties)) {
             return null;
         }
         if (create) {
-            return getElasticsearchAPI().updateIndexMapping(index, type, metadata);
+            ObjectNode typeNode = (ObjectNode) metadata.path(index).path("mappings").path(type);
+            return getElasticsearchAPI().updateIndexMapping(index, type, typeNode);
         } else {
             return null;
         }
