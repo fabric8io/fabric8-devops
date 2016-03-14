@@ -40,6 +40,11 @@ public interface ElasticsearchAPI {
     @Consumes("application/json")
     ObjectNode getIndex(@PathParam("index") String index);
 
+    @GET
+    @Path("/{index}/{type}")
+    @Consumes("application/json")
+    ObjectNode getIndex(@PathParam("index") String index, @PathParam("type") String type);
+
     @POST
     @Path("/{index}")
     @Consumes("application/json")

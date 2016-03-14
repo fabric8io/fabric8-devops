@@ -1,0 +1,32 @@
+{
+  "order" : 0,
+  "template" : "pipeline",
+  "settings" : { },
+  "mappings" : {
+    "config" : {
+      "properties" : {
+        "environment" : {
+          "index" : "not_analyzed",
+          "type" : "string"
+        },
+        "application" : {
+          "index" : "not_analyzed",
+          "type" : "string"
+        },
+        "resource" : {
+          "index" : "not_analyzed",
+          "type" : "string"
+        },
+        "author" : {
+          "index" : "not_analyzed",
+          "type" : "string"
+        },
+        "version" : {
+          "index" : "not_analyzed",
+          "type" : "string"
+        }
+      }
+    }
+  },
+  "aliases" : { }
+}
