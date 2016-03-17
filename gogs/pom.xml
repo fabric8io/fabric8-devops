@@ -45,6 +45,7 @@
     -->
 
     <fabric8.imagePullPolicy>IfNotPresent</fabric8.imagePullPolicy>
+    <fabric8.serviceAccount>gogs</fabric8.serviceAccount>
 
     <!--
     TODO disable the ssh port as OpenShift routes are broken currently for services with 2 ports
