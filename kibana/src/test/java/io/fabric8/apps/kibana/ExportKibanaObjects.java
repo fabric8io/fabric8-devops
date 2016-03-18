@@ -26,6 +26,8 @@ import io.fabric8.utils.cxf.JsonHelper;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * A helper application to dump the contents of the <code>.kibana</code> index to the file
@@ -56,6 +58,8 @@ public class ExportKibanaObjects {
     }
 
     public static void exportKibanaObjects(ElasticsearchClient es, File dir) throws IOException {
+        exportKibanaTemplates(es, new File(dir, "_template"));
+
         String[] types = {"index-pattern", "search", "dashboard", "config", "visualization"};
         for (String type : types) {
             File typeDir = new File(dir, type);
@@ -85,6 +89,22 @@ public class ExportKibanaObjects {
                     }
                 }
             }
+        }
+    }
+
+    public static void exportKibanaTemplates(ElasticsearchClient es, File dir) throws IOException {
+        System.out.println("Finding kibana templates");
+        dir.mkdirs();
+        ObjectNode results = es.getIndex("_template", "*");
+
+        Iterator<Map.Entry<String, JsonNode>> iter = results.fields();
+        while (iter.hasNext()) {
+            Map.Entry<String, JsonNode> entry = iter.next();
+            String id = entry.getKey();
+            JsonNode value = entry.getValue();
+            File file = new File(dir, id + ".json");
+            String json = JsonHelper.toJson(value);
+            Files.writeToFile(file, json.getBytes());
         }
     }
 }

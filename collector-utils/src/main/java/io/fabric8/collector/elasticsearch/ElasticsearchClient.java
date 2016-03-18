@@ -33,6 +33,9 @@ import org.apache.cxf.jaxrs.client.WebClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -43,7 +46,7 @@ import static io.fabric8.utils.cxf.WebClients.disableSslChecks;
 /**
  * A base client for communicating with Elasticsearch
  */
-public class ElasticsearchClient {
+public class ElasticsearchClient implements ElasticsearchAPI {
     public static final String ELASTICSEARCH_SERVICE_NAME = "elasticsearch";
 
     private static final transient Logger LOG = LoggerFactory.getLogger(ElasticsearchClient.class);
@@ -119,6 +122,10 @@ public class ElasticsearchClient {
 
     public ObjectNode getIndex(String index) {
         return getElasticsearchAPI().getIndex(index);
+    }
+
+    public ObjectNode getIndex(String index, String type) {
+        return getElasticsearchAPI().getIndex(index, type);
     }
 
     public ObjectNode createIndex(String index, ObjectNode metadata) {

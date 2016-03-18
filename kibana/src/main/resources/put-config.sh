@@ -16,12 +16,24 @@ until $(curl -s -f -o /dev/null --connect-timeout 1 -m 1 --head ${ELASTICSEARCH_
 done
 
 if ! [ $(curl -s -f -o /dev/null ${ELASTICSEARCH_URL}/.kibana) ]; then
-    curl -s -f -XPUT -d@/kibana-template.json "${ELASTICSEARCH_URL}/_template/kibana"
+    #curl -s -f -XPUT -d@/kibana-template.json "${ELASTICSEARCH_URL}/_template/kibana"
 
+    type="_template"
+    typefolder="kibana-objects/${type}"
+
+    echo "Processing type $type"
+    for fullfile in $typefolder/*.json; do
+      filename=$(basename "$fullfile")
+      name="${filename%.*}"
+
+      if [ "$name" != "*" ]; then
+        echo "Processing file $fullfile with name: $name"
+        curl -vvv -H "Content-Type: application/json" -s -f -XPUT -d@/${fullfile} "${ELASTICSEARCH_URL}/${type}/${name}"
+      fi
+    done
 
     declare -a arr=("index-pattern" "search" "visualization" "dashboard" "config")
 
-    #cwd=`pwd`
     for type in "${arr[@]}"
     do
       typefolder="kibana-objects/${type}"
@@ -33,11 +45,8 @@ if ! [ $(curl -s -f -o /dev/null ${ELASTICSEARCH_URL}/.kibana) ]; then
 
         if [ "$name" != "*" ]; then
           echo "Processing file $fullfile with name: $name"
-          #cd $typefolder
-          #pwd
           #curl -vvv -H "Content-Type: application/json" -s -f -XPUT -d@/${name}.json "${ELASTICSEARCH_URL}/.kibana/${type}/${name}"
           curl -vvv -H "Content-Type: application/json" -s -f -XPUT -d@/${fullfile} "${ELASTICSEARCH_URL}/.kibana/${type}/${name}"
-          #cd $cwd
         fi
       done
     done

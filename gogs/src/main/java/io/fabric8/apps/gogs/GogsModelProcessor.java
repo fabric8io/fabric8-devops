@@ -46,6 +46,13 @@ public class GogsModelProcessor {
                         "http://gogs.${DOMAIN}",
                         "https://gogs.${DOMAIN}"))
                 .and()
+
+                .addNewServiceAccountObject()
+                .withNewMetadata()
+                .withName("gogs")
+                .endMetadata()
+                .endServiceAccountObject()
+
                 .addNewServiceObject()
                 .withNewMetadata()
                 .withName(NAME)

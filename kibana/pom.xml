@@ -85,6 +85,7 @@
               <name>${fabric8.dockerUser}kibana-config:${docker.image.version}</name>
               <build>
                 <from>centos:7</from>
+                <nocache>true</nocache>
                 <assembly>
                   <basedir>/</basedir>
                   <mode>tar</mode>
@@ -216,9 +217,8 @@
         <docker.image.version>${maven.build.timestamp}</docker.image.version>
         <maven.build.timestamp.format>yyyy-MM-dd-HH-mm-ss</maven.build.timestamp.format>
 
-        <!-- lets use verbose logging and disable the build cache -->
+        <!-- lets use verbose logging -->
         <docker.verbose>true</docker.verbose>
-        <docker.nocache>true</docker.nocache>
       </properties>
     </profile>
   </profiles>
