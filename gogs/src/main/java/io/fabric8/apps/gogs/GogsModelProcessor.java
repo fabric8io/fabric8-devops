@@ -26,7 +26,7 @@ import java.util.Map;
 
 @KubernetesModelProcessor
 public class GogsModelProcessor {
-    
+
     private static final String NAME = "gogs";
 
     public void onList(TemplateBuilder builder) {
@@ -46,48 +46,6 @@ public class GogsModelProcessor {
                         "http://gogs.${DOMAIN}",
                         "https://gogs.${DOMAIN}"))
                 .and()
-
-                .addNewServiceAccountObject()
-                .withNewMetadata()
-                .withName("gogs")
-                .endMetadata()
-                .endServiceAccountObject()
-
-                .addNewServiceObject()
-                .withNewMetadata()
-                .withName(NAME)
-                .addToLabels("project", NAME)
-                .addToLabels("provider", "fabric8")
-                .endMetadata()
-                .withNewSpec()
-                .withType("LoadBalancer")
-                .addNewPort()
-                .withProtocol("TCP")
-                .withPort(80)
-                .withNewTargetPort(3000)
-                .endPort()
-                .addToSelector("project", NAME)
-                .addToSelector("provider", "fabric8")
-                .endSpec()
-                .endServiceObject()
-
-                // Second service
-                .addNewServiceObject()
-                .withNewMetadata()
-                .withName(NAME + "-ssh")
-                .addToLabels("project", NAME)
-                .addToLabels("provider", "fabric8")
-                .endMetadata()
-                .withNewSpec()
-                .addNewPort()
-                .withProtocol("TCP")
-                .withPort(22)
-                .withNewTargetPort(22)
-                .endPort()
-                .addToSelector("project", NAME)
-                .addToSelector("provider", "fabric8")
-                .endSpec()
-                .endServiceObject()
 
                 // lets add a default user secret for the default user
                 .addNewSecretObject()
