@@ -48,6 +48,13 @@
       <classifier>kubernetes</classifier>
       <type>json</type>
     </dependency>
+    <dependency>
+      <groupId>io.fabric8.devops.apps</groupId>
+      <artifactId>fluentd</artifactId>
+      <version>${project.version}</version>
+      <classifier>kubernetes</classifier>
+      <type>json</type>
+    </dependency>
   </dependencies>
 
 </project>
