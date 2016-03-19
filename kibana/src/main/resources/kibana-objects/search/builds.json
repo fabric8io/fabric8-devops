@@ -2,10 +2,10 @@
   "title" : "builds",
   "description" : "",
   "hits" : 0,
-  "columns" : [ "_source" ],
+  "columns" : [ "app", "timestamp", "build_number", "build_result", "build_url", "causes", "duration" ],
   "sort" : [ "timestamp", "desc" ],
   "version" : 1,
   "kibanaSavedObjectMeta" : {
-    "searchSourceJSON" : "{\"index\":\"pipeline\",\"filter\":[],\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"require_field_match\":false,\"fragment_size\":2147483647},\"query\":{\"query_string\":{\"query\":\"_type:build\",\"analyze_wildcard\":true}}}"
+    "searchSourceJSON" : "{\"index\":\"pipeline\",\"query\":{\"query_string\":{\"query\":\"_type:build\",\"analyze_wildcard\":true}},\"filter\":[],\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"require_field_match\":false,\"fragment_size\":2147483647}}"
   }
 }
