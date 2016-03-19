@@ -9,7 +9,7 @@
           "index" : "not_analyzed",
           "type" : "string"
         },
-        "application" : {
+        "app" : {
           "index" : "not_analyzed",
           "type" : "string"
         },
