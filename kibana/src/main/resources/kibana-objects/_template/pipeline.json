@@ -5,11 +5,11 @@
   "mappings" : {
     "config" : {
       "properties" : {
-        "environment" : {
+        "app" : {
           "index" : "not_analyzed",
           "type" : "string"
         },
-        "application" : {
+        "environment" : {
           "index" : "not_analyzed",
           "type" : "string"
         },
