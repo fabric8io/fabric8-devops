@@ -98,7 +98,7 @@
         <junit.version>4.12</junit.version>
 
         <fabric8.devops.release.version>2.2.95</fabric8.devops.release.version>
-        <fabric8.version>2.2.98</fabric8.version>
+        <fabric8.version>2.2.99</fabric8.version>
         <fabric8.release.version>${fabric8.version}</fabric8.release.version>
 
         <exec-maven-plugin.version>1.2.1</exec-maven-plugin.version>
