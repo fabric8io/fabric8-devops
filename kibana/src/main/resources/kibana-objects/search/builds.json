@@ -6,6 +6,6 @@
   "sort" : [ "timestamp", "desc" ],
   "version" : 1,
   "kibanaSavedObjectMeta" : {
-    "searchSourceJSON" : "{\"index\":\"pipeline\",\"query\":{\"query_string\":{\"query\":\"_type:build\",\"analyze_wildcard\":true}},\"filter\":[],\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"require_field_match\":false,\"fragment_size\":2147483647}}"
+    "searchSourceJSON" : "{\"index\":\"build\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[],\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"require_field_match\":false,\"fragment_size\":2147483647}}"
   }
 }
