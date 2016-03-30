@@ -33,7 +33,7 @@
   <description>Collects events from git repositories from projects in OpenShift</description>
 
   <properties>
-    <docker.from>fabric8/java</docker.from>
+    <docker.from>docker.io/fabric8/java</docker.from>
 
     <docker.image>${fabric8.dockerUser}${project.artifactId}:${project.version}</docker.image>
     <docker.assemblyDescriptorRef>artifact-with-dependencies</docker.assemblyDescriptorRef>
