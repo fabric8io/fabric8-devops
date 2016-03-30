@@ -1,0 +1,11 @@
+{
+  "title" : "logs per app per environment",
+  "visState" : "{\"aggs\":[{\"id\":\"1\",\"params\":{},\"schema\":\"metric\",\"type\":\"count\"},{\"id\":\"2\",\"params\":{\"field\":\"kubernetes.namespace_name\",\"order\":\"desc\",\"orderBy\":\"1\",\"size\":5},\"schema\":\"segment\",\"type\":\"terms\"},{\"id\":\"3\",\"params\":{\"field\":\"kubernetes.container_name\",\"order\":\"desc\",\"orderBy\":\"1\",\"size\":5},\"schema\":\"segment\",\"type\":\"terms\"}],\"listeners\":{},\"params\":{\"addLegend\":true,\"addTooltip\":true,\"isDonut\":false,\"shareYAxis\":true},\"title\":\"logs per app per environment\",\"type\":\"pie\"}",
+  "uiStateJSON" : "{}",
+  "description" : "",
+  "savedSearchId" : "logs",
+  "version" : 1,
+  "kibanaSavedObjectMeta" : {
+    "searchSourceJSON" : "{\"filter\":[]}"
+  }
+}

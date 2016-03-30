@@ -1,0 +1,11 @@
+{
+  "title" : "logs",
+  "description" : "",
+  "hits" : 0,
+  "columns" : [ "kubernetes.namespace_name", "kubernetes.container_name", "message", "kubernetes.labels.version", "kubernetes.host", "docker.container_id", "statusCode", "kubernetes.pod_name" ],
+  "sort" : [ "@timestamp", "desc" ],
+  "version" : 1,
+  "kibanaSavedObjectMeta" : {
+    "searchSourceJSON" : "{\"index\":\"logstash-*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}},\"filter\":[],\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"require_field_match\":false,\"fragment_size\":2147483647}}"
+  }
+}
