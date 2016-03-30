@@ -2,7 +2,7 @@
   "title" : "approvals",
   "description" : "",
   "hits" : 0,
-  "columns" : [ "app", "environment", "approved", "requested_time", "received_time" ],
+  "columns" : [ "app", "environment", "approved", "requested_time", "received_time", "wait_time" ],
   "sort" : [ "timestamp", "desc" ],
   "version" : 1,
   "kibanaSavedObjectMeta" : {
