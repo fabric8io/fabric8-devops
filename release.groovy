@@ -34,10 +34,10 @@ def release(project){
     stagedProject = project
     useGitTagForNextVersion = true
     helmPush = false
-    groupId = 'io.fabric8.devops.distro'
+    groupId = 'io.fabric8.devops.apps'
     githubOrganisation = 'fabric8io'
-    artifactIdToWatchInCentral = 'distro'
-    artifactExtensionToWatchInCentral = 'pom'
+    artifactIdToWatchInCentral = 'jenkins'
+    artifactExtensionToWatchInCentral = 'jar'
     promoteToDockerRegistry = 'docker.io'
     dockerOrganisation = 'fabric8'
     imagesToPromoteToDockerHub = ['git-collector','chaos-monkey','elasticsearch-logstash-template','hubot-notifier','image-linker','kibana-config','prometheus-kubernetes']
