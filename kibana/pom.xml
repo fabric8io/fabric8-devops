@@ -84,7 +84,7 @@
             <image>
               <name>${fabric8.dockerUser}kibana-config:${docker.image.version}</name>
               <build>
-                <from>centos:7</from>
+                <from>docker.io/centos:7</from>
                 <nocache>true</nocache>
                 <assembly>
                   <basedir>/</basedir>

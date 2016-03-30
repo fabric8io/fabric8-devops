@@ -98,7 +98,7 @@
             <image>
               <name>${docker.image}</name>
               <build>
-                <from>prom/blackbox-exporter:latest</from>
+                <from>docker.io/prom/blackbox-exporter:latest</from>
                 <assembly>
                   <basedir>/bin</basedir>
                   <inline xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
