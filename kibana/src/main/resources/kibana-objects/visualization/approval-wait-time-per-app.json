@@ -1,0 +1,11 @@
+{
+  "title" : "approval wait time per app",
+  "visState" : "{\"title\":\"approval wait time per app\",\"type\":\"pie\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"isDonut\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"wait_time\"}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"app\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+  "uiStateJSON" : "{}",
+  "description" : "",
+  "savedSearchId" : "approvals",
+  "version" : 1,
+  "kibanaSavedObjectMeta" : {
+    "searchSourceJSON" : "{\"filter\":[]}"
+  }
+}
