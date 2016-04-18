@@ -47,6 +47,8 @@
 
     <fabric8.imagePullPolicy>IfNotPresent</fabric8.imagePullPolicy>
     <fabric8.serviceAccount>gogs</fabric8.serviceAccount>
+    <fabric8.serviceAccountCreate>true</fabric8.serviceAccountCreate>
+    <fabric8.service.type>LoadBalancer</fabric8.service.type>
 
     <fabric8.label.project>gogs</fabric8.label.project>
     <fabric8.label.provider>fabric8</fabric8.label.provider>
