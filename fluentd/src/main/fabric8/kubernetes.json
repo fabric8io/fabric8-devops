@@ -10,12 +10,6 @@
     },
     "name": "fluentd"
   },
-  "selector": {
-    "group": "io.fabric8.devops.apps",
-    "project": "fluentd",
-    "provider": "fabric8",
-    "version": "${project.version}"
-  },
   "spec": {
     "template": {
       "metadata": {
