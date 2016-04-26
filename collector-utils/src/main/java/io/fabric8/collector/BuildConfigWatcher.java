@@ -16,6 +16,7 @@
  */
 package io.fabric8.collector;
 
+import io.fabric8.kubernetes.api.Controller;
 import io.fabric8.kubernetes.api.KubernetesHelper;
 import io.fabric8.kubernetes.client.DefaultKubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClient;
@@ -25,6 +26,7 @@ import io.fabric8.kubernetes.client.Watcher;
 import io.fabric8.openshift.api.model.BuildConfig;
 import io.fabric8.openshift.api.model.BuildConfigList;
 import io.fabric8.openshift.client.OpenShiftClient;
+import io.fabric8.utils.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +45,9 @@ public class BuildConfigWatcher {
 
     public BuildConfigWatcher(BuildConfigCollectors aCollector) {
         this.collector = aCollector;
-        OpenShiftClient openShiftClient = client.adapt(OpenShiftClient.class);
+        OpenShiftClient openShiftClient = new Controller(client).getOpenShiftClientOrJenkinshift();
+        Objects.notNull(openShiftClient, "No OpenShiftClient could be created!");
+
         this.watch = openShiftClient.buildConfigs().watch(new Watcher<BuildConfig>() {
             @Override
             public void eventReceived(Action action, BuildConfig buildConfig) {
