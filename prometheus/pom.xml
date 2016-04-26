@@ -36,6 +36,7 @@
     <http.port>9090</http.port>
 
     <fabric8.serviceAccount>metrics</fabric8.serviceAccount>
+    <fabric8.serviceAccountCreate>true</fabric8.serviceAccountCreate>
 
     <docker.image>${fabric8.dockerUser}prometheus-kubernetes:${project.version}</docker.image>
     <docker.port.container.http>${http.port}</docker.port.container.http>
