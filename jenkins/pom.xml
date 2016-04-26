@@ -44,14 +44,15 @@
         <!-- <fabric8.includePodEnvVar>true</fabric8.includePodEnvVar> -->
 
         <!-- <fabric8.env.CGO_ENABLED>0</fabric8.env.CGO_ENABLED-->
-	<fabric8.env.PROJECT_VERSION>${project.version}</fabric8.env.PROJECT_VERSION>
+	       <fabric8.env.PROJECT_VERSION>${project.version}</fabric8.env.PROJECT_VERSION>
 
         <fabric8.serviceAccount>jenkins</fabric8.serviceAccount>
+        <fabric8.serviceAccountCreate>true</fabric8.serviceAccountCreate>
         <fabric8.service.type>LoadBalancer</fabric8.service.type>
-	<fabric8.volume.data.hostPath>/var/run/docker.sock</fabric8.volume.data.hostPath>
-	<fabric8.volume.data.mountPath>/var/run/docker.sock</fabric8.volume.data.mountPath>
-	<fabric8.containerPrivileged>true</fabric8.containerPrivileged>
-	<fabric8.imagePullPolicy>IfNotPresent</fabric8.imagePullPolicy>
+      	<fabric8.volume.data.hostPath>/var/run/docker.sock</fabric8.volume.data.hostPath>
+      	<fabric8.volume.data.mountPath>/var/run/docker.sock</fabric8.volume.data.mountPath>
+      	<fabric8.containerPrivileged>true</fabric8.containerPrivileged>
+      	<fabric8.imagePullPolicy>IfNotPresent</fabric8.imagePullPolicy>
         <!-- liveness probe -->
 <!--
         TODO lets disable for now...
