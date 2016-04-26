@@ -169,6 +169,7 @@
       <module>hubot-notifier</module>
       <module>hubot-slack</module>
       <module>image-linker</module>
+      <module>java-developer</module>
       <module>jenkins</module>
       <module>keycloak</module>
       <module>kibana</module>
