@@ -10,12 +10,6 @@
     },
     "name": "fluentd"
   },
-  "selector": {
-    "group": "io.fabric8.devops.apps",
-    "project": "fluentd",
-    "provider": "fabric8",
-    "version": "${project.version}"
-  },
   "spec": {
     "template": {
       "metadata": {
@@ -39,7 +33,7 @@
                 "value": "9200"
               }
             ],
-            "image": "fabric8/fluentd-kubernetes:v1.11",
+            "image": "fabric8/fluentd-kubernetes:v1.12",
             "name": "fluentd",
             "resources": {
               "limits": {
