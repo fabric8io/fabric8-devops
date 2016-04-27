@@ -20,6 +20,7 @@ import org.eclipse.jetty.server.Server;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+@Ignore
 public final class ImageLinkerTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(ImageLinkerTest.class);
@@ -53,7 +55,7 @@ public final class ImageLinkerTest {
     }
     
 
-    @Test
+    @Ignore
     public void dummyTest() throws IOException {
 
     }
