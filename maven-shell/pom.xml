@@ -25,18 +25,18 @@
         <version>2.3-SNAPSHOT</version>
     </parent>
 
-    <artifactId>java-developer</artifactId>
+    <artifactId>maven-shell</artifactId>
 
-    <name>Java Developer</name>
+    <name>Maven Shell</name>
     <description>
-      Java Developer is an app that contains java build tools and allows development inside kubernetes
+      Maven Shell is an app that contains java build tools and allows development inside kubernetes
     </description>
 
     <properties>
         <docker.image>fabric8/maven-builder:${project.version}</docker.image>
         <docker.port.container.jolokia />
 
-        <fabric8.label.project>java-developer</fabric8.label.project>
+        <fabric8.label.project>maven-shell</fabric8.label.project>
         <fabric8.label.provider>fabric8</fabric8.label.provider>
 
         <fabric8.iconRef>java</fabric8.iconRef>
@@ -49,7 +49,7 @@
         <fabric8.volume.jenkins-maven-settings.secret>jenkins-maven-settings</fabric8.volume.jenkins-maven-settings.secret>
         <fabric8.volume.jenkins-maven-settings.mountPath>/root/.m2</fabric8.volume.jenkins-maven-settings.mountPath>
 
-        <fabric8.volume.workspace.hostPath>/home/java-developer/workspaces</fabric8.volume.workspace.hostPath>
+        <fabric8.volume.workspace.hostPath>/home/maven-shell/workspaces</fabric8.volume.workspace.hostPath>
       	<fabric8.volume.workspace.mountPath>/root/workspaces</fabric8.volume.workspace.mountPath>
 
       	<fabric8.containerPrivileged>true</fabric8.containerPrivileged>
