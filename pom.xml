@@ -89,7 +89,7 @@
         <docker.assembly.exportBaseDir>false</docker.assembly.exportBaseDir>
         <!-- TODO this can be removed once we upgrade the docker maven plugin -->
         <docker.assembly.exportBase>false</docker.assembly.exportBase>
-        <docker.maven.plugin.version>0.14.2</docker.maven.plugin.version>
+        <docker.maven.plugin.version>0.15.1</docker.maven.plugin.version>
         <fabric8.dockerUser>fabric8/</fabric8.dockerUser>
 
         <gitective-version>0.9.11</gitective-version>
