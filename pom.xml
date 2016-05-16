@@ -156,6 +156,7 @@
       <module>brackets</module>
       <module>chaos-monkey</module>
       <module>collector-utils</module>
+      <module>content-repository</module>
       <module>elasticsearch</module>
       <module>fabric8-docker-registry</module>
       <module>fluentd</module>
