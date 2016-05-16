@@ -41,7 +41,7 @@ def release(project){
     promoteToDockerRegistry = 'docker.io'
     dockerOrganisation = 'fabric8'
     imagesToPromoteToDockerHub = ['git-collector','chaos-monkey','elasticsearch-logstash-template','hubot-notifier','image-linker','kibana-config','prometheus-kubernetes']
-    extraImagesToTag = ['content-repository','hubot-irc','eclipse-orion','nexus','gerrit','fabric8-kiwiirc','brackets','jenkins-jnlp-client','taiga-front','taiga-back','hubot-slack','lets-chat','jenkins-docker','maven-builder']
+    extraImagesToTag = ['alpine-caddy','hubot-irc','eclipse-orion','nexus','gerrit','fabric8-kiwiirc','brackets','jenkins-jnlp-client','taiga-front','taiga-back','hubot-slack','lets-chat','jenkins-docker','maven-builder']
   }
 }
 
