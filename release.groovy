@@ -1,4 +1,16 @@
 #!/usr/bin/groovy
+def imagesBuiltByPipline() {
+  return ['git-collector','chaos-monkey','elasticsearch-logstash-template','hubot-notifier','image-linker','kibana-config','prometheus-kubernetes']
+}
+
+def externalImages(){
+  return ['alpine-caddy','hubot-irc','eclipse-orion','nexus','gerrit','fabric8-kiwiirc','brackets','jenkins-jnlp-client','taiga-front','taiga-back','hubot-slack','lets-chat','jenkins-docker','maven-builder']
+}
+
+def repo(){
+ return 'fabric8io/fabric8-devops'
+}
+
 def updateDependencies(source){
 
   def properties = []
@@ -8,14 +20,15 @@ def updateDependencies(source){
   updatePropertyVersion{
     updates = properties
     repository = source
-    project = 'fabric8io/fabric8-devops'
+    project = repo()
   }
 }
 
 def stage(){
   return stageProject{
-    project = 'fabric8io/fabric8-devops'
+    project = repo()
     useGitTagForNextVersion = true
+    extraImagesToStage = externalImages()
   }
 }
 
@@ -40,14 +53,14 @@ def release(project){
     artifactExtensionToWatchInCentral = 'jar'
     promoteToDockerRegistry = 'docker.io'
     dockerOrganisation = 'fabric8'
-    imagesToPromoteToDockerHub = ['git-collector','chaos-monkey','elasticsearch-logstash-template','hubot-notifier','image-linker','kibana-config','prometheus-kubernetes']
-    extraImagesToTag = ['alpine-caddy','hubot-irc','eclipse-orion','nexus','gerrit','fabric8-kiwiirc','brackets','jenkins-jnlp-client','taiga-front','taiga-back','hubot-slack','lets-chat','jenkins-docker','maven-builder']
+    imagesToPromoteToDockerHub = imagesBuiltByPipline()
+    extraImagesToTag = externalImages()
   }
 }
 
 def mergePullRequest(prId){
   mergeAndWaitForPullRequest{
-    project = 'fabric8io/fabric8-devops'
+    project = repo()
     pullRequestId = prId
   }
 
