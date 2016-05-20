@@ -1,0 +1,48 @@
+{
+  "apiVersion": "v1",
+  "kind": "ReplicationController",
+  "metadata": {
+    "name": "ingress-nginx",
+    "labels": {
+      "app": "ingress-nginx"
+    },
+    "annotations": {
+      "fabric8.io/iconUrl": "https://cdn.rawgit.com/fabric8io/fabric8-devops/master/ingress-nginx/src/main/fabric8/icon.png"
+    }
+  },
+  "spec": {
+    "replicas": 1,
+    "selector": {
+      "app": "ingress-nginx"
+    },
+    "template": {
+      "metadata": {
+        "labels": {
+          "app": "ingress-nginx"
+        }
+      },
+      "spec": {
+        "containers": [
+          {
+            "name": "ingress-nginx",
+            "image": "docker.io/rawlingsj/nginx-controller:latest",
+            "imagePullPolicy": "Always",
+            "ports": [
+              {
+                "hostPort": 80,
+                "containerPort": 80,
+                "protocol": "TCP"
+              },
+              {
+                "hostPort": 443,
+                "containerPort": 443,
+                "protocol": "TCP"
+              }
+            ]
+          }
+        ],
+        "dnsPolicy": "ClusterFirst"
+      }
+    }
+  }
+}
