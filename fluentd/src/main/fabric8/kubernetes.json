@@ -33,7 +33,7 @@
                 "value": "9200"
               }
             ],
-            "image": "fabric8/fluentd-kubernetes:v1.12",
+            "image": "fabric8/fluentd-kubernetes:v1.13",
             "name": "fluentd",
             "resources": {
               "limits": {
