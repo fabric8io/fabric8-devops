@@ -113,21 +113,24 @@ public class KubernetesHubotNotifier {
             }
         }));
 
-        addClient(client.adapt(OpenShiftClient.class).buildConfigs().watch(new WatcherSupport<BuildConfig>() {
-            @Override
-            public void eventReceived(Action action, BuildConfig buildConfig) {
-                onWatchEvent(action, buildConfig, buildConfigConfig);
-            }
-        }));
+        if (client.isAdaptable(OpenShiftClient.class)){
+            addClient(client.adapt(OpenShiftClient.class).buildConfigs().watch(new WatcherSupport<BuildConfig>() {
+                @Override
+                public void eventReceived(Action action, BuildConfig buildConfig) {
+                    onWatchEvent(action, buildConfig, buildConfigConfig);
+                }
+            }));
 
-        addClient(client.adapt(OpenShiftClient.class).deploymentConfigs().watch(new WatcherSupport<DeploymentConfig>() {
-            @Override
-            public void eventReceived(Action action, DeploymentConfig deploymentConfig) {
-                onWatchEvent(action, deploymentConfig, dcConfig);
-            }
-        }));
+            addClient(client.adapt(OpenShiftClient.class).deploymentConfigs().watch(new WatcherSupport<DeploymentConfig>() {
+                @Override
+                public void eventReceived(Action action, DeploymentConfig deploymentConfig) {
+                    onWatchEvent(action, deploymentConfig, dcConfig);
+                }
+            }));
+            LOG.info("Now watching builds and deployments");
+        }
 
-        LOG.info("Now watching services, pods, replication controllers, builds and deployments");
+        LOG.info("Now watching services, pods and replication controllers");
     }
 
     protected static abstract class WatcherSupport<T> implements io.fabric8.kubernetes.client.Watcher<T> {
