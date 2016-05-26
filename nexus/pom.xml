@@ -49,6 +49,11 @@
 
     <fabric8.volume.nexus-storage.emptyDir />
     <fabric8.volume.nexus-storage.mountPath>/sonatype-work/storage</fabric8.volume.nexus-storage.mountPath>
+
+    <fabric8.livenessProbe.httpGet.path>/content/repositories/</fabric8.livenessProbe.httpGet.path>
+    <fabric8.livenessProbe.httpGet.port>${docker.port.container.http}</fabric8.livenessProbe.httpGet.port>
+    <fabric8.livenessProbe.initialDelaySeconds>60</fabric8.livenessProbe.initialDelaySeconds>
+
   </properties>
 
     <build>
