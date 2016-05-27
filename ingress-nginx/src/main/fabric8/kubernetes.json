@@ -25,7 +25,7 @@
         "containers": [
           {
             "name": "ingress-nginx",
-            "image": "docker.io/rawlingsj/nginx-controller:latest",
+            "image": "docker.io/fabric8/nginx-controller:${project.version}",
             "imagePullPolicy": "Always",
             "ports": [
               {
