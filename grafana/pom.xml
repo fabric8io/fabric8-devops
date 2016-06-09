@@ -25,11 +25,11 @@
     <version>2.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>grafana2</artifactId>
+  <artifactId>grafana</artifactId>
 
-  <name>Grafana 2</name>
+  <name>Grafana</name>
   <description>
-    [Grafana](http://grafana.org/) 2 console for viewing metrics stored in various storage backends
+    [Grafana](http://grafana.org/) console for viewing metrics stored in various storage backends
   </description>
 
   <properties>
@@ -41,7 +41,7 @@
     <fabric8.service.containerPort>3000</fabric8.service.containerPort>
     <fabric8.service.type>LoadBalancer</fabric8.service.type>
 
-    <fabric8.label.project>grafana2</fabric8.label.project>
+    <fabric8.label.project>grafana</fabric8.label.project>
     <fabric8.label.provider>fabric8</fabric8.label.provider>
 
     <fabric8.volume.grafana-data.emptyDir />

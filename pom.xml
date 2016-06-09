@@ -164,7 +164,7 @@
       <module>gitlab</module>
       <module>git-collector</module>
       <module>gogs</module>
-      <module>grafana2</module>
+      <module>grafana</module>
       <module>hubot-irc</module>
       <module>hubot-letschat</module>
       <module>hubot-notifier</module>

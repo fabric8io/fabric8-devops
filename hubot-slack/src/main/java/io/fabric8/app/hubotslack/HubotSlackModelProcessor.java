@@ -19,7 +19,7 @@ public class HubotSlackModelProcessor {
                 .addNewParameter().withName("HUBOT_SLACK_TOKEN")
                     .withDescription("The token for Hubot to login to Slack").endParameter()
                 .addNewParameter().withName("HUBOT_SLACK_GRAFANA_HOST")
-                    .withValue("http://grafana2.default.svc.cluster.local")
+                    .withValue("http://grafana.default.svc.cluster.local")
                     .withDescription("Host for your Grafana 2.0 install, e.g. 'http://play.grafana.org'").endParameter()
                 .addNewParameter().withName("HUBOT_SLACK_GRAFANA_API_KEY")
                     .withDescription("API key for a particular user").endParameter()
