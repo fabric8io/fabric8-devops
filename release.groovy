@@ -13,16 +13,15 @@ def repo(){
 
 def updateDependencies(source){
 
-// disable until we move to the push deps approach
-  // def properties = []
-  // properties << ['<fabric8.version>','io/fabric8/kubernetes-api']
-  // properties << ['<docker.maven.plugin.version>','io/fabric8/docker-maven-plugin']
-  //
-  // updatePropertyVersion{
-  //   updates = properties
-  //   repository = source
-  //   project = repo()
-  // }
+  def properties = []
+  properties << ['<fabric8.version>','io/fabric8/kubernetes-api']
+  properties << ['<docker.maven.plugin.version>','io/fabric8/docker-maven-plugin']
+
+  updatePropertyVersion{
+    updates = properties
+    repository = source
+    project = repo()
+  }
 }
 
 def stage(){
