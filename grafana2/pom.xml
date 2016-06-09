@@ -33,7 +33,7 @@
   </description>
 
   <properties>
-    <docker.image>${fabric8.dockerUser}grafana:2.5.0_01</docker.image>
+    <docker.image>${fabric8.dockerUser}grafana:2.5.0_02</docker.image>
     <docker.port.container.http>3000</docker.port.container.http>
     <docker.port.container.jolokia />
 
