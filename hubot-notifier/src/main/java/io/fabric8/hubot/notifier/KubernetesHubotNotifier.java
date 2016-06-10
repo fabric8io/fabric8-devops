@@ -27,6 +27,7 @@ import io.fabric8.kubernetes.api.model.HasMetadata;
 import io.fabric8.kubernetes.api.model.Pod;
 import io.fabric8.kubernetes.api.model.ReplicationController;
 import io.fabric8.kubernetes.api.model.Service;
+import io.fabric8.kubernetes.api.model.Status;
 import io.fabric8.kubernetes.client.DefaultKubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClientException;
@@ -134,6 +135,10 @@ public class KubernetesHubotNotifier {
     }
 
     protected static abstract class WatcherSupport<T> implements io.fabric8.kubernetes.client.Watcher<T> {
+        @Override
+        public void errorReceived(Status status) {
+            LOG.warn("Watcher " + this + " errorReceived: " + status.getMessage() + " " + status.getStatus());
+        }
 
         public void onClose(KubernetesClientException e) {
             LOG.info("Watcher " + this + " closed due to : " + e);

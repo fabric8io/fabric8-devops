@@ -18,6 +18,7 @@ package io.fabric8.collector;
 
 import io.fabric8.kubernetes.api.Controller;
 import io.fabric8.kubernetes.api.KubernetesHelper;
+import io.fabric8.kubernetes.api.model.Status;
 import io.fabric8.kubernetes.client.DefaultKubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClientException;
@@ -70,6 +71,11 @@ public class BuildConfigWatcher {
 
             @Override
             public void onClose(KubernetesClientException e) {
+            }
+
+            @Override
+            public void errorReceived(Status status) {
+                LOG.warn("Watcher " + this + " errorReceived: " + status.getMessage() + " " + status.getStatus());
             }
         });
 
