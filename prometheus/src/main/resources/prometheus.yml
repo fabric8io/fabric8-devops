@@ -30,7 +30,6 @@ scrape_configs:
   - api_servers:
     - 'https://kubernetes.default.svc'
     in_cluster: true
-    kubelet_port: 10250
 
   relabel_configs:
   - source_labels: [__meta_kubernetes_role]
