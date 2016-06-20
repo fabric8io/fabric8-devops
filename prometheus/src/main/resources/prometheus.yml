@@ -21,6 +21,8 @@ scrape_configs:
   # configuration (`in_cluster` below) because discovery & scraping are two
   # separate concerns in Prometheus.
   tls_config:
+    # workaround for Prometheus -> Kubernetes cert issue https://github.com/fabric8io/fabric8-devops/issues/438
+    insecure_skip_verify: true
     ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
   bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
 
