@@ -196,7 +196,8 @@ public class JenkinsModelProcessor {
     }
 
     private final String settings = "<settings>\n" +
-            "  <!--This sends everything else to /public -->\n" +
+            "  <!-- sets the local maven repository outside of the ~/.m2 folder for easier mounting of secrets and repo -->\n" +
+            "  <localRepository>${user.home}/.mvnrepository</localRepository>\n" +
             "  <mirrors>\n" +
             "    <mirror>\n" +
             "      <id>nexus</id>\n" +
