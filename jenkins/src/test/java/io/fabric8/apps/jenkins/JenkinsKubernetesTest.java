@@ -21,8 +21,12 @@ import io.fabric8.kubernetes.api.model.ReplicationController;
 
 import io.fabric8.kubernetes.client.KubernetesClient;
 import org.assertj.core.api.Condition;
+import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -37,6 +41,12 @@ public class JenkinsKubernetesTest {
 
     @ArquillianResource
     Session session;
+
+    @Deployment
+    public static JavaArchive createDeployment() {
+        return ShrinkWrap.create(JavaArchive.class)
+                .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
+    }
 
     @Test
     public void testJenkins() throws Exception {

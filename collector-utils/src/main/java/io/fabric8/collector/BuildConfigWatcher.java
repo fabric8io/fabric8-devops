@@ -73,10 +73,6 @@ public class BuildConfigWatcher {
             public void onClose(KubernetesClientException e) {
             }
 
-            @Override
-            public void errorReceived(Status status) {
-                LOG.warn("Watcher " + this + " errorReceived: " + status.getMessage() + " " + status.getStatus());
-            }
         });
 
         // lets add all the current BuildConfig's first
