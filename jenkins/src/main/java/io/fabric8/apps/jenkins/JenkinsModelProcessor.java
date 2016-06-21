@@ -25,11 +25,8 @@ import io.fabric8.openshift.api.model.TemplateBuilder;
 import io.fabric8.utils.Base64Encoder;
 
 import javax.inject.Named;
-import java.io.*;
-import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @KubernetesModelProcessor
 public class JenkinsModelProcessor {

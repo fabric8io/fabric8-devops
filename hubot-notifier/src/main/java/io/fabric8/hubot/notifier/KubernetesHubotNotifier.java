@@ -135,11 +135,6 @@ public class KubernetesHubotNotifier {
     }
 
     protected static abstract class WatcherSupport<T> implements io.fabric8.kubernetes.client.Watcher<T> {
-        @Override
-        public void errorReceived(Status status) {
-            LOG.warn("Watcher " + this + " errorReceived: " + status.getMessage() + " " + status.getStatus());
-        }
-
         public void onClose(KubernetesClientException e) {
             LOG.info("Watcher " + this + " closed due to : " + e);
         }
