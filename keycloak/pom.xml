@@ -33,15 +33,19 @@
   </description>
 
   <properties>
-    <docker.image>jboss/keycloak:1.9.3.Final</docker.image>
-    <docker.port.container.http>8080</docker.port.container.http>
-    <docker.port.container.jolokia />
+    <http.port>8080</http.port>
+
+    <docker.port.container.http>${http.port}</docker.port.container.http>
+
+    <fabric8.service.port>${http.port}</fabric8.service.port>
+    <fabric8.service.containerPort>${http.port}</fabric8.service.containerPort>
 
     <fabric8.service.port>80</fabric8.service.port>
     <fabric8.service.containerPort>http</fabric8.service.containerPort>
     <fabric8.service.type>LoadBalancer</fabric8.service.type>
 
     <fabric8.label.project>keycloak</fabric8.label.project>
+    <fabric8.label.group>io.fabric8.devops.apps</fabric8.label.group>
     <fabric8.label.provider>fabric8</fabric8.label.provider>
   </properties>
 
@@ -70,5 +74,172 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+
+        <resources>
+            <resource>
+                <directory>src/main/fabric8</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources-filtered</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>${docker.maven.plugin.version}</version>
+                <configuration>
+                    <image>${fabric8.dockerUser}${project.artifactId}:${project.version}</image>
+                    <images>
+                        <image>
+                            <name>${fabric8.dockerUser}${project.artifactId}:${project.version}</name>
+                            <build>
+                                <from>jboss/keycloak:1.9.7.Final</from>
+                                <assembly>
+                                    <basedir>/</basedir>
+                                    <inline xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2" xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+                                        <id>${project.artifactId}</id>
+                                        <fileSets>
+                                            <fileSet>
+                                                <directory>${project.basedir}/src/main/resources</directory>
+                                                <outputDirectory>/</outputDirectory>
+                                                <includes>
+                                                    <include>*</include>
+                                                </includes>
+                                            </fileSet>
+                                        </fileSets>
+                                    </inline>
+                                </assembly>
+                                <entryPoint>
+                                    <shell>/docker-entrypoint.sh keycloak ${keycloakssl}</shell>
+                                </entryPoint>
+                            </build>
+                        </image>
+                    </images>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>ssl</id>
+            <properties>
+                <keystore.password>supersecret</keystore.password>
+                <keycloakssl>ssl</keycloakssl>
+                <http.port>8443</http.port>
+                <docker.port.container.http>${http.port}</docker.port.container.http>
+                <fabric8.service.port>443</fabric8.service.port>
+                <fabric8.service.containerPort>${http.port}</fabric8.service.containerPort>
+                <fabric8.volume.keystore.secret>keycloak-keystore</fabric8.volume.keystore.secret>
+                <fabric8.volume.keystore.mountPath>/secret/keycloak/</fabric8.volume.keystore.mountPath>
+                <fabric8.annotations.service.api.service.kubernetes.io.scheme>https</fabric8.annotations.service.api.service.kubernetes.io.scheme>
+                <fabric8.readinessProbe.httpGet.scheme>HTTPS</fabric8.readinessProbe.httpGet.scheme>
+                <fabric8.extra.json>${project.build.directory}/classes/route-tls-passthrough.json</fabric8.extra.json>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>keytool-maven-plugin</artifactId>
+                        <version>1.5</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>generateKeyPair</goal>
+                                </goals>
+                                <phase>generate-sources</phase>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <keystore>${project.build.directory}/secret/keycloak/keystore</keystore>
+                            <storepass>${keystore.password}</storepass>
+                            <keypass>${keystore.password}</keypass>
+                            <alias>keycloak.${KUBERNETES_DOMAIN}</alias>
+                            <dname>CN=keycloak.${KUBERNETES_DOMAIN}, OU=Keycloak, O=Fabric8 Inc., L=Ipswich, S=Massachusetts, C=US</dname>
+                            <sigalg>SHA1withRSA</sigalg>
+                            <ext></ext>
+                            <validity>10950</validity>
+                            <keyalg>RSA</keyalg>
+                            <keysize>2048</keysize>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <version>2.7</version>
+                        <executions>
+                            <execution>
+                                <id>copy-resources</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/target/secret/keycloak</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>${basedir}/ssl</directory>
+                                            <filtering>true</filtering>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <executions>
+                            <execution>
+                                <id>Deploy Secret</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>${basedir}/ssl.sh</executable>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>f8-build</id>
+            <build>
+                <defaultGoal>clean install docker:build fabric8:json</defaultGoal>
+            </build>
+        </profile>
+        <profile>
+            <id>f8-deploy</id>
+            <properties>
+                <fabric8.imagePullPolicySnapshot>Always</fabric8.imagePullPolicySnapshot>
+                <fabric8.recreate>true</fabric8.recreate>
+            </properties>
+            <build>
+                <defaultGoal>clean install docker:build docker:push fabric8:json fabric8:apply</defaultGoal>
+            </build>
+        </profile>
+        <profile>
+            <id>f8-local-deploy</id>
+            <properties>
+                <fabric8.recreate>true</fabric8.recreate>
+            </properties>
+            <build>
+                <defaultGoal>clean install docker:build fabric8:json fabric8:apply</defaultGoal>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
