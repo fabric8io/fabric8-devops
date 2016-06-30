@@ -39,8 +39,8 @@ public class ImageLinkerKubernetesTest {
     @Test
     public void testApiRegistry() throws Exception {
         String serviceName = "image-linker";
-        assertThat(client).replicationController(serviceName, session.getNamespace()).isNotNull();
-        assertThat(client).hasServicePort(serviceName, session.getNamespace(), 80);
+        assertThat(client).replicationController(serviceName).isNotNull();
+        assertThat(client).hasServicePort(serviceName, 80);
 
         assertThat(client).pods()
                 .runningStatus()

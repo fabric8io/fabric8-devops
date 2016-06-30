@@ -38,7 +38,7 @@ public class HubotNotifierKubernetesTest {
 
     @Test
     public void testApiRegistry() throws Exception {
-        assertThat(client).replicationController("hubot-notifier", session.getNamespace()).isNotNull();
+        assertThat(client).replicationController("hubot-notifier").isNotNull();
 
         assertThat(client).pods()
                 .runningStatus()

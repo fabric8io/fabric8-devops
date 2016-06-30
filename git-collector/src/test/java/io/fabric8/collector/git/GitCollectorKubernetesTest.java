@@ -38,7 +38,7 @@ public class GitCollectorKubernetesTest {
 
     @Test
     public void testApiRegistry() throws Exception {
-        assertThat(client).replicationController("git-collector", session.getNamespace()).isNotNull();
+        assertThat(client).replicationController("git-collector").isNotNull();
 
         assertThat(client).pods()
                 .runningStatus()

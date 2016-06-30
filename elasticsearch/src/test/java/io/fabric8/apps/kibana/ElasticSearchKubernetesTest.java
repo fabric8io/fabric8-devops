@@ -39,8 +39,8 @@ public class ElasticSearchKubernetesTest {
     @Test
     public void testElasticSearch() throws Exception {
         String serviceName = "elasticsearch";
-        assertThat(client).replicationController(serviceName, session.getNamespace()).isNotNull();
-        assertThat(client).hasServicePort(serviceName, session.getNamespace(), 9200);
+        assertThat(client).replicationController(serviceName).isNotNull();
+        assertThat(client).hasServicePort(serviceName, 9200);
 
         assertThat(client).pods()
                 .runningStatus()
