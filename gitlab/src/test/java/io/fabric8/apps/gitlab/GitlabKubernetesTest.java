@@ -39,8 +39,8 @@ public class GitlabKubernetesTest {
     @Test
     public void testGogs() throws Exception {
         String service = "gitlab";
-        assertThat(client).replicationController(service, session.getNamespace()).isNotNull();
-        assertThat(client).hasServicePort(service, session.getNamespace(), 80);
+        assertThat(client).replicationController(service).isNotNull();
+        assertThat(client).hasServicePort(service, 80);
 
         assertThat(client).pods()
                 .runningStatus()

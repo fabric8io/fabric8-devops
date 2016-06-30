@@ -40,8 +40,8 @@ public class KibanaKubernetesTest {
     @Test
     public void testKibana() throws Exception {
         String serviceName = "kibana";
-        assertThat(client).replicationController(serviceName, session.getNamespace()).isNotNull();
-        assertThat(client).hasServicePort(serviceName, session.getNamespace(), 5601);
+        assertThat(client).replicationController(serviceName).isNotNull();
+        assertThat(client).hasServicePort(serviceName, 5601);
 
         assertThat(client).pods()
                 .runningStatus()

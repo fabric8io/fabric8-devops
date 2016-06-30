@@ -39,8 +39,8 @@ public class NexusKubernetesTest {
     @Test
     public void testGogs() throws Exception {
         String serviceName = "nexus";
-        assertThat(client).replicationController(serviceName, session.getNamespace()).isNotNull();
-        assertThat(client).hasServicePort(serviceName, session.getNamespace(), 80);
+        assertThat(client).replicationController(serviceName).isNotNull();
+        assertThat(client).hasServicePort(serviceName, 80);
 
         assertThat(client).pods()
                 .runningStatus()

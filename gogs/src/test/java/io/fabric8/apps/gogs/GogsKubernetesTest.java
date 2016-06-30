@@ -39,8 +39,8 @@ public class GogsKubernetesTest {
     @Test
     public void testGogs() throws Exception {
         String service = "gogs";
-        assertThat(client).replicationController(service, session.getNamespace()).isNotNull();
-        assertThat(client).hasServicePort(service, session.getNamespace(), 80);
+        assertThat(client).replicationController(service).isNotNull();
+        assertThat(client).hasServicePort(service, 80);
         // TODO
         // assertThat(client).hasServicePort(service, 22);
 
