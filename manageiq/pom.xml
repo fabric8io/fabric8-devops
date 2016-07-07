@@ -42,7 +42,7 @@
         <fabric8.service.manageiq.containerPort>443</fabric8.service.manageiq.containerPort>
 
         <fabric8.service.type>LoadBalancer</fabric8.service.type>
-
+        <fabric8.livenessProbe.port>443</fabric8.livenessProbe.port>
         <fabric8.containerPrivileged>true</fabric8.containerPrivileged>
       	<fabric8.imagePullPolicy>IfNotPresent</fabric8.imagePullPolicy>
 
