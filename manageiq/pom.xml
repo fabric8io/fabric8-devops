@@ -42,11 +42,17 @@
         <fabric8.service.manageiq.containerPort>443</fabric8.service.manageiq.containerPort>
 
         <fabric8.service.type>LoadBalancer</fabric8.service.type>
-        <fabric8.livenessProbe.port>443</fabric8.livenessProbe.port>
+        <fabric8.livenessProbe.httpGet.port>443</fabric8.livenessProbe.httpGet.port>
+        <fabric8.livenessProbe.httpGet.path>/</fabric8.livenessProbe.httpGet.path>
+        <fabric8.livenessProbe.httpGet.scheme>HTTPS</fabric8.livenessProbe.httpGet.scheme>
+        <fabric8.livenessProbe.initialDelaySeconds>300</fabric8.livenessProbe.initialDelaySeconds>
+        <fabric8.livenessProbe.timeoutSeconds>5</fabric8.livenessProbe.timeoutSeconds>
 
         <fabric8.readinessProbe.httpGet.port>443</fabric8.readinessProbe.httpGet.port>
         <fabric8.readinessProbe.httpGet.path>/</fabric8.readinessProbe.httpGet.path>
-        <fabric8.readinessProbe.initialDelaySeconds>10</fabric8.readinessProbe.initialDelaySeconds>
+        <fabric8.readinessProbe.httpGet.scheme>HTTPS</fabric8.readinessProbe.httpGet.scheme>
+        <fabric8.readinessProbe.initialDelaySeconds>60</fabric8.readinessProbe.initialDelaySeconds>
+        <fabric8.readinessProbe.timeoutSeconds>5</fabric8.readinessProbe.timeoutSeconds>
 
         <fabric8.containerPrivileged>true</fabric8.containerPrivileged>
       	<fabric8.imagePullPolicy>IfNotPresent</fabric8.imagePullPolicy>
