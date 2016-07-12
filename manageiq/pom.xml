@@ -42,11 +42,6 @@
         <fabric8.service.manageiq.containerPort>443</fabric8.service.manageiq.containerPort>
 
         <fabric8.service.type>LoadBalancer</fabric8.service.type>
-        <fabric8.livenessProbe.httpGet.port>443</fabric8.livenessProbe.httpGet.port>
-        <fabric8.livenessProbe.httpGet.path>/</fabric8.livenessProbe.httpGet.path>
-        <fabric8.livenessProbe.httpGet.scheme>HTTPS</fabric8.livenessProbe.httpGet.scheme>
-        <fabric8.livenessProbe.initialDelaySeconds>300</fabric8.livenessProbe.initialDelaySeconds>
-        <fabric8.livenessProbe.timeoutSeconds>5</fabric8.livenessProbe.timeoutSeconds>
 
         <fabric8.readinessProbe.httpGet.port>443</fabric8.readinessProbe.httpGet.port>
         <fabric8.readinessProbe.httpGet.path>/</fabric8.readinessProbe.httpGet.path>
