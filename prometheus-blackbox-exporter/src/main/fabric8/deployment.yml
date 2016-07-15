@@ -1,0 +1,25 @@
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - name: blackbox-exporter
+        image: prom/blackbox-exporter:master
+        ports:
+        - name: http
+          containerPort: 9115
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/blackbox_exporter
+        livenessProbe:
+          httpGet:
+            port: http
+          initialDelaySeconds: 1
+        readinessProbe:
+          httpGet:
+            port: http
+          initialDelaySeconds: 1
+      volumes:
+      - name: config-volume
+        configMap:
+          name: blackbox-exporter

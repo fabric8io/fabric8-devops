@@ -1,0 +1,10 @@
+metadata:
+  annotations:
+    prometheus.io/scrape: "true"
+spec:
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 9090
+

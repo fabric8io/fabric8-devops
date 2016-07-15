@@ -1,0 +1,12 @@
+metadata:
+  name: blackbox-exporter
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9115"
+spec:
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 9115
+

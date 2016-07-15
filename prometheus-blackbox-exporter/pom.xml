@@ -32,29 +32,6 @@
     [Prometheus Blackbox Exporter](https://github.com/prometheus/blackbox_exporter) - blackbox probing of endpoints over HTTP, HTTPS and TCP.
   </description>
 
-  <properties>
-    <http.port>9115</http.port>
-
-    <docker.image>${fabric8.dockerUser}prometheus-blackbox:${project.version}</docker.image>
-    <docker.port.container.http>${http.port}</docker.port.container.http>
-    <docker.port.container.jolokia />
-
-    <fabric8.service.name>blackbox</fabric8.service.name>
-    <fabric8.service.port>80</fabric8.service.port>
-    <fabric8.service.containerPort>${http.port}</fabric8.service.containerPort>
-    <fabric8.service.type>LoadBalancer</fabric8.service.type>
-
-    <fabric8.label.component>prometheus</fabric8.label.component>
-    <fabric8.label.provider>fabric8</fabric8.label.provider>
-
-    <!-- Start Prometheus metrics stuff. -->
-    <fabric8.metrics.scrape>true</fabric8.metrics.scrape>
-    <fabric8.metrics.port>${http.port}</fabric8.metrics.port>
-    <!-- End Prometheus metrics stuff -->
-
-    <fabric8.livenessProbe.port>${http.port}</fabric8.livenessProbe.port>
-  </properties>
-
   <dependencies>
     <dependency>
       <groupId>org.jboss.arquillian.junit</groupId>
@@ -91,35 +68,24 @@
     <plugins>
       <plugin>
         <groupId>io.fabric8</groupId>
-        <artifactId>docker-maven-plugin</artifactId>
-        <version>${docker.maven.plugin.version}</version>
-        <configuration>
-          <images>
-            <image>
-              <name>${docker.image}</name>
-              <build>
-                <from>docker.io/prom/blackbox-exporter:latest</from>
-                <assembly>
-                  <basedir>/bin</basedir>
-                  <inline xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
-                              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                              xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
-                    <id>blackbox-conf</id>
-                    <files>
-                      <file>
-                        <source>${basedir}/src/main/resources/blackbox.yml</source>
-                        <outputDirectory>.</outputDirectory>
-                      </file>
-                    </files>
-                  </inline>
-                </assembly>
-                <ports>
-                  <port>9115</port>
-                </ports>
-              </build>
-            </image>
-          </images>
-        </configuration>
+        <artifactId>fabric8-maven-plugin</artifactId>
+        <version>${fabric8.maven.plugin.version}</version>
+        <executions>
+          <execution>
+            <id>resource</id>
+            <goals>
+              <goal>resource</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>json</id>
+            <phase>none</phase>
+          </execution>
+          <execution>
+            <id>attach</id>
+            <phase>none</phase>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
