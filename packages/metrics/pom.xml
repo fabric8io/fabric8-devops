@@ -38,26 +38,49 @@
       <groupId>io.fabric8.devops.apps</groupId>
       <artifactId>prometheus</artifactId>
       <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
+    </dependency>
+    <dependency>
+      <groupId>io.fabric8.devops.apps</groupId>
+      <artifactId>prometheus-blackbox-exporter</artifactId>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>io.fabric8.devops.apps</groupId>
       <artifactId>grafana</artifactId>
       <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
     </dependency>
-<!--
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>heapster</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
--->
-
   </dependencies>
 
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>io.fabric8</groupId>
+        <artifactId>fabric8-maven-plugin</artifactId>
+        <version>${fabric8.maven.plugin.version}</version>
+        <configuration>
+          <enricher>
+            <default.deployment.deployment>false</default.deployment.deployment>
+            <default.deployment.replicaSet>false</default.deployment.replicaSet>
+            <default.deployment.replicaController>false</default.deployment.replicaController>
+          </enricher>
+        </configuration>
+        <executions>
+          <execution>
+            <id>resource</id>
+            <goals>
+              <goal>resource</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>json</id>
+            <phase>none</phase>
+          </execution>
+          <execution>
+            <id>attach</id>
+            <phase>none</phase>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>
