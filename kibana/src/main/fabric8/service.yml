@@ -1,0 +1,11 @@
+metadata:
+  name: kibana
+spec:
+  type: LoadBalancer
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 5601
+
+
