@@ -33,7 +33,7 @@
   </description>
 
   <properties>
-    <kibana.version>4.5.1</kibana.version>
+    <kibana.version>4.5.3</kibana.version>
     <replicas>1</replicas>
 
     <elasticsearch.url>http://elasticsearch.vagrant.f8/</elasticsearch.url>
