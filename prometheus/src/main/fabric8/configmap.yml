@@ -17,10 +17,10 @@ data:
     #
     # Kubernetes labels will be added as Prometheus labels on metrics via the
     # `labelmap` relabeling action.
-
-    # Scrape config for cluster components.
     scrape_configs:
-    - job_name: 'kubernetes-cluster'
+
+    # Scrape config for API server.
+    - job_name: 'kubernetes-apiservers'
 
       # This TLS & bearer token file config is used to connect to the actual scrape
       # endpoints for cluster components. This is separate to discovery auth
@@ -38,16 +38,58 @@ data:
       - api_servers:
         - 'https://kubernetes.default.svc'
         in_cluster: true
+        role: apiserver
 
       relabel_configs:
-      - source_labels: [__meta_kubernetes_role]
-        action: keep
-        regex: (?:apiserver|node)
       - action: labelmap
         regex: __meta_kubernetes_node_label_(.+)
-      - source_labels: [__meta_kubernetes_role]
-        action: replace
-        target_label: kubernetes_role
+
+    # Scrape config for nodes.
+    - job_name: 'kubernetes-nodes'
+
+      # This TLS & bearer token file config is used to connect to the actual scrape
+      # endpoints for cluster components. This is separate to discovery auth
+      # configuration (`in_cluster` below) because discovery & scraping are two
+      # separate concerns in Prometheus.
+      tls_config:
+        # workaround for Prometheus -> Kubernetes cert issue https://github.com/fabric8io/fabric8-devops/issues/438
+        insecure_skip_verify: true
+        ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+      bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+
+      scheme: https
+
+      kubernetes_sd_configs:
+      - api_servers:
+        - 'https://kubernetes.default.svc'
+        in_cluster: true
+        role: node
+
+      relabel_configs:
+      - action: labelmap
+        regex: __meta_kubernetes_node_label_(.+)
+
+    # Scrape config for node exporter pods deployed as a daemonset.
+    - job_name: 'kubernetes-node-exporters'
+
+      kubernetes_sd_configs:
+      - api_servers:
+        - 'https://kubernetes.default.svc'
+        in_cluster: true
+        role: pod
+
+      relabel_configs:
+        - source_labels: [__meta_kubernetes_pod_name]
+          action: keep
+          regex: node-exporter-.+
+        - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+          action: replace
+          regex: (.+):(?:\d+);(\d+)
+          replacement: ${1}:${2}
+          target_label: __address__
+        - source_labels: [__meta_kubernetes_pod_node_name]
+          action: replace
+          target_label: instance
 
     # Scrape config for service endpoints.
     #
@@ -66,11 +108,12 @@ data:
       - api_servers:
         - 'https://kubernetes.default.svc'
         in_cluster: true
+        role: endpoint
 
       relabel_configs:
-      - source_labels: [__meta_kubernetes_role, __meta_kubernetes_service_annotation_prometheus_io_scrape]
+      - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
         action: keep
-        regex: endpoint;true
+        regex: true
       - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scheme]
         action: replace
         target_label: __scheme__
@@ -86,9 +129,6 @@ data:
         replacement: $1:$2
       - action: labelmap
         regex: __meta_kubernetes_service_label_(.+)
-      - source_labels: [__meta_kubernetes_role]
-        action: replace
-        target_label: kubernetes_role
       - source_labels: [__meta_kubernetes_service_namespace]
         action: replace
         target_label: kubernetes_namespace
@@ -96,7 +136,7 @@ data:
         action: replace
         target_label: kubernetes_name
 
-    # Example scrape config for probing services via the Blackbox Exporter.
+    # Scrape config for probing services via the Blackbox Exporter.
     #
     # The relabeling allows the actual service scrape endpoint to be configured
     # via the following annotations:
@@ -112,11 +152,12 @@ data:
       - api_servers:
         - 'https://kubernetes.default.svc'
         in_cluster: true
+        role: service
 
       relabel_configs:
-      - source_labels: [__meta_kubernetes_role, __meta_kubernetes_service_annotation_prometheus_io_probe]
+      - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_probe]
         action: keep
-        regex: service;true
+        regex: true
       - source_labels: []
         target_label: __address__
         replacement: blackbox
@@ -129,26 +170,24 @@ data:
         replacement: $1.$2.svc
       - action: labelmap
         regex: __meta_kubernetes_service_label_(.+)
-      - source_labels: [__meta_kubernetes_role]
-        action: replace
-        target_label: kubernetes_role
       - source_labels: [__meta_kubernetes_service_namespace]
         action: replace
         target_label: kubernetes_namespace
       - source_labels: [__meta_kubernetes_service_name]
         action: replace
         target_label: kubernetes_name
+
   pod.rules: |-
-    pod:memory_usage_bytes = sum(container_memory_usage_bytes{kubernetes_pod_name=~".+", kubernetes_role="node"}) by (kubernetes_pod_name, kubernetes_namespace)
+    pod:memory_usage_bytes = sum(container_memory_usage_bytes{kubernetes_pod_name=~".+", job="kubernetes-nodes"}) by (kubernetes_pod_name, kubernetes_namespace)
 
-    pod:network_receive_bytes:1m = sum(rate(container_network_receive_bytes_total{kubernetes_pod_name=~".+", kubernetes_role="node"}[1m])) by (kubernetes_pod_name, kubernetes_namespace)
+    pod:network_receive_bytes:1m = sum(rate(container_network_receive_bytes_total{kubernetes_pod_name=~".+", job="kubernetes-nodes"}[1m])) by (kubernetes_pod_name, kubernetes_namespace)
 
-    pod:network_transmit_bytes:1m = sum(rate(container_network_transmit_bytes_total{kubernetes_pod_name=~".+", kubernetes_role="node"}[1m])) by (kubernetes_pod_name, kubernetes_namespace)
+    pod:network_transmit_bytes:1m = sum(rate(container_network_transmit_bytes_total{kubernetes_pod_name=~".+", job="kubernetes-nodes"}[1m])) by (kubernetes_pod_name, kubernetes_namespace)
 
-    pod:cpu_usage_seconds:1m = sum(rate(container_cpu_usage_seconds_total{kubernetes_pod_name=~".+", kubernetes_role="node"}[1m])) by (kubernetes_pod_name, kubernetes_namespace)
+    pod:cpu_usage_seconds:1m = sum(rate(container_cpu_usage_seconds_total{kubernetes_pod_name=~".+", job="kubernetes-nodes"}[1m])) by (kubernetes_pod_name, kubernetes_namespace)
 
     ALERT ServiceDown
-      IF probe_success{kubernetes_role="service"} == 0
+    IF probe_success{job="kubernetes-services"} == 0
       FOR 10s
       LABELS {
         service = "{{$labels.kubernetes_namespace}}/{{$labels.kubernetes_name}}"

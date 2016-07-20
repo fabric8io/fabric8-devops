@@ -2,6 +2,7 @@ metadata:
   annotations:
     prometheus.io/scrape: "true"
 spec:
+  type: LoadBalancer
   ports:
   - name: http
     protocol: TCP

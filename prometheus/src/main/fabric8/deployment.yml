@@ -2,10 +2,10 @@ spec:
   replicas: 1
   template:
     spec:
-      serviceAccount: metrics
+      serviceAccountName: metrics
       containers:
       - name: prometheus
-        image: prom/prometheus:0.20.0
+        image: prom/prometheus:v1.0.0
         ports:
         - name: http
           containerPort: 9090
