@@ -4,24 +4,11 @@ spec:
     spec:
       containers:
       - name: grafana
-        image: ${fabric8.dockerUser}grafana:2.5.0_02
-        env:
-        - name: PROMETHEUS_ADDRESS
-          value: http://prometheus
-        ports:
-        - name: http
-          containerPort: 3000
-        volumeMounts:
-        - name: data-volume
-          mountPath: /var/lib/grafana
         livenessProbe:
           httpGet:
-            port: http
+            port: 3000
           initialDelaySeconds: 5
         readinessProbe:
           httpGet:
-            port: http
+            port: 3000
           initialDelaySeconds: 5
-      volumes:
-      - name: data-volume
-        emptyDir: {}

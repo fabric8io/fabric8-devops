@@ -1,11 +1,11 @@
 metadata:
-  annotations:
-    prometheus.io/scrape: "true"
+  name: kibana
 spec:
   type: LoadBalancer
   ports:
   - name: http
     protocol: TCP
     port: 80
-    targetPort: 9090
+    targetPort: 5601
+
 

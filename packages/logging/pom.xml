@@ -25,36 +25,57 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>logging</artifactId>
-  <packaging>pom</packaging>
 
   <name>Fabric8 DevOps :: Packages :: Management :: Loggging</name>
-
-  <properties>
-    <fabric8.combineDependencies>true</fabric8.combineDependencies>
-  </properties>
 
   <dependencies>
     <dependency>
       <groupId>io.fabric8.devops.apps</groupId>
       <artifactId>elasticsearch</artifactId>
       <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
     </dependency>
     <dependency>
       <groupId>io.fabric8.devops.apps</groupId>
       <artifactId>kibana</artifactId>
       <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
     </dependency>
     <dependency>
       <groupId>io.fabric8.devops.apps</groupId>
       <artifactId>fluentd</artifactId>
       <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
     </dependency>
   </dependencies>
 
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>io.fabric8</groupId>
+        <artifactId>fabric8-maven-plugin</artifactId>
+        <version>${fabric8.maven.plugin.version}</version>
+        <configuration>
+          <enricher>
+            <default.deployment.deployment>false</default.deployment.deployment>
+            <default.deployment.replicaSet>false</default.deployment.replicaSet>
+            <default.deployment.replicaController>false</default.deployment.replicaController>
+          </enricher>
+        </configuration>
+        <executions>
+          <execution>
+            <id>resource</id>
+            <goals>
+              <goal>resource</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>json</id>
+            <phase>none</phase>
+          </execution>
+          <execution>
+            <id>attach</id>
+            <phase>none</phase>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>

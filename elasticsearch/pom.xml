@@ -33,32 +33,9 @@
   </description>
 
   <properties>
-    <docker.image>${fabric8.dockerUser}elasticsearch-k8s:2.3.2</docker.image>
-    <docker.port.container.http>9200</docker.port.container.http>
-    <docker.port.container.transport>9300</docker.port.container.transport>
-    <docker.port.container.jolokia />
+    <elasticsearch.version>2.3.4</elasticsearch.version>
 
-    <fabric8.env.SERVICE>elasticsearch-masters</fabric8.env.SERVICE>
-
-    <fabric8.service.port>9200</fabric8.service.port>
-    <fabric8.service.containerPort>9200</fabric8.service.containerPort>
-    <fabric8.service.type>LoadBalancer</fabric8.service.type>
-
-    <fabric8.service.elasticsearch-masters.port>9300</fabric8.service.elasticsearch-masters.port>
-    <fabric8.service.elasticsearch-masters.containerPort>9300</fabric8.service.elasticsearch-masters.containerPort>
-    <fabric8.service.elasticsearch-masters.headless>true</fabric8.service.elasticsearch-masters.headless>
-
-    <fabric8.label.project>elasticsearch</fabric8.label.project>
-    <fabric8.label.provider>fabric8</fabric8.label.provider>
-
-    <fabric8.volume.elasticsearch-data.emptyDir />
-    <fabric8.volume.elasticsearch-data.mountPath>/usr/share/elasticsearch/data</fabric8.volume.elasticsearch-data.mountPath>
-
-    <fabric8.livenessProbe.port>9300</fabric8.livenessProbe.port>
-    <fabric8.livenessProbe.initialDelaySeconds>60</fabric8.livenessProbe.initialDelaySeconds>
-    <fabric8.readinessProbe.httpGet.path>/_template/logstash</fabric8.readinessProbe.httpGet.path>
-    <fabric8.readinessProbe.httpGet.port>9200</fabric8.readinessProbe.httpGet.port>
-    <fabric8.readinessProbe.initialDelaySeconds>5</fabric8.readinessProbe.initialDelaySeconds>
+    <replicas>1</replicas>
   </properties>
 
   <build>
@@ -70,25 +47,33 @@
     </resources>
     <plugins>
       <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <fork>true</fork>
-          <compilerArgs>
-            <arg>-J-Dproject.version=${project.version}</arg>
-          </compilerArgs>
-        </configuration>
-      </plugin>
-      <plugin>
         <groupId>io.fabric8</groupId>
-        <artifactId>docker-maven-plugin</artifactId>
-        <version>${docker.maven.plugin.version}</version>
+        <artifactId>fabric8-maven-plugin</artifactId>
+        <version>${fabric8.maven.plugin.version}</version>
+        <executions>
+          <execution>
+            <id>resource</id>
+            <goals>
+              <goal>resource</goal>
+              <goal>build</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>json</id>
+            <phase>none</phase>
+          </execution>
+          <execution>
+            <id>attach</id>
+            <phase>none</phase>
+          </execution>
+        </executions>
         <configuration>
           <image>${fabric8.dockerUser}elasticsearch-logstash-template:${project.version}</image>
           <images>
             <image>
               <name>${fabric8.dockerUser}elasticsearch-logstash-template:${project.version}</name>
               <build>
-                <from>docker.io/centos:7</from>
+                <from>centos:7</from>
                 <assembly>
                   <basedir>/</basedir>
                   <mode>tar</mode>
@@ -119,16 +104,6 @@
 
   <dependencies>
     <dependency>
-      <groupId>io.fabric8</groupId>
-      <artifactId>kubernetes-api</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>io.fabric8</groupId>
-      <artifactId>kubernetes-generator</artifactId>
-    </dependency>
-
-    <dependency>
       <groupId>org.jboss.arquillian.junit</groupId>
       <artifactId>arquillian-junit-container</artifactId>
       <scope>test</scope>
@@ -152,48 +127,4 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
-  <profiles>
-    <profile>
-      <id>docker-build</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>io.fabric8</groupId>
-            <artifactId>docker-maven-plugin</artifactId>
-            <version>${docker.maven.plugin.version}</version>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>build</goal>
-                </goals>
-                <phase>package</phase>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>docker-push</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>io.fabric8</groupId>
-            <artifactId>docker-maven-plugin</artifactId>
-            <version>${docker.maven.plugin.version}</version>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>build</goal>
-                  <goal>push</goal>
-                </goals>
-                <phase>package</phase>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
 </project>
