@@ -1,0 +1,19 @@
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - name: nginx-ingress
+        image: fabric8/nginx-ingress:0.3
+        args:
+          - -v=3
+          - -nginx-configmaps=default/nginx-config
+        ports:
+        - containerPort: 80
+          hostPort: 80
+          protocol: TCP
+        - containerPort: 443
+          hostPort: 443
+          protocol: TCP
+      nodeSelector:
+          externalIP: true

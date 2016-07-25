@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+data:
+  client-max-body-size: 2000m
+  proxy-connect-timeout: 10s
+  proxy-read-timeout: 10s
+  server-names-hash-bucket-size: "256"
+  server-names-hash-max-size: "1024"
