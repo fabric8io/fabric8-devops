@@ -10,10 +10,35 @@ spec:
       containers:
       - image: prom/node-exporter
         name: node-exporter
+        args:
+        - -collector.procfs
+        - /host/proc
+        - -collector.sysfs
+        - /host/proc
+        - -collector.filesystem.ignored-mount-points
+        - "^/(sys|proc|dev|host|etc)($|/)"
         ports:
         - containerPort: 9100
-          hostPort: 9100
           name: scrape
+        volumeMounts:
+          - name: host-proc
+            mountPath: /host/proc
+            readOnly: true
+          - name: host-sys
+            mountPath: /host/sys
+            readOnly: true
+          - name: host-root
+            mountPath: /rootfs
+            readOnly: true
       serviceAccountName: node-exporter
       hostNetwork: true
-      hostPID: true
+      volumes:
+        - name: host-proc
+          hostPath:
+            path: /proc
+        - name: host-sys
+          hostPath:
+            path: /sys
+        - name: host-root
+          hostPath:
+            path: /
