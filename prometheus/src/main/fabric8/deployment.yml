@@ -6,12 +6,17 @@ spec:
       containers:
       - name: prometheus
         image: prom/prometheus:v1.0.1
+        args:
+          - -config.file=/etc/prometheus/config/prometheus.yml
+          - -storage.local.path=/prometheus
+          - -web.console.libraries=/etc/prometheus/console_libraries
+          - -web.console.templates=/etc/prometheus/consoles
         ports:
         - name: http
           containerPort: 9090
         volumeMounts:
         - name: config-volume
-          mountPath: /etc/prometheus
+          mountPath: /etc/prometheus/config
         - name: data-volume
           mountPath: /prometheus
         livenessProbe:
