@@ -54,9 +54,11 @@
         <version>${fabric8.maven.plugin.version}</version>
         <configuration>
           <enricher>
-            <default.deployment.deployment>false</default.deployment.deployment>
-            <default.deployment.replicaSet>false</default.deployment.replicaSet>
-            <default.deployment.replicaController>false</default.deployment.replicaController>
+            <config>
+              <default.deployment.deployment>false</default.deployment.deployment>
+              <default.deployment.replicaSet>false</default.deployment.replicaSet>
+              <default.deployment.replicaController>false</default.deployment.replicaController>
+            </config>
           </enricher>
         </configuration>
         <executions>
