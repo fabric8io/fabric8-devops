@@ -33,7 +33,7 @@
     </description>
 
     <properties>
-      <fabric8-fluentd-kubernetes.version>v1.15</fabric8-fluentd-kubernetes.version>
+      <fabric8-fluentd-kubernetes.version>v1.16</fabric8-fluentd-kubernetes.version>
     </properties>
 
     <dependencies>

@@ -4,10 +4,16 @@ metadata:
   name: fluentd
 spec:
   template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
     spec:
       containers:
       - image: fabric8/fluentd-kubernetes:${fabric8-fluentd-kubernetes.version}
         name: fluentd
+        ports:
+          - name: scrape
+            containerPort: 24231
         env:
           - name: ELASTICSEARCH_HOST
             value: elasticsearch
@@ -23,7 +29,7 @@ spec:
           limits:
             cpu: 100m
         securityContext:
-          priviliged: true
+          privileged: true
       serviceAccountName: fluentd
       volumes:
         - name: varlog
