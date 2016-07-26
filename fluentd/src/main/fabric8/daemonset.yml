@@ -29,7 +29,7 @@ spec:
           limits:
             cpu: 100m
         securityContext:
-          priviliged: true
+          privileged: true
       serviceAccountName: fluentd
       volumes:
         - name: varlog
