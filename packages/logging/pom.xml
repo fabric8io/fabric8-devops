@@ -51,32 +51,13 @@
       <plugin>
         <groupId>io.fabric8</groupId>
         <artifactId>fabric8-maven-plugin</artifactId>
-        <version>${fabric8.maven.plugin.version}</version>
         <configuration>
           <enricher>
-            <config>
-              <default.deployment.deployment>false</default.deployment.deployment>
-              <default.deployment.replicaSet>false</default.deployment.replicaSet>
-              <default.deployment.replicaController>false</default.deployment.replicaController>
-            </config>
+            <excludes>
+              <exclude>f8-controller</exclude>
+            </excludes>
           </enricher>
         </configuration>
-        <executions>
-          <execution>
-            <id>resource</id>
-            <goals>
-              <goal>resource</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>json</id>
-            <phase>none</phase>
-          </execution>
-          <execution>
-            <id>attach</id>
-            <phase>none</phase>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>

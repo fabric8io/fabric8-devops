@@ -49,26 +49,7 @@
       <plugin>
         <groupId>io.fabric8</groupId>
         <artifactId>fabric8-maven-plugin</artifactId>
-        <version>${fabric8.maven.plugin.version}</version>
-        <executions>
-          <execution>
-            <id>resource</id>
-            <goals>
-              <goal>resource</goal>
-              <goal>build</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>json</id>
-            <phase>none</phase>
-          </execution>
-          <execution>
-            <id>attach</id>
-            <phase>none</phase>
-          </execution>
-        </executions>
         <configuration>
-          <image>${fabric8.dockerUser}elasticsearch-logstash-template:${project.version}</image>
           <images>
             <image>
               <name>${fabric8.dockerUser}elasticsearch-logstash-template:${project.version}</name>

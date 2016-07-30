@@ -68,7 +68,6 @@
       <plugin>
         <groupId>io.fabric8</groupId>
         <artifactId>fabric8-maven-plugin</artifactId>
-        <version>${fabric8.maven.plugin.version}</version>
         <configuration>
           <images>
             <image>
@@ -97,42 +96,7 @@
               </build>
             </image>
           </images>
-          <deployment>
-            <containers>
-              <container>
-                <ports>
-                  <port>3000</port>
-                </ports>
-                <mounts>
-                  <data>/var/lib/grafana</data>
-                </mounts>
-              </container>
-            </containers>
-            <volumes>
-              <volume>
-                <name>data</name>
-                <type>emptyDir</type>
-              </volume>
-            </volumes>
-          </deployment>
         </configuration>
-        <executions>
-          <execution>
-            <id>fabric8</id>
-            <goals>
-              <goal>resource</goal>
-              <goal>build</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>json</id>
-            <phase>none</phase>
-          </execution>
-          <execution>
-            <id>attach</id>
-            <phase>none</phase>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>
