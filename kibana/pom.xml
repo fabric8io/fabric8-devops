@@ -50,26 +50,7 @@
       <plugin>
         <groupId>io.fabric8</groupId>
         <artifactId>fabric8-maven-plugin</artifactId>
-        <version>${fabric8.maven.plugin.version}</version>
-        <executions>
-          <execution>
-            <id>resource</id>
-            <goals>
-              <goal>resource</goal>
-              <goal>build</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>json</id>
-            <phase>none</phase>
-          </execution>
-          <execution>
-            <id>attach</id>
-            <phase>none</phase>
-          </execution>
-        </executions>
         <configuration>
-          <image>${fabric8.dockerUser}kibana-config:${project.version}</image>
           <images>
             <image>
               <name>${fabric8.dockerUser}kibana-config:${project.version}</name>
@@ -78,7 +59,8 @@
                 <assembly>
                   <basedir>/</basedir>
                   <mode>tar</mode>
-                  <inline xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2" xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+                  <inline xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+                          xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
                     <id>kibana-config</id>
                     <fileSets>
                       <fileSet>
