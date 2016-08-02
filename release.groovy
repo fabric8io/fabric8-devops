@@ -43,6 +43,16 @@ def approveRelease(project){
   }
 }
 
+def updateDownstreamDependencies(stagedProject) {
+  pushPomPropertyChangePR {
+    propertyName = 'fabric8-devops.version'
+    projects = [
+            'fabric8io/fabric8-maven-dependencies'
+    ]
+    version = stagedProject[1]
+  }
+}
+
 def release(project){
   releaseProject{
     stagedProject = project
