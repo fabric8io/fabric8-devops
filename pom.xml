@@ -215,40 +215,6 @@
         </plugins>
       </pluginManagement>
       <plugins>
-        <!-- generate a .zip with all the quickstarts -->
-        <plugin>
-          <groupId>io.fabric8</groupId>
-          <artifactId>fabric8-maven-plugin</artifactId>
-          <version>${fabric8.version}</version>
-          <executions>
-            <execution>
-              <id>json</id>
-              <phase>generate-resources</phase>
-              <goals>
-                <goal>json</goal>
-              </goals>
-             </execution>
-             <execution>
-              <id>attach</id>
-              <phase>package</phase>
-              <goals>
-                <goal>attach</goal>
-              </goals>
-            </execution>
-<!--
-             <execution>
-              <id>helm</id>
-              <phase>package</phase>
-              <goals>
-                <goal>helm</goal>
-              </goals>
-            </execution>
--->
-          </executions>
-          <configuration>
-            <replaceReadmeLinksPrefix>/apps/</replaceReadmeLinksPrefix>
-          </configuration>
-        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-resources-plugin</artifactId>
@@ -364,6 +330,70 @@
     </dependencyManagement>
 
     <profiles>
+      <profile>
+        <id>fmp-v3</id>
+        <build>
+          <plugins>
+            <plugin>
+              <groupId>io.fabric8</groupId>
+              <artifactId>fabric8-maven-plugin</artifactId>
+              <version>${fabric8.maven.plugin.version}</version>
+              <executions>
+                <execution>
+                  <id>fmp</id>
+                  <goals>
+                    <goal>resource</goal>
+                    <goal>build</goal>
+                  </goals>
+                </execution>
+              </executions>
+            </plugin>
+          </plugins>
+        </build>
+        <activation>
+          <file>
+            <missing>uses.fmp2</missing>
+          </file>
+        </activation>
+      </profile>
+
+      <profile>
+        <id>fmp-v2</id>
+        <build>
+          <plugins>
+            <plugin>
+              <groupId>io.fabric8</groupId>
+              <artifactId>fabric8-maven-plugin</artifactId>
+              <version>${fabric8.version}</version>
+              <executions>
+                <execution>
+                  <id>json</id>
+                  <phase>generate-resources</phase>
+                  <goals>
+                    <goal>json</goal>
+                  </goals>
+                </execution>
+                <execution>
+                  <id>attach</id>
+                  <phase>package</phase>
+                  <goals>
+                    <goal>attach</goal>
+                  </goals>
+                </execution>
+              </executions>
+              <configuration>
+                <replaceReadmeLinksPrefix>/apps/</replaceReadmeLinksPrefix>
+              </configuration>
+            </plugin>
+          </plugins>
+        </build>
+        <activation>
+          <file>
+            <exists>uses.fmp2</exists>
+          </file>
+        </activation>
+      </profile>
+
         <profile>
           <id>systests</id>
           <modules>
