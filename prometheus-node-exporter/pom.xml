@@ -72,7 +72,7 @@
         <configuration>
           <enricher>
             <excludes>
-              <exclude>f8-controller</exclude>
+              <exclude>fmp-controller</exclude>
             </excludes>
           </enricher>
         </configuration>
