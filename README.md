@@ -1,5 +1,7 @@
 ## Fabric8 DevOps 
 
+[![Join the chat at https://gitter.im/fabric8io/fabric8-devops](https://badges.gitter.im/fabric8io/fabric8-devops.svg)](https://gitter.im/fabric8io/fabric8-devops?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ![Apache 2](http://img.shields.io/badge/license-Apache%202-red.svg)
 
 <p align="center">
