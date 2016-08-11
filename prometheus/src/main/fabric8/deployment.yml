@@ -27,6 +27,16 @@ spec:
           httpGet:
             port: http
           initialDelaySeconds: 1
+      - name: configmap-reload
+        image: jimmidyson/configmap-reload:v0.1
+        args:
+          - -volume-dir
+          - /etc/prometheus/config
+          - -webhook-url
+          - http://localhost:9090/-/reload
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/prometheus/config
       volumes:
       - name: config-volume
         configMap:
