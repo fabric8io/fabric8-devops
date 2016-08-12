@@ -141,7 +141,6 @@
   </build>
 
   <profiles>
-
     <profile>
       <id>test</id>
       <properties>
