@@ -226,7 +226,11 @@ public class ChaosMonkey {
             LOG.warn("No notifier so can't say: " + message);
         } else {
             String room = getRoom();
-            notifier.notifyRoom(room, message);
+            try {
+                notifier.notifyRoom(room, message);
+            } catch (Throwable e) {
+                LOG.warn("Caught: " + e);
+            }
         }
     }
 
