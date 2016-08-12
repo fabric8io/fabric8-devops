@@ -1,0 +1,39 @@
+---
+apiVersion: "extensions/v1beta1"
+kind: "Deployment"
+metadata:
+  labels:
+    name: "hubot-slack"
+  name: "hubot-slack"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: "hubot-slack"
+  template:
+    metadata:
+      labels:
+        name: "hubot-slack"
+      name: "hubot-slack"
+    spec:
+      containers:
+      - env:
+        - name: "HUBOT_SLACK_TOKEN"
+          valueFrom:
+            configMapKeyRef:
+              key: "hubot-slack-token"
+              name: "hubot-slack"
+        - name: "HUBOT_GRAFANA_HOST"
+          value: "${HUBOT_SLACK_GRAFANA_HOST}"
+        - name: "HUBOT_GRAFANA_API_KEY"
+          value: "${HUBOT_SLACK_GRAFANA_API_KEY}"
+        - name: "HUBOT_JENKINS_URL"
+          valueFrom:
+            configMapKeyRef:
+              key: "hubot-jenkins-url"
+              name: "hubot-slack"
+        image: "fabric8/hubot-slack:${project.version}"
+        name: "hubot-slack"
+        ports:
+        - containerPort: 8080
+          protocol: "TCP"

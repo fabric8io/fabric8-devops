@@ -1,0 +1,48 @@
+---
+apiVersion: "extensions/v1beta1"
+kind: "Deployment"
+metadata:
+  labels:
+    provider: "fabric8"
+    project: "${project.artifactId}"
+    version: "${project.version}"
+    group: "io.fabric8.devops.apps"
+  name: "gitlab"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      provider: "fabric8"
+      project: "${project.artifactId}"
+      group: "io.fabric8.devops.apps"
+  template:
+    metadata:
+      labels:
+        provider: "fabric8"
+        project: "${project.artifactId}"
+        version: "${project.version}"
+        group: "io.fabric8.devops.apps"
+    spec:
+      containers:
+      - env:
+        - name: "KUBERNETES_NAMESPACE"
+          valueFrom:
+            fieldRef:
+              fieldPath: "metadata.namespace"
+        image: "gitlab/gitlab-ce"
+        imagePullPolicy: "IfNotPresent"
+        name: "gitlab"
+        ports:
+        - containerPort: 22
+          name: "ssh"
+        - containerPort: 80
+          name: "http"
+        - containerPort: 443
+          name: "https"
+        resources:
+          limits:
+            cpu: "0"
+            memory: "0"
+          requests:
+            cpu: "0"
+            memory: "0"
