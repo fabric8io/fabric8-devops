@@ -1,4 +1,4 @@
-<!--
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><!--
 
      Copyright 2005-2015 Red Hat, Inc.
 
@@ -14,15 +14,14 @@
      implied.  See the License for the specific language governing
      permissions and limitations under the License.
 
--->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+--><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
      <groupId>io.fabric8.devops.apps</groupId>
      <artifactId>fabric8-devops</artifactId>
-    <version>2.2.68-SNAPSHOT</version>
+    <version>2.2-SNAPSHOT</version>
   </parent>
 
   <artifactId>prometheus-alertmanager</artifactId>
@@ -34,19 +33,7 @@
 
   <properties>
     <docker.image>${fabric8.dockerUser}prometheus-alertmanager:${project.version}</docker.image>
-    <docker.port.container.http>9093</docker.port.container.http>
-    <docker.port.container.jolokia />
-
-    <fabric8.service.name>alertmanager</fabric8.service.name>
-    <fabric8.service.port>80</fabric8.service.port>
-    <fabric8.service.containerPort>9093</fabric8.service.containerPort>
-    <fabric8.service.type>LoadBalancer</fabric8.service.type>
-
-    <fabric8.label.component>prometheus</fabric8.label.component>
-    <fabric8.label.provider>fabric8</fabric8.label.provider>
-
-    <fabric8.livenessProbe.port>9093</fabric8.livenessProbe.port>
-  </properties>
+    </properties>
 
   <dependencies>
     <dependency>
@@ -82,10 +69,12 @@
       </resource>
     </resources>
     <plugins>
+      
+    
       <plugin>
         <groupId>io.fabric8</groupId>
-        <artifactId>docker-maven-plugin</artifactId>
-        <version>${docker.maven.plugin.version}</version>
+        <artifactId>fabric8-maven-plugin</artifactId>
+        <version>${fabric8.maven.plugin.version}</version>
         <configuration>
           <images>
             <image>
@@ -94,9 +83,7 @@
                 <from>docker.io/prom/alertmanager:dev</from>
                 <assembly>
                   <basedir>/bin</basedir>
-                  <inline xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
-                              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                              xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+                  <inline xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2" xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
                     <id>blackbox-conf</id>
                     <files>
                       <file>
@@ -114,6 +101,6 @@
           </images>
         </configuration>
       </plugin>
-    </plugins>
+      </plugins>
   </build>
 </project>
