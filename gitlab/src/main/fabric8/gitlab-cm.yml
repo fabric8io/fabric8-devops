@@ -1,0 +1,26 @@
+---
+apiVersion: "v1"
+data:
+  jenkins-gitlab-password: "RedHat$1"
+  gitlab-url: "gitlab.vagrant.f8"
+  jenkins-gitlab-user: "jenkins"
+  jenkins-gitlab-email: "gitlab@fabric8.local"
+kind: "ConfigMap"
+metadata:
+  annotations:
+    fabric8.gitlab/summary: "[Gitlab](http://gitlab.com/) - A self-hosted Git service"
+    description: "Gitlab is a self-hosted Git service      \n\nMore details on the\
+      \ <a href=\"http://gitlab.com/\" target=\"gitlab\">Gitlab home page</a>.\n"
+    fabric8.io/json-schema: "{\n  \"type\" : \"object\",\n  \"properties\" : {\n \
+      \   \"JENKINS_GITLAB_USER\" : {\n      \"type\" : \"string\",\n      \"description\"\
+      \ : \"The user name for Jenkins to login to Gitlab\",\n      \"default\" : \"\
+      jenkins\"\n    },\n    \"JENKINS_GITLAB_PASSWORD\" : {\n      \"type\" : \"\
+      string\",\n      \"description\" : \"The password for Jenkins to login to Gitlab\"\
+      ,\n      \"default\" : \"RedHat$1\"\n    },\n    \"GITLAB_URL\" : {\n      \"\
+      type\" : \"string\",\n      \"description\" : \"The GitLab server URL\",\n \
+      \     \"default\" : \"gitlab.vagrant.f8\"\n    },\n    \"JENKINS_GITLAB_EMAIL\"\
+      \ : {\n      \"type\" : \"string\",\n      \"description\" : \"The email address\
+      \ of the Jenkins user on Gitlab\",\n      \"default\" : \"gitlab@fabric8.local\"\
+      \n    }\n  }\n}"
+  labels: {}
+  name: "gitlab"

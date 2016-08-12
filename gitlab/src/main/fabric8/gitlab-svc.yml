@@ -1,0 +1,17 @@
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  labels:
+    project: "${project.artifactId}"
+    provider: "fabric8"
+  name: "gitlab"
+spec:
+  ports:
+  - port: 80
+    protocol: "TCP"
+    targetPort: 80
+  selector:
+    project: "gitlab"
+    provider: "fabric8"
+  type: "LoadBalancer"

@@ -1,0 +1,117 @@
+---
+apiVersion: "extensions/v1beta1"
+kind: "Deployment"
+metadata:
+  annotations:
+    fabric8.io/iconUrl: "https://cdn.rawgit.com/fabric8io/fabric8-devops/master/jenkins/src/main/fabric8/icon.svg"
+  labels:
+    provider: "fabric8"
+    project: "${project.artifactId}"
+    version: "${project.version}"
+    group: "io.fabric8.devops.apps"
+  name: "jenkins"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      provider: "fabric8"
+      project: "${project.artifactId}"
+      group: "io.fabric8.devops.apps"
+  template:
+    metadata:
+      annotations:
+        fabric8.io/secret-ssh-key: "jenkins-git-ssh,jenkins-master-ssh"
+        fabric8.io/secret-ssh-config: "jenkins-ssh-config"
+        fabric8.io/secret-gpg-key: "jenkins-release-gpg"
+        fabric8.io/secret-maven-settings: "jenkins-maven-settings"
+        fabric8.io/secret-hub-api-token: "jenkins-hub-api-token"
+        fabric8.io/secret-docker-cfg: "jenkins-docker-cfg"
+      labels:
+        provider: "fabric8"
+        project: "${project.artifactId}"
+        version: "${project.version}"
+        group: "io.fabric8.devops.apps"
+    spec:
+      containers:
+      - env:
+        - name: "JENKINS_WORKFLOW_GIT_REPOSITORY"
+          valueFrom:
+            configMapKeyRef:
+              key: "jenkins-workflow-git-repository"
+              name: "jenkins"
+        - name: "PROJECT_VERSION"
+          valueFrom:
+            configMapKeyRef:
+              key: "project-version"
+              name: "jenkins"
+        - name: "PIPELINE_ELASTICSEARCH_PROTOCOL"
+          valueFrom:
+            configMapKeyRef:
+              key: "pipeline-elasticsearch-protocol"
+              name: "jenkins"
+        - name: "JENKINS_GOGS_PASSWORD"
+          valueFrom:
+            configMapKeyRef:
+              key: "jenkins-gogs-password"
+              name: "jenkins"
+        - name: "JENKINS_GOGS_USER"
+          valueFrom:
+            configMapKeyRef:
+              key: "jenkins-gogs-user"
+              name: "jenkins"
+        - name: "JENKINS_GOGS_EMAIL"
+          valueFrom:
+            configMapKeyRef:
+              key: "jenkins-gogs-email"
+              name: "jenkins"
+        - name: "PIPELINE_ELASTICSEARCH_HOST"
+          valueFrom:
+            configMapKeyRef:
+              key: "pipeline-elasticsearch-host"
+              name: "jenkins"
+        - name: "JENKINS_JOBS_GIT_REPOSITORY"
+          valueFrom:
+            configMapKeyRef:
+              key: "jenkins-jobs-git-repository"
+              name: "jenkins"
+        - name: "KUBERNETES_NAMESPACE"
+          valueFrom:
+            fieldRef:
+              fieldPath: "metadata.namespace"
+        image: "fabric8/jenkins-docker:${project.version}"
+        imagePullPolicy: "IfNotPresent"
+        lifecycle:
+          postStart:
+            exec:
+              command:
+              - "/root/postStart.sh"
+        name: "jenkins"
+        ports:
+        - containerPort: 50000
+          name: "slave"
+        - containerPort: 8080
+          name: "http"
+        resources:
+          limits:
+            cpu: "0"
+            memory: "0"
+          requests:
+            cpu: "0"
+            memory: "0"
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - mountPath: "/var/run/docker.sock"
+          name: "data"
+          readOnly: false
+        - mountPath: "/home/jenkins/.docker"
+          name: "jenkins-docker-cfg"
+          readOnly: false
+      serviceAccountName: "jenkins"
+      volumes:
+      - hostPath:
+          path: "/var/run/docker.sock"
+        name: "data"
+      - name: "jenkins-docker-cfg"
+        secret:
+          secretName: "jenkins-docker-cfg"
