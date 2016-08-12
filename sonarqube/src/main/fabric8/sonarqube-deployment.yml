@@ -1,0 +1,32 @@
+---
+apiVersion: "extensions/v1beta1"
+kind: "Deployment"
+metadata:
+  labels:
+    name: "sonarqube"
+  name: "sonarqube"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: "sonarqube"
+  template:
+    metadata:
+      labels:
+        name: "sonarqube"
+      name: "sonarqube"
+    spec:
+      containers:
+      - env:
+        - name: "DB_PORT_3306_TCP_ADDR"
+          value: "localhost"
+        image: "tpires/sonar-server"
+        name: "sonarqube-server-container"
+        ports:
+        - containerPort: 9000
+          protocol: "TCP"
+      - image: "tpires/sonar-mysql"
+        name: "sonarqube-database-container"
+        ports:
+        - containerPort: 3306
+          protocol: "TCP"
