@@ -1,0 +1,100 @@
+---
+apiVersion: "extensions/v1beta1"
+kind: "Deployment"
+metadata:
+  annotations:
+    fabric8.io/iconUrl: "https://cdn.rawgit.com/fabric8io/fabric8-devops/master/hubot-irc/src/main/fabric8/icon.png"
+  labels:
+    provider: "fabric8"
+    project: "${project.artifactId}"
+    version: "${project.version}"
+    group: "io.fabric8.devops.apps"
+  name: "hubot-irc"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      provider: "fabric8"
+      project: "${project.artifactId}"
+      group: "io.fabric8.devops.apps"
+  template:
+    metadata:
+      labels:
+        provider: "fabric8"
+        project: "${project.artifactId}"
+        version: "${project.version}"
+        group: "io.fabric8.devops.apps"
+    spec:
+      containers:
+      - env:
+        - name: "HUBOT_IRC_USESSL"
+          valueFrom:
+            configMapKeyRef:
+              key: "hubot-irc-usessl"
+              name: "hubot-irc"
+        - name: "HUBOT_GRAFANA_API_KEY"
+          valueFrom:
+            configMapKeyRef:
+              key: "hubot-grafana-api-key"
+              name: "hubot-irc"
+        - name: "HUBOT_IRC_NICK"
+          valueFrom:
+            configMapKeyRef:
+              key: "hubot-irc-nick"
+              name: "hubot-irc"
+        - name: "HUBOT_IRC_DEBUG"
+          valueFrom:
+            configMapKeyRef:
+              key: "hubot-irc-debug"
+              name: "hubot-irc"
+        - name: "HUBOT_IRC_ROOMS"
+          valueFrom:
+            configMapKeyRef:
+              key: "hubot-irc-rooms"
+              name: "hubot-irc"
+        - name: "HUBOT_GRAFANA_HOST"
+          valueFrom:
+            configMapKeyRef:
+              key: "hubot-grafana-host"
+              name: "hubot-irc"
+        - name: "HUBOT_IRC_UNFLOOD"
+          valueFrom:
+            configMapKeyRef:
+              key: "hubot-irc-unflood"
+              name: "hubot-irc"
+        - name: "HUBOT_IRC_SERVER"
+          valueFrom:
+            configMapKeyRef:
+              key: "hubot-irc-server"
+              name: "hubot-irc"
+        - name: "HUBOT_JENKINS_URL"
+          valueFrom:
+            configMapKeyRef:
+              key: "hubot-jenkins-url"
+              name: "hubot-irc"
+        - name: "HUBOT_IRC_NICKSERV_PASSWORD"
+          valueFrom:
+            configMapKeyRef:
+              key: "hubot-irc-nickserv-password"
+              name: "hubot-irc"
+        - name: "HUBOT_IRC_PASSWORD"
+          valueFrom:
+            configMapKeyRef:
+              key: "hubot-irc-password"
+              name: "hubot-irc"
+        - name: "KUBERNETES_NAMESPACE"
+          valueFrom:
+            fieldRef:
+              fieldPath: "metadata.namespace"
+        image: "fabric8/hubot-irc:${project.version}"
+        name: "hubot-irc"
+        ports:
+        - containerPort: 8080
+          name: "http"
+        resources:
+          limits:
+            cpu: "0"
+            memory: "0"
+          requests:
+            cpu: "0"
+            memory: "0"

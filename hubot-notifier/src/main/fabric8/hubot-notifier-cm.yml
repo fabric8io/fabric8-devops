@@ -1,0 +1,25 @@
+---
+apiVersion: "v1"
+data:
+  hubot-password: "RedHat$1"
+  kubernetes-dns-domain: "cluster.local"
+  hubot-username: "fabric8"
+kind: "ConfigMap"
+metadata:
+  annotations:
+    fabric8.hubot-notifier/summary: "Watches the OpenShift environment and notifies\
+      \ Hubot of events such as builds completing or failing"
+    description: "Watches the OpenShift environment and notifies Hubot of events such\
+      \ as builds completing or failing."
+    fabric8.hubot-notifier/iconUrl: "https://cdn.rawgit.com/fabric8io/fabric8-devops/master/hubot-notifier/src/main/fabric8/icon.png"
+    fabric8.io/json-schema: "{\n  \"type\" : \"object\",\n  \"properties\" : {\n \
+      \   \"HUBOT_USERNAME\" : {\n      \"type\" : \"string\",\n      \"description\"\
+      \ : \"The username for Hubot to login to the chat service\",\n      \"default\"\
+      \ : \"fabric8\"\n    },\n    \"KUBERNETES_DNS_DOMAIN\" : {\n      \"type\" :\
+      \ \"string\",\n      \"description\" : \"The DNS domain added to the serviceName.namespace.svc.\
+      \ to make the DNS name\",\n      \"default\" : \"cluster.local\"\n    },\n \
+      \   \"HUBOT_PASSWORD\" : {\n      \"type\" : \"string\",\n      \"description\"\
+      \ : \"The password for Hubot to login to the chat service\",\n      \"default\"\
+      \ : \"RedHat$1\"\n    }\n  }\n}"
+  labels: {}
+  name: "hubot-notifier"
