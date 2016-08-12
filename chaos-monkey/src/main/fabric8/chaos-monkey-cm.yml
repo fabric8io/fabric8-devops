@@ -1,0 +1,15 @@
+---
+apiVersion: "v1"
+data:
+  chaos-monkey-kill-frequency-seconds: "60"
+  chaos-monkey-excludes: "letschat*,gogs*"
+  chaos-monkey-room: "#fabric8_${namespace}"
+  chaos-monkey-includes: "*"
+kind: "ConfigMap"
+metadata:
+  annotations:
+    fabric8.chaos-monkey/summary: "Kills random pods for chaos fun!"
+    description: "Randomly kills pods to help check your environment can withstand\
+      \ failures"
+    fabric8.chaos-monkey/iconUrl: "https://cdn.rawgit.com/fabric8io/fabric8-devops/master/chaos-monkey/src/main/fabric8/icon.png"
+  name: "chaos-monkey"
