@@ -33,7 +33,10 @@
   <description>Collects events from git repositories from projects in OpenShift</description>
 
   <properties>
-    <fabric8.generateJson>false</fabric8.generateJson>
+    <fabric8.skip>true</fabric8.skip>
+    <docker.skip>true</docker.skip>
+    <docker.skip.build>true</docker.skip.build>
+
     <elasticsearch.host>http://elasticsearch.vagrant.f8</elasticsearch.host>
   </properties>
 
