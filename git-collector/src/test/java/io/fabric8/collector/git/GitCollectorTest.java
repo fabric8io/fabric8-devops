@@ -36,7 +36,7 @@ public class GitCollectorTest extends EmbeddedElasticsearchTestSupport {
     protected String gitUrl = "https://github.com/jstrachan/test-git-collector.git";
     protected String branch = "master";
     protected NamespaceName namespaceName = new NamespaceName("default", "myapp");
-    protected long pollPeriod = 1 * 1000;
+    protected long pollPeriod = 4 * 1000;
 
     @Test
     public void testCollectionPopulatesElasticSearch() throws Exception {
