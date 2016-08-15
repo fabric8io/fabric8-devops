@@ -1,0 +1,35 @@
+---
+apiVersion: "v1"
+data:
+  gerrit-initial-commit: "false"
+  gerrit-admin-pwd: "secret"
+  gerrit-admin-user: "admin"
+  gerrit-repo-description: "Description of the gerrit git repo"
+kind: "ConfigMap"
+metadata:
+  annotations:
+    fabric8.gerrit/summary: "[Gerrit](https://code.google.com/p/gerrit/) Web based\
+      \ code review and project management for Git based projects"
+    description: "Gerrit is a web based code review system, facilitating online code\
+      \ reviews for projects using the Git version control system.\n\nGerrit makes\
+      \ reviews easier by showing changes in a side-by-side display, and allowing\
+      \ inline comments to be added by any reviewer.\n\nGerrit simplifies Git based\
+      \ project maintainership by permitting any authorized user to submit changes\
+      \ to the master Git repository, rather than requiring all approved changes to\
+      \ be merged in by hand by the project maintainer. This functionality enables\
+      \ a more centralized usage of Git.\n\n[https://www.gerritcodereview.com/](https://www.gerritcodereview.com/)"
+    fabric8.gerrit/iconUrl: "https://cdn.rawgit.com/fabric8io/fabric8-devops/master/gerrit/src/main/fabric8/icon.png"
+    fabric8.io/json-schema: "{\n  \"type\" : \"object\",\n  \"properties\" : {\n \
+      \   \"GERRIT_ADMIN_PWD\" : {\n      \"type\" : \"string\",\n      \"description\"\
+      \ : \"Admin password\",\n      \"default\" : \"secret\"\n    },\n    \"GERRIT_INITIAL_COMMIT\"\
+      \ : {\n      \"type\" : \"string\",\n      \"description\" : \"Parameter used\
+      \ when the Gerrit Git repo is created using the DevOpsConnector. By default,\
+      \ it is false as commits have already been done within gogs repo\",\n      \"\
+      default\" : \"false\"\n    },\n    \"GERRIT_ADMIN_USER\" : {\n      \"type\"\
+      \ : \"string\",\n      \"description\" : \"Admin user used to perform operations\
+      \ on gerrit\",\n      \"default\" : \"admin\"\n    },\n    \"GERRIT_REPO_DESCRIPTION\"\
+      \ : {\n      \"type\" : \"string\",\n      \"description\" : \"Description ot\
+      \ add to the Gerrit Git repo created when a CD Project is created\",\n     \
+      \ \"default\" : \"Description of the gerrit git repo\"\n    }\n  }\n}"
+  labels: {}
+  name: "gerrit"
