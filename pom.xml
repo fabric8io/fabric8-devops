@@ -429,6 +429,19 @@
               </execution>
             </executions>
           </plugin>
+          <plugin>
+            <groupId>io.fabric8</groupId>
+            <artifactId>fabric8-maven-plugin</artifactId>
+            <version>${fabric8.maven.plugin.version}</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>push</goal>
+                </goals>
+                <phase>package</phase>
+              </execution>
+            </executions>
+          </plugin>
         </plugins>
       </build>
     </profile>
