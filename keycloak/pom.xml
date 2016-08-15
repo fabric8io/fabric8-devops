@@ -42,7 +42,6 @@
 
     <fabric8.service.port>80</fabric8.service.port>
     <fabric8.service.containerPort>http</fabric8.service.containerPort>
-    <fabric8.service.type>LoadBalancer</fabric8.service.type>
 
     <fabric8.label.project>keycloak</fabric8.label.project>
     <fabric8.label.group>io.fabric8.devops.apps</fabric8.label.group>
