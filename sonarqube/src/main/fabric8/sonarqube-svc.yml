@@ -9,4 +9,3 @@ spec:
     targetPort: 9000
   selector:
     name: "sonarqube"
-  type: "LoadBalancer"

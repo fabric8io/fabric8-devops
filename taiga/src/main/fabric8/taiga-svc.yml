@@ -13,4 +13,3 @@ spec:
   selector:
     provider: "fabric8"
     project: "taiga"
-  type: "LoadBalancer"

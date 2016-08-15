@@ -15,4 +15,3 @@ spec:
   selector:
     project: "jenkins"
     provider: "fabric8"
-  type: "LoadBalancer"
