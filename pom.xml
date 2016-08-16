@@ -440,14 +440,8 @@
                   <goal>resource</goal>
                   <goal>helm</goal>
                   <goal>build</goal>
-                </goals>
-              </execution>
-              <execution>
-                <id>push</id>
-                <goals>
                   <goal>push</goal>
                 </goals>
-                <phase>package</phase>
               </execution>
             </executions>
           </plugin>
