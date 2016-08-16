@@ -435,8 +435,16 @@
             <version>${fabric8.maven.plugin.version}</version>
             <executions>
               <execution>
+                <id>fmp</id>
                 <goals>
+                  <goal>resource</goal>
+                  <goal>helm</goal>
                   <goal>build</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>push</id>
+                <goals>
                   <goal>push</goal>
                 </goals>
                 <phase>package</phase>
@@ -445,12 +453,6 @@
           </plugin>
         </plugins>
       </build>
-    </profile>
-    <profile>
-      <id>hawtio-snapshot</id>
-      <properties>
-        <hawtio.version>1.5-SNAPSHOT</hawtio.version>
-      </properties>
     </profile>
     <profile>
       <id>license</id>

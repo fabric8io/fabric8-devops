@@ -14,7 +14,9 @@
      implied.  See the License for the specific language governing
      permissions and limitations under the License.
 
---><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
@@ -33,57 +35,57 @@
 
   <properties>
     <docker.image>gitlab/gitlab-ce</docker.image>
-    </properties>
+  </properties>
 
-    <build>
-        <resources>
-            <resource>
-                <directory>src/main/fabric8</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/fabric8</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
     <plugins>
       <plugin>
         <groupId>io.fabric8</groupId>
         <artifactId>fabric8-maven-plugin</artifactId>
         <version>${fabric8.maven.plugin.version}</version>
-        
       </plugin>
-      </plugins></build>
+    </plugins>
+  </build>
 
-    <dependencies>
-        <dependency>
-            <groupId>io.fabric8</groupId>
-            <artifactId>kubernetes-api</artifactId>
-        </dependency>
+  <dependencies>
+    <dependency>
+      <groupId>io.fabric8</groupId>
+      <artifactId>kubernetes-api</artifactId>
+    </dependency>
 
-        <dependency>
-            <groupId>io.fabric8</groupId>
-            <artifactId>kubernetes-generator</artifactId>
-        </dependency>
+    <dependency>
+      <groupId>io.fabric8</groupId>
+      <artifactId>kubernetes-generator</artifactId>
+    </dependency>
 
-        <dependency>
-            <groupId>org.jboss.arquillian.junit</groupId>
-            <artifactId>arquillian-junit-container</artifactId>
-            <scope>test</scope>
-        </dependency>
+    <dependency>
+      <groupId>org.jboss.arquillian.junit</groupId>
+      <artifactId>arquillian-junit-container</artifactId>
+      <scope>test</scope>
+    </dependency>
 
-        <dependency>
-            <groupId>io.fabric8</groupId>
-            <artifactId>fabric8-arquillian</artifactId>
-            <scope>test</scope>
-        </dependency>
+    <dependency>
+      <groupId>io.fabric8</groupId>
+      <artifactId>fabric8-arquillian</artifactId>
+      <scope>test</scope>
+    </dependency>
 
-        <dependency>
-            <groupId>io.fabric8</groupId>
-            <artifactId>kubernetes-assertions</artifactId>
-            <scope>test</scope>
-        </dependency>
+    <dependency>
+      <groupId>io.fabric8</groupId>
+      <artifactId>kubernetes-assertions</artifactId>
+      <scope>test</scope>
+    </dependency>
 
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 </project>
