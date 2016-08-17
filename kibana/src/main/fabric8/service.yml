@@ -1,11 +1,12 @@
 metadata:
   name: kibana
+  labels:
+    provider: "fabric8"
+    project: "${project.artifactId}"
+    expose: "true"
 spec:
-  type: LoadBalancer
   ports:
   - name: http
     protocol: TCP
     port: 80
     targetPort: 5601
-
-

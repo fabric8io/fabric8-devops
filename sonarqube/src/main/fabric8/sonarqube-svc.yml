@@ -3,10 +3,13 @@ apiVersion: "v1"
 kind: "Service"
 metadata:
   name: "sonarqube"
+  labels:
+    provider: "fabric8"
+    project: "${project.artifactId}"
+    expose: "true"
 spec:
   ports:
   - port: 80
     targetPort: 9000
   selector:
     name: "sonarqube"
-  type: "LoadBalancer"

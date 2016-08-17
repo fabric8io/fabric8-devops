@@ -5,6 +5,7 @@ metadata:
   labels:
     provider: "fabric8"
     project: "${project.artifactId}"
+    expose: "true"
   name: "taiga"
 spec:
   ports:
@@ -13,4 +14,3 @@ spec:
   selector:
     provider: "fabric8"
     project: "taiga"
-  type: "LoadBalancer"
