@@ -25,13 +25,8 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>social</artifactId>
-  <packaging>pom</packaging>
 
   <name>Fabric8 DevOps :: Packages :: Social</name>
-
-  <properties>
-    <fabric8.combineDependencies>true</fabric8.combineDependencies>
-  </properties>
 
   <dependencies>
 
@@ -50,7 +45,23 @@
       <classifier>kubernetes</classifier>
       <type>json</type>
     </dependency>
-
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>io.fabric8</groupId>
+        <artifactId>fabric8-maven-plugin</artifactId>
+        <version>${fabric8.maven.plugin.version}</version>
+        <configuration>
+          <enricher>
+            <excludes>
+              <exclude>fmp-controller</exclude>
+            </excludes>
+          </enricher>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>

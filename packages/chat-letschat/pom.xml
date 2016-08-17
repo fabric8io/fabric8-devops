@@ -25,37 +25,42 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>chat-letschat</artifactId>
-  <packaging>pom</packaging>
 
   <name>Fabric8 DevOps :: Packages :: Chat :: Let's Chat</name>
-
-  <properties>
-    <fabric8.combineDependencies>true</fabric8.combineDependencies>
-  </properties>
 
   <dependencies>
     <dependency>
       <groupId>io.fabric8.devops.apps</groupId>
       <artifactId>hubot-notifier</artifactId>
       <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
     </dependency>
     <dependency>
       <groupId>io.fabric8.devops.apps</groupId>
       <artifactId>letschat</artifactId>
       <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
     </dependency>
     <dependency>
       <groupId>io.fabric8.devops.apps</groupId>
       <artifactId>hubot-letschat</artifactId>
       <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
     </dependency>
-
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>io.fabric8</groupId>
+        <artifactId>fabric8-maven-plugin</artifactId>
+        <version>${fabric8.maven.plugin.version}</version>
+        <configuration>
+          <enricher>
+            <excludes>
+              <exclude>fmp-controller</exclude>
+            </excludes>
+          </enricher>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>
