@@ -38,6 +38,8 @@ spec:
             path: "/content/repositories/"
             port: 8081
           initialDelaySeconds: 60
+          timeoutSeconds: 10
+          failureThreshold: 3
         name: "nexus"
         ports:
         - containerPort: 8081
