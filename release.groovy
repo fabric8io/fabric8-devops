@@ -4,7 +4,7 @@ def imagesBuiltByPipline() {
 }
 
 def externalImages(){
-  return ['nginx-controller','alpine-caddy','hubot-irc','eclipse-orion','nexus','gerrit','fabric8-kiwiirc','brackets','jenkins-jnlp-client','taiga-front','taiga-back','hubot-slack','lets-chat','jenkins-docker','maven-builder','gogs']
+  return ['exposecontroller','nginx-controller','alpine-caddy','hubot-irc','eclipse-orion','nexus','gerrit','fabric8-kiwiirc','brackets','jenkins-jnlp-client','taiga-front','taiga-back','hubot-slack','lets-chat','jenkins-docker','maven-builder','gogs']
 }
 
 def repo(){
