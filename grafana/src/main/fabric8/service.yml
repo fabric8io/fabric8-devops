@@ -1,7 +1,10 @@
+metadata:
+  labels:
+    provider: "fabric8"
+    expose: "true"
 spec:
   ports:
   - name: http
     protocol: TCP
     port: 80
     targetPort: 3000
-

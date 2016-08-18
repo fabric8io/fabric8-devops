@@ -5,6 +5,7 @@ metadata:
   labels:
     project: "${project.artifactId}"
     provider: "fabric8"
+    expose: "true"
   name: "gerrit-ssh"
 spec:
   ports:

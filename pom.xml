@@ -161,6 +161,7 @@
     <module>collector-utils</module>
     <module>content-repository</module>
     <module>elasticsearch</module>
+    <module>exposecontroller</module>
     <module>fabric8-docker-registry</module>
     <module>fluentd</module>
     <module>gerrit</module>

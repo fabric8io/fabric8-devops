@@ -1,5 +1,8 @@
 metadata:
   name: elasticsearch
+  labels:
+    provider: "fabric8"
+    expose: "true"
 spec:
   type: LoadBalancer
   ports:
@@ -7,5 +10,3 @@ spec:
     protocol: TCP
     port: 9200
     targetPort: 9200
-
-
