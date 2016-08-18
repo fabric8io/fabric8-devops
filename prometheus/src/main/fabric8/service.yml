@@ -1,6 +1,9 @@
 metadata:
   annotations:
     prometheus.io/scrape: "true"
+  labels:
+    provider: "fabric8"
+    expose: "true"
 spec:
   type: LoadBalancer
   ports:
@@ -8,4 +11,3 @@ spec:
     protocol: TCP
     port: 80
     targetPort: 9090
-

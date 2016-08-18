@@ -9,6 +9,7 @@ metadata:
     project: "${project.artifactId}"
     version: "${project.version}"
     group: "io.fabric8.devops.apps"
+    expose: "true"
   name: "gogs"
 spec:
   ports:
