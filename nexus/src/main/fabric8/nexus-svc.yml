@@ -9,6 +9,7 @@ metadata:
     project: "${project.artifactId}"
     version: "${project.version}"
     group: "io.fabric8.devops.apps"
+    expose: "true"
   name: "nexus"
 spec:
   ports:
@@ -19,4 +20,3 @@ spec:
     project: "nexus"
     provider: "fabric8"
     group: "io.fabric8.devops.apps"
-  type: "LoadBalancer"

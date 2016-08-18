@@ -10,6 +10,7 @@ metadata:
     project: "${project.artifactId}"
     version: "${project.version}"
     group: "io.fabric8.devops.apps"
+    export: "true"
   name: "alertmanager"
 spec:
   ports:
@@ -21,4 +22,3 @@ spec:
     component: "prometheus"
     provider: "fabric8"
     group: "io.fabric8.devops.apps"
-  type: "LoadBalancer"

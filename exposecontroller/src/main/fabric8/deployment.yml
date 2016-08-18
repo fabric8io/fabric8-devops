@@ -1,0 +1,8 @@
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - name: exposecontroller
+        image: fabric8/exposecontroller
+      serviceAccountName: exposecontroller

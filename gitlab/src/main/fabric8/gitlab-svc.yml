@@ -5,6 +5,7 @@ metadata:
   labels:
     project: "${project.artifactId}"
     provider: "fabric8"
+    expose: "true"
   name: "gitlab"
 spec:
   ports:
@@ -14,4 +15,3 @@ spec:
   selector:
     project: "gitlab"
     provider: "fabric8"
-  type: "LoadBalancer"
