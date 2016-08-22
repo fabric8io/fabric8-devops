@@ -5,4 +5,9 @@ spec:
       containers:
       - name: exposecontroller
         image: fabric8/exposecontroller
+        env:
+        - name: "KUBERNETES_NAMESPACE"
+          valueFrom:
+            fieldRef:
+              fieldPath: "metadata.namespace"
       serviceAccountName: exposecontroller
