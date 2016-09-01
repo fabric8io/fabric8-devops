@@ -34,7 +34,7 @@
   </description>
 
   <properties>
-    <docker.image>${fabric8.dockerUser}gogs:${project.version}</docker.image>
+    <gogs.image.version>v0.9.71</gogs.image.version>
     <domain>os1.fabric8.io</domain>
   </properties>
 

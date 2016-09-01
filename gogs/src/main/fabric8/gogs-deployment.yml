@@ -29,9 +29,6 @@ spec:
       - name: gogs-data
         persistentVolumeClaim:
           claimName: gogs-data
-      - name: gogs-repositories
-        persistentVolumeClaim:
-          claimName: gogs-repositories
       containers:
       - env:
         - name: "DOMAIN"
@@ -107,7 +104,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: "metadata.namespace"
-        image: "fabric8/gogs:${project.version}"
+        image: "fabric8/gogs:${gogs.image.version}"
         imagePullPolicy: "IfNotPresent"
         name: "gogs"
         ports:
@@ -116,11 +113,8 @@ spec:
         - containerPort: 3000
           name: "http"
         volumeMounts:
-        - mountPath: /opt/gogs/data
+        - mountPath: /app/gogs/data
           name: gogs-data
-          readOnly: false
-        - mountPath: /home/git
-          name: gogs-repositories
           readOnly: false
         resources:
           limits:
