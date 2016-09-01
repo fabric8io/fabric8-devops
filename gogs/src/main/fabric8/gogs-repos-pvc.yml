@@ -4,13 +4,8 @@ metadata:
   name: gogs-repositories
 spec:
   accessModes:
-  - ReadWriteMany
+  - ReadWriteOnce
   resources:
     requests:
       storage: 100Mi
   volumeName: gogs-repositories
-status:
-  accessModes:
-  - ReadWriteMany
-  capacity:
-    storage: 100Mi
