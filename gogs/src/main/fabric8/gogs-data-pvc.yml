@@ -8,7 +8,7 @@ spec:
   resources:
     requests:
       storage: 100Mi
-  volumeName: gogs-da
+  volumeName: gogs-data
 status:
   accessModes:
   - ReadWriteMany
