@@ -118,8 +118,10 @@ spec:
         volumeMounts:
         - mountPath: /opt/gogs/data
           name: gogs-data
+          readOnly: false
         - mountPath: /home/git
           name: gogs-repositories
+          readOnly: false
         resources:
           limits:
             cpu: "0"

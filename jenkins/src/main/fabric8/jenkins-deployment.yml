@@ -107,6 +107,12 @@ spec:
         - mountPath: "/home/jenkins/.docker"
           name: "jenkins-docker-cfg"
           readOnly: false
+        - mountPath: /var/jenkins_home/jobs
+          name: jenkins-jobs
+          readOnly: false
+        - mountPath: /var/jenkins_home/workspace
+          name: jenkins-workspace
+          readOnly: false
       serviceAccountName: "jenkins"
       volumes:
       - hostPath:
@@ -115,3 +121,9 @@ spec:
       - name: "jenkins-docker-cfg"
         secret:
           secretName: "jenkins-docker-cfg"
+      - name: jenkins-jobs
+        persistentVolumeClaim:
+          claimName: jenkins-jobs
+      - name: jenkins-workspace
+        persistentVolumeClaim:
+          claimName: jenkins-workspace
