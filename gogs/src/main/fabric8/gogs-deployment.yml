@@ -25,6 +25,13 @@ spec:
         version: "${project.version}"
         group: "io.fabric8.devops.apps"
     spec:
+      volumes:
+      - name: gogs-data
+        persistentVolumeClaim:
+          claimName: gogs-data
+      - name: gogs-repositories
+        persistentVolumeClaim:
+          claimName: gogs-repositories
       containers:
       - env:
         - name: "DOMAIN"
@@ -108,6 +115,11 @@ spec:
           name: "ssh"
         - containerPort: 3000
           name: "http"
+        volumeMounts:
+        - mountPath: /opt/gogs/data
+          name: gogs-data
+        - mountPath: /home/git
+          name: gogs-repositories
         resources:
           limits:
             cpu: "0"
