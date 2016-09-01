@@ -56,25 +56,8 @@ spec:
             configMapKeyRef:
               key: "gogs-server--protocol"
               name: "gogs"
-        - name: "GOGS_OAUTH_OPENSHIFT__ENABLED"
-          value: "true"
         - name: "ADMIN_USER_CREATE"
           value: "true"
-        - name: "GOGS_OAUTH_OPENSHIFT__TOKEN_URL"
-          valueFrom:
-            configMapKeyRef:
-              key: "gogs-oauth-openshift--token-url"
-              name: "gogs"
-        - name: "GOGS_OAUTH_OPENSHIFT__SCOPES"
-          valueFrom:
-            configMapKeyRef:
-              key: "gogs-oauth-openshift--scopes"
-              name: "gogs"
-        - name: "GOGS_OAUTH_OPENSHIFT__AUTH_URL"
-          valueFrom:
-            configMapKeyRef:
-              key: "gogs-oauth-openshift--auth-url"
-              name: "gogs"
         - name: "GOGS_WEBHOOK__TASK_INTERVAL"
           value: "true"
         - name: "GOGS_WEBHOOK__SKIP_TLS_VERIFY"
@@ -89,17 +72,11 @@ spec:
             configMapKeyRef:
               key: "admin-user-name"
               name: "gogs"
-        - name: "GOGS_OAUTH_TWITTER__ENABLED"
-          value: "false"
-        - name: "GOGS_OAUTH__ENABLED"
-          value: "true"
         - name: "KUBERNETES_ADMIN_USER"
           valueFrom:
             configMapKeyRef:
               key: "kubernetes-admin-user"
               name: "gogs"
-        - name: "GOGS_OAUTH_OPENSHIFT__CLIENT_ID"
-          value: "gogs"
         - name: "KUBERNETES_NAMESPACE"
           valueFrom:
             fieldRef:
@@ -108,14 +85,13 @@ spec:
         imagePullPolicy: "IfNotPresent"
         name: "gogs"
         ports:
-        - containerPort: 22
+        - containerPort: 2222
           name: "ssh"
         - containerPort: 3000
           name: "http"
         volumeMounts:
         - mountPath: /app/gogs/data
           name: gogs-data
-          readOnly: false
         resources:
           limits:
             cpu: "0"

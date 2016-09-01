@@ -34,7 +34,7 @@
   </description>
 
   <properties>
-    <gogs.image.version>v0.9.71</gogs.image.version>
+    <gogs.image.version>v0.9.97</gogs.image.version>
     <domain>os1.fabric8.io</domain>
   </properties>
 
