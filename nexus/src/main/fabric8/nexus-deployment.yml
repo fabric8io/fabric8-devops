@@ -57,3 +57,5 @@ spec:
           readOnly: false
       volumes:
       - name: "nexus-storage"
+        persistentVolumeClaim:
+          claimName: nexus-storage
