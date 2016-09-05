@@ -1,10 +1,10 @@
 #!/usr/bin/groovy
-def imagesBuiltByPipline() {
-  return ['git-collector','chaos-monkey','elasticsearch-logstash-template','hubot-notifier','image-linker','kibana-config']
+def imagesBuiltByPipeline() {
+  return ['git-collector','chaos-monkey','elasticsearch-logstash-template','grafana','hubot-notifier','image-linker','kibana-config']
 }
 
 def externalImages(){
-  return ['exposecontroller','nginx-controller','alpine-caddy','hubot-irc','eclipse-orion','nexus','gerrit','fabric8-kiwiirc','brackets','jenkins-jnlp-client','taiga-front','taiga-back','hubot-slack','lets-chat','jenkins-docker','maven-builder','gogs','grafana']
+  return ['exposecontroller','nginx-controller','alpine-caddy','hubot-irc','eclipse-orion','nexus','gerrit','fabric8-kiwiirc','brackets','jenkins-jnlp-client','taiga-front','taiga-back','hubot-slack','lets-chat','jenkins-docker','maven-builder','gogs']
 }
 
 def repo(){
@@ -71,7 +71,7 @@ def release(project){
     artifactExtensionToWatchInCentral = 'jar'
     promoteToDockerRegistry = 'docker.io'
     dockerOrganisation = 'fabric8'
-    imagesToPromoteToDockerHub = imagesBuiltByPipline()
+    imagesToPromoteToDockerHub = imagesBuiltByPipeline()
     extraImagesToTag = externalImages()
   }
 }
