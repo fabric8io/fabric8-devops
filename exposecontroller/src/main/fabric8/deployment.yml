@@ -4,7 +4,7 @@ spec:
     spec:
       containers:
       - name: exposecontroller
-        image: fabric8/exposecontroller
+        image: fabric8/exposecontroller:${project.version}
         env:
         - name: "KUBERNETES_NAMESPACE"
           valueFrom:
