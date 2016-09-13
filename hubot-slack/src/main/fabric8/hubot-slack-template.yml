@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Template
+labels: {}
+metadata:
+  name: hubot-slack
+parameters:
+- description: The token for Hubot to login to Slack
+  name: HUBOT_SLACK_TOKEN
+- description: Host for your Grafana 2.0 install, e.g. 'http://play.grafana.org'
+  name: HUBOT_SLACK_GRAFANA_HOST
+  value: http://grafana2.default.svc.cluster.local
+- description: API key for a particular user
+  name: HUBOT_SLACK_GRAFANA_API_KEY

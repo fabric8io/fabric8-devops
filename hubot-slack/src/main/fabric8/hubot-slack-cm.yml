@@ -22,3 +22,8 @@ metadata:
   labels:
     name: "hubot-slack"
   name: "hubot-slack"
+data:
+  hubot-jenkins-url: "http://jenkins/"
+  hubot-grafana-host: "http://grafana/"
+  hubot-slack-token: "${HUBOT_SLACK_TOKEN}"
+  hubot-grafana-api-key: "${HUBOT_SLACK_GRAFANA_API_KEY}"
