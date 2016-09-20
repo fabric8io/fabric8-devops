@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: nginx-config
+  namespace: fabric8-system
 data:
   client-max-body-size: 2000m
   proxy-connect-timeout: 10s
