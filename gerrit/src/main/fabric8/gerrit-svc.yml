@@ -15,4 +15,3 @@ spec:
   selector:
     project: "gerrit"
     provider: "fabric8"
-  type: "LoadBalancer"

@@ -20,4 +20,3 @@ spec:
     project: "kiwiirc"
     provider: "fabric8"
     group: "io.fabric8.devops.apps"
-  type: "LoadBalancer"
