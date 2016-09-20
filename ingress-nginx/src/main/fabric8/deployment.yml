@@ -1,3 +1,5 @@
+metadata:
+  namespace: fabric8-system
 spec:
   replicas: 1
   template:
@@ -7,7 +9,7 @@ spec:
         image: nginxdemos/nginx-ingress:0.3
         args:
           - -v=3
-          - -nginx-configmaps=default/nginx-config
+          - -nginx-configmaps=fabric8-system/nginx-config
         ports:
         - containerPort: 80
           hostPort: 80
