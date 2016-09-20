@@ -20,4 +20,3 @@ spec:
     project: "nexus"
     provider: "fabric8"
     group: "io.fabric8.devops.apps"
-  type: "LoadBalancer"

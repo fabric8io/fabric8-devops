@@ -4,7 +4,6 @@ metadata:
     provider: "fabric8"
     expose: "true"
 spec:
-  type: LoadBalancer
   ports:
   - name: http
     protocol: TCP
