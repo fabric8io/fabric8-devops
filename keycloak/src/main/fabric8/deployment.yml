@@ -9,17 +9,23 @@ spec:
           value: admin
         - name: KEYCLOAK_PASSWORD
           value: admin
-      volumeMounts:
-      - mountPath: /opt/jboss/keycloak/standalone/data
-        name: keycloak-data
-        readOnly: false
-      - mountPath: /opt/jboss/keycloak/standalone/configuration
-        name: keycloak-config
-        readOnly: false
+        readinessProbe:
+          httpGet:
+            path: "/auth"
+            port: 8080
+          initialDelaySeconds: 10
+          timeoutSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: "/auth"
+            port: 8080
+          initialDelaySeconds: 60
+          timeoutSeconds: 10
+        volumeMounts:
+        - mountPath: /opt/jboss/keycloak/standalone/data
+          name: keycloak-data
+          readOnly: false
       volumes:
       - name: keycloak-data
         persistentVolumeClaim:
           claimName: keycloak-data
-      - name: keycloak-config
-        persistentVolumeClaim:
-          claimName: keycloak-config
