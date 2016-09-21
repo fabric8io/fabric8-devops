@@ -1,0 +1,11 @@
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - image: jboss/keycloak:2.2.0.Final
+        env:
+        - name: KEYCLOAK_USER
+          value: admin
+        - name: KEYCLOAK_PASSWORD
+          value: admin
