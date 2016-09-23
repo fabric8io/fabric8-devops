@@ -24,4 +24,5 @@ spec:
         image: ${fabric8.dockerUser}elasticsearch-logstash-template:${project.version}
       volumes:
         - name: data
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: es-data
