@@ -183,6 +183,7 @@
     <module>manageiq</module>
     <module>maven-shell</module>
     <module>nexus</module>
+    <module>nexus3</module>
     <module>orion</module>
     <module>prometheus</module>
     <module>prometheus-blackbox-exporter</module>
