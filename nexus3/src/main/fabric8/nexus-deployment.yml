@@ -25,7 +25,7 @@ spec:
         project: "${project.artifactId}"
         version: "${project.version}"
         group: "io.fabric8.devops.apps"
-        preview: "true"
+        fabric8.io/type: "preview"
     spec:
       containers:
       - image: "fabric8/nexus:dev3"

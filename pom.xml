@@ -176,6 +176,7 @@
     <module>image-linker</module>
     <module>ingress-nginx</module>
     <module>jenkins</module>
+    <module>jenkins-openshift</module>
     <module>keycloak</module>
     <module>kibana</module>
     <module>kiwiirc</module>
