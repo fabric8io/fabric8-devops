@@ -1,0 +1,24 @@
+---
+apiVersion: "extensions/v1beta1"
+kind: "Deployment"
+metadata:
+  labels:
+    fabric8.io/type: "preview"
+  name: "${project.artifactId}"
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - image: "fabric8/jenkins-openshift:dev"
+        imagePullPolicy: "Always"
+        name: "${project.artifactId}"
+        ports:
+        - containerPort: 50000
+          name: "slave"
+        - containerPort: 8080
+          name: "http"
+        env:
+        - name: JENKINS_PASSWORD
+          value: admin
+      serviceAccountName: "${project.artifactId}"
