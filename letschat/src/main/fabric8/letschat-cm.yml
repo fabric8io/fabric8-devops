@@ -4,6 +4,7 @@ data:
   hubot-password: "RedHat$1"
   hubot-username: "fabric8"
   letschat-default-rooms: "fabric8_default"
+  hubot-token: ""
 kind: "ConfigMap"
 metadata:
   annotations:

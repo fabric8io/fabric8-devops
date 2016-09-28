@@ -28,11 +28,20 @@ spec:
         - name: "LETSCHAT_CREATE_HUBOT_USER"
           value: "true"
         - name: "LETSCHAT_HUBOT_TOKEN"
-          value: "${LETSCHAT_HUBOT_TOKEN}"
+          valueFrom:
+            configMapKeyRef:
+              name: letschat
+              key: hubot-token
         - name: "LETSCHAT_HUBOT_PASSWORD"
-          value: "${HUBOT_PASSWORD}"
+          valueFrom:
+            configMapKeyRef:
+              name: letschat
+              key: hubot-password
         - name: "LETSCHAT_HUBOT_USERNAME"
-          value: "${HUBOT_USERNAME}"
+          valueFrom:
+            configMapKeyRef:
+              name: letschat
+              key: hubot-username
         - name: "LETSCHAT_HUBOT_EMAIL"
           value: "fabric8-admin@googlegroups.com"
         - name: "LETSCHAT_HUBOT_FIRST_NAME"
