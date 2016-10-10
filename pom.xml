@@ -79,6 +79,9 @@
     <docker.image>${fabric8.dockerUser}${project.artifactId}:${project.version}</docker.image>
     <docker.assemblyDescriptorRef>artifact-with-dependencies</docker.assemblyDescriptorRef>
 
+    <!-- lets disable S2I for our releases -->
+    <fabric8.mode>kubernetes</fabric8.mode>
+
     <jube.plugin.enabled>false</jube.plugin.enabled>
 
     <maven.compiler.source>1.7</maven.compiler.source>
