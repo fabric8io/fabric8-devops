@@ -18,5 +18,5 @@ spec:
       volumes:
       - name: config-volume
         configMap:
-          name: exposecontroller-cm
+          name: exposecontroller
       serviceAccountName: exposecontroller

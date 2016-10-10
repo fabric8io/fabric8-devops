@@ -18,15 +18,21 @@ spec:
     spec:
       containers:
       - env:
+        - name: "HUBOT_GRAFANA_API_KEY"
+          valueFrom:
+            configMapKeyRef:
+              key: "hubot-grafana-api-key"
+              name: "hubot-slack"
         - name: "HUBOT_SLACK_TOKEN"
           valueFrom:
             configMapKeyRef:
               key: "hubot-slack-token"
               name: "hubot-slack"
         - name: "HUBOT_GRAFANA_HOST"
-          value: "${HUBOT_SLACK_GRAFANA_HOST}"
-        - name: "HUBOT_GRAFANA_API_KEY"
-          value: "${HUBOT_SLACK_GRAFANA_API_KEY}"
+          valueFrom:
+            configMapKeyRef:
+              key: "hubot-grafana-host"
+              name: "hubot-slack"
         - name: "HUBOT_JENKINS_URL"
           valueFrom:
             configMapKeyRef:
