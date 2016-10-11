@@ -1,5 +1,4 @@
 data:
   config.yml: |
-    domain: "Auto"
-    exposer: "NodePort"
-
+    domain:
+    exposer:
