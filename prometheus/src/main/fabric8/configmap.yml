@@ -79,17 +79,17 @@ data:
         role: pod
 
       relabel_configs:
-        - source_labels: [__meta_kubernetes_pod_name]
-          action: keep
-          regex: node-exporter-.+
-        - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
-          action: replace
-          regex: (.+):(?:\d+);(\d+)
-          replacement: ${1}:${2}
-          target_label: __address__
-        - source_labels: [__meta_kubernetes_pod_node_name]
-          action: replace
-          target_label: instance
+      - source_labels: [__meta_kubernetes_pod_name]
+        action: keep
+        regex: node-exporter-.+
+      - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+        action: replace
+        regex: (.+):(?:\d+);(\d+)
+        replacement: ${1}:${2}
+        target_label: __address__
+      - source_labels: [__meta_kubernetes_pod_node_name]
+        action: replace
+        target_label: instance
 
     # Scrape config for service endpoints.
     #
