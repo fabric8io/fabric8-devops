@@ -63,42 +63,4 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>io.fabric8</groupId>
-        <artifactId>fabric8-maven-plugin</artifactId>
-        <configuration>
-          <images>
-            <image>
-              <name>${docker.image}</name>
-              <build>
-                <from>grafana/grafana:${grafana.version}</from>
-                <args>
-                  <GRAFANA_VERSION>3.1.0-1468321182</GRAFANA_VERSION>
-                </args>
-                <assembly>
-                  <basedir>/</basedir>
-                  <mode>tar</mode>
-                  <inline>
-                    <fileSets>
-                      <fileSet>
-                        <outputDirectory>.</outputDirectory>
-                        <directory>${project.build.outputDirectory}</directory>
-                        <includes>
-                          <include>run.sh</include>
-                        </includes>
-                      </fileSet>
-                    </fileSets>
-                  </inline>
-                </assembly>
-                <dockerFileDir>${project.basedir}/src/main/fabric8</dockerFileDir>
-              </build>
-            </image>
-          </images>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
 </project>
