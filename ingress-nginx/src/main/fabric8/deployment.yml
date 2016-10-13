@@ -18,4 +18,4 @@ spec:
           hostPort: 443
           protocol: TCP
       nodeSelector:
-          externalIP: true
+          fabric8.io/externalIP: true
