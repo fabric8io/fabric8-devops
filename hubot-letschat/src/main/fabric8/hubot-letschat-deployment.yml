@@ -31,6 +31,41 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: "metadata.namespace"
+        - name: "LETSCHAT_HUBOT_USERNAME"
+          valueFrom:
+            configMapKeyRef:
+              name: hubot-letschat
+              key: letschat-hubot-username
+        - name: "LETSCHAT_HUBOT_PASSWORD"
+          valueFrom:
+            configMapKeyRef:
+              name: hubot-letschat
+              key: letschat-hubot-password
+        - name: "HUBOT_JENKINS_URL"
+          valueFrom:
+            configMapKeyRef:
+              name: hubot-letschat
+              key: hubot-jenkins-url
+        - name: "HUBOT_JENKINS_AUTH"
+          valueFrom:
+            configMapKeyRef:
+              name: hubot-letschat
+              key: hubot-jenkins-auth
+        - name: "HUBOT_LCB_ROOMS"
+          valueFrom:
+            configMapKeyRef:
+              name: hubot-letschat
+              key: letschat-default-rooms
+        - name: "HUBOT_GRAFANA_HOST"
+          valueFrom:
+            configMapKeyRef:
+              name: hubot-letschat
+              key: hubot-grafana-host
+        - name: "HUBOT_GRAFANA_API_KEY"
+          valueFrom:
+            configMapKeyRef:
+              name: hubot-letschat
+              key: hubot-grafana-api-key
         image: "fabric8/hubot-letschat:v1.0.0"
         name: "hubot-letschat"
         ports:
