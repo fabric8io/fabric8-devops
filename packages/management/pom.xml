@@ -28,19 +28,6 @@
 
   <name>Fabric8 DevOps :: Packages :: Management</name>
 
-  <dependencies>
-    <!-- kubernetes.yamls from dependencies are automatically picked up by the f8-dependency enricher -->
-    <dependency>
-      <groupId>io.fabric8.devops.packages</groupId>
-      <artifactId>logging</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.packages</groupId>
-      <artifactId>metrics</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-  </dependencies>
 
   <build>
     <plugins>
@@ -55,6 +42,19 @@
             </excludes>
           </enricher>
         </configuration>
+        <dependencies>
+          <!-- kubernetes.yamls from dependencies are automatically picked up by the f8-dependency enricher -->
+          <dependency>
+            <groupId>io.fabric8.devops.packages</groupId>
+            <artifactId>logging</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>io.fabric8.devops.packages</groupId>
+            <artifactId>metrics</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+        </dependencies>
       </plugin>
     </plugins>
   </build>

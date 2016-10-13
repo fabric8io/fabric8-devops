@@ -28,24 +28,6 @@
 
   <name>Fabric8 DevOps :: Packages :: Social</name>
 
-  <dependencies>
-
-    <!-- CD social -->
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>taiga</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>orion</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-  </dependencies>
 
   <build>
     <plugins>
@@ -60,6 +42,20 @@
             </excludes>
           </enricher>
         </configuration>
+        <dependencies>
+
+          <!-- CD social -->
+          <dependency>
+            <groupId>io.fabric8.devops.apps</groupId>
+            <artifactId>taiga</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>io.fabric8.devops.apps</groupId>
+            <artifactId>orion</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+        </dependencies>
       </plugin>
     </plugins>
   </build>
