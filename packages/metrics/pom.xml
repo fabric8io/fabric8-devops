@@ -28,28 +28,6 @@
 
   <name>Fabric8 DevOps :: Packages :: Management :: Metrics</name>
 
-  <dependencies>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>prometheus</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>prometheus-blackbox-exporter</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>prometheus-node-exporter</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>grafana</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-  </dependencies>
 
   <build>
     <plugins>
@@ -64,6 +42,28 @@
             </excludes>
           </enricher>
         </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>io.fabric8.devops.apps</groupId>
+            <artifactId>prometheus</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>io.fabric8.devops.apps</groupId>
+            <artifactId>prometheus-blackbox-exporter</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>io.fabric8.devops.apps</groupId>
+            <artifactId>prometheus-node-exporter</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>io.fabric8.devops.apps</groupId>
+            <artifactId>grafana</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+        </dependencies>
       </plugin>
     </plugins>
   </build>

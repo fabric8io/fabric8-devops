@@ -30,138 +30,6 @@
 
   <name>Fabric8 DevOps :: Packages :: Distro</name>
 
-  <dependencies>
-    <dependency>
-      <groupId>io.fabric8.devops.packages</groupId>
-      <artifactId>cd-pipeline</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.packages</groupId>
-      <artifactId>chat-irc</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.packages</groupId>
-      <artifactId>chat-letschat</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.packages</groupId>
-      <artifactId>chat-slack</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>fabric8-docker-registry</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>gitlab</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>gerrit</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.packages</groupId>
-      <artifactId>social</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.packages</groupId>
-      <artifactId>management</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-
-    <!-- individual apps -->
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>chaos-monkey</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>artifactory</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>kiwiirc</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>git-collector</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>jenkins</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>gogs</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>letschat</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>nexus</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-
-    <!-- COMMENT OUT UNTIL SONARQUBE CONVERTED TO GENERATE VALID kubernetes.json -->
-    <!-- <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>sonarqube</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency> -->
-  </dependencies>
 
   <build>
     <plugins>
@@ -184,6 +52,97 @@
             </goals>
           </execution>
         </executions>
+        <dependencies>
+          <dependency>
+            <groupId>io.fabric8.devops.packages</groupId>
+            <artifactId>chat-irc</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>io.fabric8.devops.packages</groupId>
+            <artifactId>chat-letschat</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>io.fabric8.devops.packages</groupId>
+            <artifactId>chat-slack</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>io.fabric8.devops.apps</groupId>
+            <artifactId>fabric8-docker-registry</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>io.fabric8.devops.apps</groupId>
+            <artifactId>gitlab</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>io.fabric8.devops.apps</groupId>
+            <artifactId>gerrit</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>io.fabric8.devops.packages</groupId>
+            <artifactId>social</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>io.fabric8.devops.packages</groupId>
+            <artifactId>management</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+
+          <!-- individual apps -->
+          <dependency>
+            <groupId>io.fabric8.devops.apps</groupId>
+            <artifactId>chaos-monkey</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>io.fabric8.devops.apps</groupId>
+            <artifactId>artifactory</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>io.fabric8.devops.apps</groupId>
+            <artifactId>kiwiirc</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>io.fabric8.devops.apps</groupId>
+            <artifactId>git-collector</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>io.fabric8.devops.apps</groupId>
+            <artifactId>jenkins</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>io.fabric8.devops.apps</groupId>
+            <artifactId>gogs</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>io.fabric8.devops.apps</groupId>
+            <artifactId>letschat</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>io.fabric8.devops.apps</groupId>
+            <artifactId>nexus</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+
+          <!-- COMMENT OUT UNTIL SONARQUBE CONVERTED TO GENERATE VALID kubernetes.json -->
+          <!-- <dependency>
+            <groupId>io.fabric8.devops.apps</groupId>
+            <artifactId>sonarqube</artifactId>
+            <version>${project.version}</version>
+          </dependency> -->
+        </dependencies>
       </plugin>
     </plugins>
   </build>

@@ -28,24 +28,6 @@
 
   <name>Fabric8 DevOps :: Packages :: Management :: Loggging</name>
 
-  <dependencies>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>elasticsearch</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>kibana</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>fluentd</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-  </dependencies>
-
   <build>
     <plugins>
       <plugin>
@@ -59,6 +41,23 @@
             </excludes>
           </enricher>
         </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>io.fabric8.devops.apps</groupId>
+            <artifactId>elasticsearch</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>io.fabric8.devops.apps</groupId>
+            <artifactId>kibana</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>io.fabric8.devops.apps</groupId>
+            <artifactId>fluentd</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+        </dependencies>
       </plugin>
     </plugins>
   </build>

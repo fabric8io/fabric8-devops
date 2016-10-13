@@ -28,23 +28,6 @@
 
   <name>Fabric8 DevOps :: Packages :: Chat :: Let's Chat</name>
 
-  <dependencies>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>hubot-notifier</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>letschat</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.devops.apps</groupId>
-      <artifactId>hubot-letschat</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-  </dependencies>
 
   <build>
     <plugins>
@@ -59,6 +42,23 @@
             </excludes>
           </enricher>
         </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>io.fabric8.devops.apps</groupId>
+            <artifactId>hubot-notifier</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>io.fabric8.devops.apps</groupId>
+            <artifactId>letschat</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>io.fabric8.devops.apps</groupId>
+            <artifactId>hubot-letschat</artifactId>
+            <version>${project.version}</version>
+          </dependency>
+        </dependencies>
       </plugin>
     </plugins>
   </build>
