@@ -6,7 +6,7 @@ spec:
     spec:
       containers:
       - name: nginx-ingress
-        image: nginxdemos/nginx-ingress:0.3
+        image: nginxdemos/nginx-ingress:0.3.1
         args:
           - -v=3
           - -nginx-configmaps=fabric8-system/nginx-config
