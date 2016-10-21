@@ -5,7 +5,6 @@ data:
   admin-user-email: "gogsadmin@fabric8.local"
   admin-user-name: "gogsadmin"
   admin-user-password: "RedHat$1"
-  domain: "vagrant.f8"
   gogs-oauth--enabled: "true"
   gogs-oauth-openshift--auth-url: ""
   gogs-oauth-openshift--client-id: "gogs"
@@ -13,8 +12,6 @@ data:
   gogs-oauth-openshift--scopes: ""
   gogs-oauth-openshift--token-url: ""
   gogs-oauth-twitter--enabled: "false"
-  gogs-server--domain: "gogs.vagrant.f8"
-  gogs-server--protocol: "http"
   gogs-server--root-url: ""
   gogs-webhook--skip-tls-verify: "true"
   gogs-webhook--task-interval: "true"
@@ -27,6 +24,8 @@ metadata:
     description: "Gogs is a self-hosted Git service written in Go.\n\nMore details\
       \ on the <a href=\"http://gogs.io/\" target=\"gogs\">Gogs home page</a>.\n"
     fabric8.gogs/iconUrl: "https://cdn.rawgit.com/fabric8io/fabric8-devops/master/gogs/src/main/fabric8/icon.png"
+    expose-url.fabric8.io/url-key: "gogs-server--root-url"
+    configmap.fabric8.io/update-on-change: "gogs"
     fabric8.io/json-schema: "{\n  \"type\" : \"object\",\n  \"properties\" : {\n \
       \   \"GOGS_SERVER__ROOT_URL\" : {\n      \"type\" : \"string\",\n      \"description\"\
       \ : \"The root URL for the gogs server\"\n    },\n    \"DOMAIN\" : {\n     \
