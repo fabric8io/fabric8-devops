@@ -26,11 +26,11 @@
     <version>2.2-SNAPSHOT</version>
   </parent>
 
-  <artifactId>exposecontroller</artifactId>
+  <artifactId>configmapcontroller</artifactId>
 
-  <name>Expose Controller</name>
+  <name>ConfigMap Controller</name>
   <description>
-    Exposes services externally based on Kubernetes implementation
+    Performs Rolling Upgrades to Deployments when ConfigMaps are changed
   </description>
 
   <build>

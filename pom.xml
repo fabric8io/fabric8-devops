@@ -162,6 +162,7 @@
     <module>brackets</module>
     <module>chaos-monkey</module>
     <module>collector-utils</module>
+    <module>configmapcontroller</module>
     <module>content-repository</module>
     <module>elasticsearch</module>
     <module>exposecontroller</module>
