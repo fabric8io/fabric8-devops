@@ -31,11 +31,6 @@ spec:
           claimName: gogs-data
       containers:
       - env:
-        - name: "DOMAIN"
-          valueFrom:
-            configMapKeyRef:
-              key: "domain"
-              name: "gogs"
         - name: "GOGS_SERVER__ROOT_URL"
           valueFrom:
             configMapKeyRef:
@@ -51,22 +46,12 @@ spec:
             configMapKeyRef:
               key: "admin-user-password"
               name: "gogs"
-        - name: "GOGS_SERVER__PROTOCOL"
-          valueFrom:
-            configMapKeyRef:
-              key: "gogs-server--protocol"
-              name: "gogs"
         - name: "ADMIN_USER_CREATE"
           value: "true"
         - name: "GOGS_WEBHOOK__TASK_INTERVAL"
           value: "true"
         - name: "GOGS_WEBHOOK__SKIP_TLS_VERIFY"
           value: "true"
-        - name: "GOGS_SERVER__DOMAIN"
-          valueFrom:
-            configMapKeyRef:
-              key: "gogs-server--domain"
-              name: "gogs"
         - name: "ADMIN_USER_NAME"
           valueFrom:
             configMapKeyRef:
