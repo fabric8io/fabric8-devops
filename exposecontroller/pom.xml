@@ -28,9 +28,9 @@
 
   <artifactId>exposecontroller</artifactId>
 
-  <name>Exposer</name>
+  <name>Expose Controller</name>
   <description>
-    Exposes services based on Kubernetes implementation
+    Exposes services externally based on Kubernetes implementation
   </description>
 
   <build>
