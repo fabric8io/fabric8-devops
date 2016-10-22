@@ -4,7 +4,7 @@ def imagesBuiltByPipeline() {
 }
 
 def externalImages(){
-  return ['exposecontroller','nginx-controller','alpine-caddy','hubot-irc','eclipse-orion','nexus','gerrit','fabric8-kiwiirc','brackets','jenkins-jnlp-client','taiga-front','taiga-back','hubot-slack','lets-chat','jenkins-docker','maven-builder','gogs','grafana']
+  return ['configmapcontroller','exposecontroller','nginx-controller','alpine-caddy','hubot-irc','eclipse-orion','nexus','gerrit','fabric8-kiwiirc','brackets','jenkins-jnlp-client','taiga-front','taiga-back','hubot-slack','lets-chat','jenkins-docker','maven-builder','gogs','grafana']
 }
 
 def repo(){
