@@ -1,3 +1,6 @@
+metadata:
+  annotations:
+    configmap.fabric8.io/update-on-change: "exposecontroller"
 spec:
   replicas: 1
   template:
