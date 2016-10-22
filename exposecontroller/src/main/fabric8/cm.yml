@@ -1,6 +1,3 @@
-metadata:
-  annotations:
-    configmap.fabric8.io/update-on-change: "exposecontroller"
 data:
   config.yml: |
     domain:

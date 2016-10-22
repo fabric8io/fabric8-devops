@@ -3,6 +3,7 @@ apiVersion: "extensions/v1beta1"
 kind: "Deployment"
 metadata:
   annotations:
+    configmap.fabric8.io/update-on-change: "gogs"
     fabric8.io/iconUrl: "https://cdn.rawgit.com/fabric8io/fabric8-devops/master/gogs/src/main/fabric8/icon.png"
   labels:
     provider: "fabric8"
