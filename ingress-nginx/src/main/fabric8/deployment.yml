@@ -1,4 +1,6 @@
 metadata:
+  annotations:
+    configmap.fabric8.io/update-on-change: "nginx-config"
   namespace: fabric8-system
 spec:
   replicas: 1
