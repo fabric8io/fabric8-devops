@@ -4,7 +4,7 @@ spec:
     spec:
       containers:
       - name: grafana
-        image: ${fabric8.dockerUser}grafana:2.6.0
+        image: ${fabric8.dockerUser}grafana:2.6.1
         env:
         - name: PROMETHEUS_ADDRESS
           value: http://prometheus
