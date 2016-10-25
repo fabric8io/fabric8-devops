@@ -6,6 +6,8 @@ metadata:
     project: "${project.artifactId}"
     provider: "fabric8"
     expose: "true"
+  annotations:
+    fabric8.io/app-menu: development
   name: "gitlab"
 spec:
   ports:

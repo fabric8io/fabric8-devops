@@ -3,6 +3,8 @@ metadata:
   labels:
     provider: "fabric8"
     expose: "true"
+  annotations:
+    fabric8.io/app-menu: management
 spec:
   ports:
   - name: http
