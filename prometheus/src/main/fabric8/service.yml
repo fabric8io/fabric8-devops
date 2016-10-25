@@ -1,6 +1,7 @@
 metadata:
   annotations:
     prometheus.io/scrape: "true"
+    fabric8.io/app-menu: management
   labels:
     provider: "fabric8"
     expose: "true"

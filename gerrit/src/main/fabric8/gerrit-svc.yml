@@ -6,6 +6,9 @@ metadata:
     project: "${project.artifactId}"
     provider: "fabric8"
     expose: "true"
+  annotations:
+    fabric8.io/app-menu: development
+    fabric8.io/iconUrl: "https://cdn.rawgit.com/fabric8io/fabric8-devops/master/gerrit/src/main/fabric8/icon.png"
   name: "gerrit"
 spec:
   ports:
