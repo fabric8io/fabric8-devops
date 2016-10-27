@@ -74,13 +74,4 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
-  <profiles>
-    <profile>
-      <id>fabric8-snapshot</id>
-      <properties>
-        <docker.image>fabric8/jenkins-docker</docker.image>
-      </properties>
-    </profile>
-  </profiles>
 </project>

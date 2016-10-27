@@ -33,11 +33,6 @@
     [Docker Registry](https://github.com/docker/distribution) - A private docker registry
   </description>
 
-  <properties>
-    <docker.image>registry:2</docker.image>
-    <!-- <fabric8.volume.registry-storage.mountPath>/var/lib/registry</fabric8.volume.registry-storage.mountPath> -->
-  </properties>
-
   <build>
     <resources>
       <resource>

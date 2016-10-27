@@ -35,7 +35,6 @@
   <properties>
     <image.user>fabric8</image.user>
     <grafana.version>3.1.0</grafana.version>
-    <docker.image>${image.user}/${project.artifactId}:${project.version}</docker.image>
   </properties>
 
   <dependencies>

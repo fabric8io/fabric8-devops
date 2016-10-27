@@ -33,11 +33,6 @@
     A Repository storing static HTML reports and content from releases
   </description>
 
-  <properties>
-    <docker.image>${fabric8.dockerUser}alpine-caddy:${project.version}</docker.image>
-    <!-- TODO use real persistent volume! -->
-  </properties>
-
   <build>
     <resources>
       <resource>
@@ -79,14 +74,5 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
-  <profiles>
-    <profile>
-      <id>snapshot</id>
-      <properties>
-        <docker.image>fabric8/alpine-caddy</docker.image>
-      </properties>
-    </profile>
-  </profiles>
 
 </project>

@@ -34,7 +34,6 @@
   </description>
 
   <properties>
-    <docker.image>fabric8/jenkins-docker:${project.version}</docker.image>
     <!-- <fabric8.includePodEnvVar>true</fabric8.includePodEnvVar> -->
 
     <!-- <fabric8.env.CGO_ENABLED>0</fabric8.env.CGO_ENABLED-->
@@ -92,12 +91,4 @@
     </dependency>
   </dependencies>
 
-  <profiles>
-    <profile>
-      <id>fabric8-snapshot</id>
-      <properties>
-        <docker.image>fabric8/jenkins-docker</docker.image>
-      </properties>
-    </profile>
-  </profiles>
 </project>

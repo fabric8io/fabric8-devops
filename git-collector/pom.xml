@@ -35,7 +35,6 @@
   <properties>
     <docker.from>docker.io/fabric8/java</docker.from>
 
-    <docker.image>${fabric8.dockerUser}${project.artifactId}:${project.version}</docker.image>
     <docker.assemblyDescriptorRef>artifact-with-dependencies</docker.assemblyDescriptorRef>
     <docker.env.MAIN>org.jboss.weld.environment.se.StartMain</docker.env.MAIN>
     <elasticsearch.host>http://elasticsearch.vagrant.f8</elasticsearch.host>
@@ -207,7 +206,7 @@
         <configuration>
           <images>
             <image>
-              <name>${docker.image}</name>
+              <name>${artifact.image.name}</name>
               <build>
                 <from>${docker.from}</from>
                 <assembly>

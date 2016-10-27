@@ -76,7 +76,7 @@
 
     <docker.from>docker.io/fabric8/java</docker.from>
 
-    <docker.image>${fabric8.dockerUser}${project.artifactId}:${project.version}</docker.image>
+    <artifact.image.name>${fabric8.dockerUser}${project.artifactId}:${project.version}</artifact.image.name>
     <docker.assemblyDescriptorRef>artifact-with-dependencies</docker.assemblyDescriptorRef>
 
     <!-- lets disable S2I for our releases -->

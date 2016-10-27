@@ -39,13 +39,7 @@
     <version.maven-bundle-plugin>2.3.7</version.maven-bundle-plugin>
     <maven-resources-plugin.version>2.6</maven-resources-plugin.version>
     <skipTests>false</skipTests>
-
-    <docker.from>docker.io/fabric8/java</docker.from>
-
-    <docker.image>${fabric8.dockerUser}${project.artifactId}:${project.version}</docker.image>
-    <docker.assemblyDescriptorRef>artifact-with-dependencies</docker.assemblyDescriptorRef>
-    <docker.env.MAIN>org.jboss.weld.environment.se.StartMain</docker.env.MAIN>
-    </properties>
+  </properties>
 
   <dependencyManagement>
     <dependencies>
@@ -131,8 +125,8 @@
         </configuration>
       </plugin>
 
-      
-      
+
+
 
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -143,7 +137,7 @@
           <includePluginDependencies>false</includePluginDependencies>
         </configuration>
       </plugin>
-    
+
       <plugin>
         <groupId>io.fabric8</groupId>
         <artifactId>fabric8-maven-plugin</artifactId>
@@ -151,14 +145,14 @@
         <configuration>
           <images>
             <image>
-              <name>${docker.image}</name>
+              <name>${artifact.image.name}</name>
               <build>
-                <from>${docker.from}</from>
+                <from>docker.io/fabric8/java</from>
                 <assembly>
-                  <descriptorRef>${docker.assemblyDescriptorRef}</descriptorRef>
+                  <descriptorRef>artifact-with-dependencies</descriptorRef>
                 </assembly>
                 <env>
-                  <MAIN>${docker.env.MAIN}</MAIN>
+                  <MAIN>org.jboss.weld.environment.se.StartMain</MAIN>
                   <SKIP_TLS_VERIFY>true</SKIP_TLS_VERIFY>
                 </env>
                 <ports>

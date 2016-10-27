@@ -33,11 +33,6 @@
     [Hubot](http://hubot.github.com) chat bot for Lets Chat
   </description>
 
-  <properties>
-    <docker.image>${fabric8.dockerUser}hubot-letschat:v1.0.0</docker.image>
-
-  </properties>
-
   <build>
     <resources>
       <resource>
