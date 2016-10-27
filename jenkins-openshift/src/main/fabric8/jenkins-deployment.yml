@@ -4,7 +4,7 @@ kind: "Deployment"
 metadata:
   labels:
     fabric8.io/type: "preview"
-  name: "${project.artifactId}"
+  name: "jenkins"
 spec:
   replicas: 1
   template:
@@ -12,7 +12,7 @@ spec:
       containers:
       - image: "fabric8/jenkins-openshift:dev"
         imagePullPolicy: "Always"
-        name: "${project.artifactId}"
+        name: "jenkins"
         ports:
         - containerPort: 50000
           name: "slave"

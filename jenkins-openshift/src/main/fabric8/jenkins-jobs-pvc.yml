@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: "${project.artifactId}-jobs"
+  name: "jenkins-jobs"
 spec:
   accessModes:
   - ReadWriteOnce
