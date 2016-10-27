@@ -1,0 +1,5 @@
+metadata:
+  name: ${NAMESPACE}:default
+policyRef:
+  name: default
+  namespace: ${NAMESPACE}

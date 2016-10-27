@@ -1,5 +1,2 @@
----
-apiVersion: "v1"
-kind: "ServiceAccount"
 metadata:
-  name: "${project.artifactId}"
+  name: "jenkins"

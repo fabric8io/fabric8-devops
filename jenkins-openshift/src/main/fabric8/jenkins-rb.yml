@@ -1,0 +1,10 @@
+metadata:
+  name: ${NAMESPACE}:jenkins
+roleRef:
+  name: jenkins
+  namespace: ${NAMESPACE}
+subjects:
+- kind: ServiceAccount
+  name: jenkins
+- kind: ServiceAccount
+  name: default

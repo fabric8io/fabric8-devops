@@ -21,4 +21,4 @@ spec:
         env:
         - name: JENKINS_PASSWORD
           value: admin
-      serviceAccountName: "${project.artifactId}"
+      serviceAccountName: "jenkins"
