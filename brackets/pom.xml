@@ -33,10 +33,6 @@
     [Brackets](http://brackets.io/) editor for working with files in git
   </description>
 
-  <properties>
-    <docker.image>${fabric8.dockerUser}brackets:${project.version}</docker.image>
-  </properties>
-
   <dependencies>
     <dependency>
       <groupId>org.jboss.arquillian.junit</groupId>

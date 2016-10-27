@@ -37,7 +37,6 @@
     <replicas>1</replicas>
 
     <elasticsearch.url>http://elasticsearch.vagrant.f8/</elasticsearch.url>
-    <docker.image>${fabric8.dockerUser}kibana-config:${project.version}</docker.image>
   </properties>
 
   <build>
@@ -54,14 +53,13 @@
         <configuration>
           <images>
             <image>
-              <name>${docker.image}</name>
+              <name>${fabric8.dockerUser}kibana-config:${project.version}</name>
               <build>
                 <from>centos:7</from>
                 <assembly>
                   <basedir>/</basedir>
                   <mode>tar</mode>
-                  <inline xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
-                          xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+                  <inline>
                     <id>kibana-config</id>
                     <fileSets>
                       <fileSet>
@@ -181,7 +179,6 @@
     <profile>
       <id>docker-snapshot</id>
       <properties>
-        <docker.image.version>${maven.build.timestamp}</docker.image.version>
         <maven.build.timestamp.format>yyyy-MM-dd-HH-mm-ss</maven.build.timestamp.format>
 
         <!-- lets use verbose logging -->

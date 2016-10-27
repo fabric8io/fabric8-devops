@@ -33,10 +33,6 @@
     [Orion](http://eclipse.org/orion/) is a web based IDE for working files in a git repository
   </description>
 
-  <properties>
-    <docker.image>${fabric8.dockerUser}eclipse-orion:${project.version}</docker.image>
-  </properties>
-
   <dependencies>
     <dependency>
       <groupId>org.jboss.arquillian.junit</groupId>

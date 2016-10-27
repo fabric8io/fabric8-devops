@@ -33,10 +33,6 @@
     [Gitlab](http://gitlab.com/) - A self-hosted Git service
   </description>
 
-  <properties>
-    <docker.image>gitlab/gitlab-ce</docker.image>
-  </properties>
-
   <build>
     <resources>
       <resource>

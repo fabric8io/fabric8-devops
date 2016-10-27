@@ -35,7 +35,6 @@
   <properties>
     <http.port>8080</http.port>
 
-    <docker.image>${fabric8.dockerUser}${project.artifactId}:${project.version}</docker.image>
   </properties>
 
   <dependencies>
@@ -88,10 +87,9 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>${docker.maven.plugin.version}</version>
                 <configuration>
-                    <image>${docker.image}</image>
                     <images>
                         <image>
-                            <name>${docker.image}</name>
+                            <name>${artifact.image.name}</name>
                             <build>
                                 <from>jboss/keycloak:1.9.7.Final</from>
                                 <assembly>

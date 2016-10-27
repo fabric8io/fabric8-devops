@@ -33,10 +33,6 @@
     Maven Shell is an app that contains java build tools and allows development inside kubernetes
   </description>
 
-  <properties>
-    <docker.image>fabric8/maven-builder:${project.version}</docker.image>
-  </properties>
-
   <build>
     <resources>
       <resource>
@@ -99,12 +95,4 @@
     </dependency>
   </dependencies>
 
-  <profiles>
-    <profile>
-      <id>fabric8-snapshot</id>
-      <properties>
-        <docker.image>fabric8/jenkins-docker</docker.image>
-      </properties>
-    </profile>
-  </profiles>
 </project>

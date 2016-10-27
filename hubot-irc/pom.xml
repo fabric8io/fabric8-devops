@@ -33,11 +33,6 @@
     [Hubot](http://hubot.github.com) IRC chat bot
   </description>
 
-  <properties>
-    <docker.image>${fabric8.dockerUser}hubot-irc:${project.version}</docker.image>
-
-  </properties>
-
   <build>
     <resources>
       <resource>

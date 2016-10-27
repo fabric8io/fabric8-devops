@@ -34,11 +34,6 @@
 
   <properties>
     <elasticsearch.version>2.3.4</elasticsearch.version>
-
-    <!-- Note due to this we must use docker.image for any sidecar docker builds:
-        https://github.com/fabric8io/fabric8-maven-plugin/issues/263
-        -->
-    <docker.image>${fabric8.dockerUser}elasticsearch-logstash-template:${project.version}</docker.image>
     <replicas>1</replicas>
   </properties>
 
@@ -57,13 +52,13 @@
         <configuration>
           <images>
             <image>
-              <name>${docker.image}</name>
+              <name>${fabric8.dockerUser}elasticsearch-logstash-template:${project.version}</name>
               <build>
                 <from>centos:7</from>
                 <assembly>
                   <basedir>/</basedir>
                   <mode>tar</mode>
-                  <inline xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2" xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+                  <inline>
                     <id>logstash-template</id>
                     <fileSets>
                       <fileSet>

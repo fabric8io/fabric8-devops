@@ -33,11 +33,6 @@
     ManageIQ Cloud Management Platform http://manageiq.org - default username/password is admin/smartvm
   </description>
 
-  <properties>
-    <docker.image>manageiq/manageiq:latest</docker.image>
-
-  </properties>
-
   <build>
     <resources>
       <resource>
@@ -100,12 +95,4 @@
     </dependency>
   </dependencies>
 
-  <profiles>
-    <profile>
-      <id>fabric8-snapshot</id>
-      <properties>
-        <docker.image>fabric8/jenkins-docker</docker.image>
-      </properties>
-    </profile>
-  </profiles>
 </project>
