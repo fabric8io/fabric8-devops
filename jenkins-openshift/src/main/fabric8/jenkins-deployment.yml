@@ -21,4 +21,18 @@ spec:
         env:
         - name: JENKINS_PASSWORD
           value: admin
+        volumeMounts:
+        - mountPath: /var/lib/jenkins/jobs
+          name: jenkins-jobs
+          readOnly: false
+        - mountPath: /var/lib/jenkins/workspace
+          name: jenkins-workspace
+          readOnly: false
       serviceAccountName: "jenkins"
+      volumes:
+      - name: jenkins-jobs
+        persistentVolumeClaim:
+          claimName: jenkins-jobs
+      - name: jenkins-workspace
+        persistentVolumeClaim:
+          claimName: jenkins-workspace
