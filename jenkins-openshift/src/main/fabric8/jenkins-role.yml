@@ -1,0 +1,24 @@
+rules:
+- verbs:
+  - create
+  - delete
+  - deletecollection
+  - get
+  - list
+  - watch
+  resources:
+  - pods
+  - pods/attach
+  - pods/exec
+  - pods/portforward
+  - pods/proxy
+- verbs:
+  - get
+  - list
+  - watch
+  resources:
+  - pods/log
+  - persistentvolumeclaims
+  - persistentclaims/status
+  - persistentvolumes
+  - persistentvolumes/status
