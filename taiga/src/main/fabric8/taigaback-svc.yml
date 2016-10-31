@@ -5,7 +5,7 @@ metadata:
   labels:
     provider: "fabric8"
     project: "${project.artifactId}"
-  name: "taigaback"
+  name: "taiga-back"
 spec:
   ports:
   - port: 8000

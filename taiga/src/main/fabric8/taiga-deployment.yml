@@ -44,6 +44,18 @@ spec:
         ports:
         - containerPort: 8000
           protocol: "TCP"
+        readinessProbe:
+          httpGet:
+            path: "/"
+            port: 8000
+          initialDelaySeconds: 20
+          timeoutSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: "/"
+            port: 8000
+          initialDelaySeconds: 120
+          timeoutSeconds: 10
         volumeMounts:
         - mountPath: "/var/lib/postgresql/data"
           name: "taiga-data"
@@ -56,6 +68,18 @@ spec:
         ports:
         - containerPort: 80
           protocol: "TCP"
+        readinessProbe:
+          httpGet:
+            path: "/"
+            port: 80
+          initialDelaySeconds: 20
+          timeoutSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: "/"
+            port: 80
+          initialDelaySeconds: 120
+          timeoutSeconds: 10
         volumeMounts:
         - mountPath: "/var/lib/postgresql/data"
           name: "taiga-data"
