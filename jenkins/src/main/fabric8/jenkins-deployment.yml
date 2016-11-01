@@ -34,11 +34,6 @@ spec:
     spec:
       containers:
       - env:
-        - name: "JENKINS_WORKFLOW_GIT_REPOSITORY"
-          valueFrom:
-            configMapKeyRef:
-              key: "jenkins-workflow-git-repository"
-              name: "jenkins"
         - name: "PROJECT_VERSION"
           valueFrom:
             configMapKeyRef:
@@ -69,11 +64,6 @@ spec:
             configMapKeyRef:
               key: "pipeline-elasticsearch-host"
               name: "jenkins"
-        - name: "JENKINS_JOBS_GIT_REPOSITORY"
-          valueFrom:
-            configMapKeyRef:
-              key: "jenkins-jobs-git-repository"
-              name: "jenkins"
         - name: "KUBERNETES_NAMESPACE"
           valueFrom:
             fieldRef:
@@ -82,11 +72,18 @@ spec:
           value: "https://kubernetes.default"
         image: "fabric8/jenkins-docker:${project.version}"
         imagePullPolicy: "IfNotPresent"
-        lifecycle:
-          postStart:
-            exec:
-              command:
-              - "/root/postStart.sh"
+        readinessProbe:
+          httpGet:
+            path: "/blue"
+            port: 8080
+          initialDelaySeconds: 20
+          timeoutSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: "/blue"
+            port: 8080
+          initialDelaySeconds: 120
+          timeoutSeconds: 10
         name: "jenkins"
         ports:
         - containerPort: 50000
