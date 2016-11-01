@@ -4,6 +4,7 @@ kind: "Service"
 metadata:
   annotations:
     fabric8.io/app-menu: development
+    api.service.kubernetes.io/path: /blue
   labels:
     project: "${project.artifactId}"
     provider: "fabric8"
