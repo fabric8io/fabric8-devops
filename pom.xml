@@ -100,7 +100,7 @@
     <jube.version>2.2.0</jube.version>
     <junit.version>4.12</junit.version>
 
-    <fabric8.version>2.2.173</fabric8.version>
+    <fabric8.version>2.2.174</fabric8.version>
     <fabric8.release.version>${fabric8.version}</fabric8.release.version>
 
     <fabric8.maven.plugin.version>3.1.83</fabric8.maven.plugin.version>
