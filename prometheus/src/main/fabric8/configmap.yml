@@ -60,10 +60,7 @@ data:
       scheme: https
 
       kubernetes_sd_configs:
-      - api_servers:
-        - 'https://kubernetes.default.svc'
-        in_cluster: true
-        role: node
+      - role: node
 
       relabel_configs:
       - action: labelmap
@@ -73,10 +70,7 @@ data:
     - job_name: 'kubernetes-node-exporters'
 
       kubernetes_sd_configs:
-      - api_servers:
-        - 'https://kubernetes.default.svc'
-        in_cluster: true
-        role: pod
+      - role: pod
 
       relabel_configs:
       - source_labels: [__meta_kubernetes_pod_name]
@@ -105,10 +99,7 @@ data:
     - job_name: 'kubernetes-service-endpoints'
 
       kubernetes_sd_configs:
-      - api_servers:
-        - 'https://kubernetes.default.svc'
-        in_cluster: true
-        role: endpoint
+      - role: endpoints
 
       relabel_configs:
       - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
@@ -149,10 +140,7 @@ data:
         module: [http_2xx]
 
       kubernetes_sd_configs:
-      - api_servers:
-        - 'https://kubernetes.default.svc'
-        in_cluster: true
-        role: service
+      - role: service
 
       relabel_configs:
       - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_probe]
@@ -187,10 +175,7 @@ data:
     - job_name: 'kubernetes-pods'
 
       kubernetes_sd_configs:
-      - api_servers:
-        - 'https://kubernetes.default.svc'
-        in_cluster: true
-        role: pod
+      - role: pod
 
       relabel_configs:
       - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
