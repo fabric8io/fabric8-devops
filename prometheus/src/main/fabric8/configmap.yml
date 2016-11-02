@@ -5,8 +5,8 @@ metadata:
 data:
   prometheus.yml: |-
     global:
-      scrape_interval:     5s
-      evaluation_interval: 5s
+      scrape_interval:     30s
+      evaluation_interval: 60s
 
     rule_files:
       - "*.rules"
@@ -19,7 +19,7 @@ data:
     # `labelmap` relabeling action.
     scrape_configs:
 
-    # Scrape config for API server.
+    # Scrape config for API servers.
     - job_name: 'kubernetes-apiservers'
 
       # This TLS & bearer token file config is used to connect to the actual scrape
@@ -35,14 +35,12 @@ data:
       scheme: https
 
       kubernetes_sd_configs:
-      - api_servers:
-        - 'https://kubernetes.default.svc'
-        in_cluster: true
-        role: apiserver
+      - role: endpoints
 
       relabel_configs:
-      - action: labelmap
-        regex: __meta_kubernetes_node_label_(.+)
+      - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
+        action: keep
+        regex: default;kubernetes;https
 
     # Scrape config for nodes.
     - job_name: 'kubernetes-nodes'
@@ -60,10 +58,7 @@ data:
       scheme: https
 
       kubernetes_sd_configs:
-      - api_servers:
-        - 'https://kubernetes.default.svc'
-        in_cluster: true
-        role: node
+      - role: node
 
       relabel_configs:
       - action: labelmap
@@ -73,10 +68,7 @@ data:
     - job_name: 'kubernetes-node-exporters'
 
       kubernetes_sd_configs:
-      - api_servers:
-        - 'https://kubernetes.default.svc'
-        in_cluster: true
-        role: pod
+      - role: pod
 
       relabel_configs:
       - source_labels: [__meta_kubernetes_pod_name]
@@ -105,10 +97,7 @@ data:
     - job_name: 'kubernetes-service-endpoints'
 
       kubernetes_sd_configs:
-      - api_servers:
-        - 'https://kubernetes.default.svc'
-        in_cluster: true
-        role: endpoint
+      - role: endpoints
 
       relabel_configs:
       - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
@@ -149,10 +138,7 @@ data:
         module: [http_2xx]
 
       kubernetes_sd_configs:
-      - api_servers:
-        - 'https://kubernetes.default.svc'
-        in_cluster: true
-        role: service
+      - role: service
 
       relabel_configs:
       - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_probe]
@@ -187,10 +173,7 @@ data:
     - job_name: 'kubernetes-pods'
 
       kubernetes_sd_configs:
-      - api_servers:
-        - 'https://kubernetes.default.svc'
-        in_cluster: true
-        role: pod
+      - role: pod
 
       relabel_configs:
       - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]

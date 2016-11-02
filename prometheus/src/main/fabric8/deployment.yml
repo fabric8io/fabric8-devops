@@ -5,7 +5,7 @@ spec:
       serviceAccountName: metrics
       containers:
       - name: prometheus
-        image: prom/prometheus:v1.2.1
+        image: prom/prometheus:v1.3.0
         ports:
         - name: http
           containerPort: 9090
@@ -31,7 +31,7 @@ spec:
           - http://localhost:9090/-/reload
         volumeMounts:
         - name: config-volume
-          mountPath: /etc/prometheus/config
+          mountPath: /etc/prometheus
       volumes:
       - name: config-volume
         configMap:
