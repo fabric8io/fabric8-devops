@@ -31,7 +31,7 @@ spec:
           - http://localhost:9090/-/reload
         volumeMounts:
         - name: config-volume
-          mountPath: /etc/prometheus/config
+          mountPath: /etc/prometheus
       volumes:
       - name: config-volume
         configMap:
