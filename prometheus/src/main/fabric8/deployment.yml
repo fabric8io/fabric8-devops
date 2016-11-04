@@ -5,7 +5,7 @@ spec:
       serviceAccountName: metrics
       containers:
       - name: prometheus
-        image: prom/prometheus:v1.3.0
+        image: prom/prometheus:v1.3.1
         ports:
         - name: http
           containerPort: 9090
