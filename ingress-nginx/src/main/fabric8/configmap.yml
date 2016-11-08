@@ -5,7 +5,7 @@ metadata:
   namespace: fabric8-system
 data:
   client-max-body-size: 2000m
-  proxy-connect-timeout: 10s
-  proxy-read-timeout: 10s
+  proxy-connect-timeout: 500s
+  proxy-read-timeout: 500s
   server-names-hash-bucket-size: "256"
   server-names-hash-max-size: "1024"
