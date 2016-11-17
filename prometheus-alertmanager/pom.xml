@@ -78,7 +78,7 @@
               <build>
                 <from>docker.io/prom/alertmanager:dev</from>
                 <assembly>
-                  <basedir>/bin</basedir>
+                  <targetDir>/bin</targetDir>
                   <inline>
                     <id>blackbox-conf</id>
                     <files>

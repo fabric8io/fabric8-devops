@@ -56,7 +56,7 @@
               <build>
                 <from>centos:7</from>
                 <assembly>
-                  <basedir>/</basedir>
+                  <targetDir>/</targetDir>
                   <mode>tar</mode>
                   <inline>
                     <id>logstash-template</id>
