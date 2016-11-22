@@ -82,8 +82,6 @@
     <!-- lets disable S2I for our releases -->
     <fabric8.mode>kubernetes</fabric8.mode>
 
-    <jube.plugin.enabled>false</jube.plugin.enabled>
-
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
 
@@ -97,7 +95,6 @@
 
     <gitective-version>0.9.11</gitective-version>
     <jcraft-jzlib-version>1.1.3</jcraft-jzlib-version>
-    <jube.version>2.2.0</jube.version>
     <junit.version>4.12</junit.version>
 
     <fabric8.version>2.2.176</fabric8.version>
@@ -361,12 +358,6 @@
         <!-- this must be the last released version - cannot be a snapshot -->
         <fabric8.release.version>2.2.81</fabric8.release.version>
         <fabric8.dockerPrefix/>
-      </properties>
-    </profile>
-    <profile>
-      <id>jube-snapshot</id>
-      <properties>
-        <jube.version>2.2-SNAPSHOT</jube.version>
       </properties>
     </profile>
 
