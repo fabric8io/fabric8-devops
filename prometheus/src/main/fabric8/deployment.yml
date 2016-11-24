@@ -14,6 +14,7 @@ spec:
           mountPath: /etc/prometheus
         - name: data-volume
           mountPath: /prometheus
+          subPath: prometheus-db
         livenessProbe:
           httpGet:
             port: http
