@@ -97,7 +97,7 @@
     <jcraft-jzlib-version>1.1.3</jcraft-jzlib-version>
     <junit.version>4.12</junit.version>
 
-    <fabric8.version>2.2.181</fabric8.version>
+    <fabric8.version>2.2.182</fabric8.version>
     <fabric8.release.version>${fabric8.version}</fabric8.release.version>
 
     <fabric8.maven.plugin.version>3.2.4</fabric8.maven.plugin.version>
