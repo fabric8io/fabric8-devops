@@ -4,7 +4,7 @@ spec:
     spec:
       containers:
       - name: configmapcontroller
-        image: fabric8/configmapcontroller:${project.version}
+        image: fabric8/configmapcontroller:${configmapcontroller.version}
         env:
         - name: "KUBERNETES_NAMESPACE"
           valueFrom:
