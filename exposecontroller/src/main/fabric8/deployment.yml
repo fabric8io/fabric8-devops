@@ -9,6 +9,12 @@ spec:
       containers:
       - name: exposecontroller
         image: fabric8/exposecontroller:${exposecontroller.version}
+        livenessProbe:
+          exec:
+            command:
+            - cat
+            - /tmp/restarteveryday
+          initialDelaySeconds: 86164
         env:
         - name: "KUBERNETES_NAMESPACE"
           valueFrom:
