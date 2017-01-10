@@ -1,3 +1,5 @@
+metadata:
+  namespace: fabric8-system
 data:
   config.yml: |
     domain:

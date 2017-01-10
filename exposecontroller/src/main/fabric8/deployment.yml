@@ -1,4 +1,5 @@
 metadata:
+  namespace: fabric8-system
   annotations:
     configmap.fabric8.io/update-on-change: "exposecontroller"
 spec:
@@ -8,6 +9,12 @@ spec:
       containers:
       - name: exposecontroller
         image: fabric8/exposecontroller:${exposecontroller.version}
+        livenessProbe:
+          exec:
+            command:
+            - cat
+            - /tmp/restarteveryday
+          initialDelaySeconds: 86164
         env:
         - name: "KUBERNETES_NAMESPACE"
           valueFrom:
