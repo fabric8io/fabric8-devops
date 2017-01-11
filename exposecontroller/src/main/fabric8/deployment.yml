@@ -1,5 +1,4 @@
 metadata:
-  namespace: fabric8-system
   annotations:
     configmap.fabric8.io/update-on-change: "exposecontroller"
 spec:
