@@ -97,15 +97,7 @@ spec:
           requests:
             cpu: "0"
             memory: "0"
-        securityContext:
-          privileged: true
         volumeMounts:
-        - mountPath: "/var/run/docker.sock"
-          name: "data"
-          readOnly: false
-        - mountPath: "/home/jenkins/.docker"
-          name: "jenkins-docker-cfg"
-          readOnly: false
         - mountPath: /var/jenkins_home/jobs
           name: jenkins-jobs
           readOnly: false
@@ -114,12 +106,6 @@ spec:
           readOnly: false
       serviceAccountName: "jenkins"
       volumes:
-      - hostPath:
-          path: "/var/run/docker.sock"
-        name: "data"
-      - name: "jenkins-docker-cfg"
-        secret:
-          secretName: "jenkins-docker-cfg"
       - name: jenkins-jobs
         persistentVolumeClaim:
           claimName: jenkins-jobs
