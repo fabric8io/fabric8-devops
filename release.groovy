@@ -55,6 +55,7 @@ def updateDownstreamDependencies(stagedProject) {
     propertyName = 'fabric8.devops.version'
     projects = [
             'fabric8io/fabric8-platform',
+            'fabric8io/fabric8-online',
             'fabric8io/fabric8-pipeline-library',
             'fabric8io/ipaas-platform',
             'fabric8io/fabric8-forge',
