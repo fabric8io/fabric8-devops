@@ -26,6 +26,7 @@ import io.fabric8.collector.elasticsearch.ResultsDTO;
 import io.fabric8.collector.elasticsearch.SearchDTO;
 import io.fabric8.collector.git.elasticsearch.CommitDTO;
 import io.fabric8.collector.git.elasticsearch.GitElasticsearchClient;
+import io.fabric8.kubernetes.api.KubernetesHelper;
 import io.fabric8.openshift.api.model.BuildConfig;
 import io.fabric8.openshift.api.model.BuildConfigSpec;
 import io.fabric8.openshift.api.model.BuildSource;
@@ -63,6 +64,7 @@ import java.util.Objects;
 import java.util.concurrent.Callable;
 
 import static io.fabric8.collector.git.elasticsearch.Searches.createMinMaxGitCommitSearch;
+import static io.fabric8.kubernetes.api.Annotations.Builds.GIT_CLONE_URL;
 
 /**
  */
@@ -131,9 +133,12 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
 
     @Override
     public void process(NamespaceName name, BuildConfig buildConfig) throws Exception {
+        String uri = KubernetesHelper.getOrCreateAnnotations(buildConfig).get(GIT_CLONE_URL);
         GitBuildSource git = gitBuildSource(buildConfig);
         if (git != null) {
-            String uri = git.getUri();
+            if (Strings.isNullOrBlank(uri)) {
+                uri = git.getUri();
+            }
             if (Strings.isNotBlank(uri)) {
                 processGitRepo(name, buildConfig, git, uri);
             }
