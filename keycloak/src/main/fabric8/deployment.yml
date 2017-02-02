@@ -3,7 +3,7 @@ spec:
   template:
     spec:
       containers:
-      - image: jboss/keycloak:2.2.0.Final
+      - image: jboss/keycloak:2.5.1.Final
         env:
         - name: KEYCLOAK_USER
           value: admin
