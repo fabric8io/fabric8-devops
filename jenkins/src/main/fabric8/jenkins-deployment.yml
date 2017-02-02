@@ -73,17 +73,17 @@ spec:
         image: "fabric8/jenkins-docker:${project.version}"
         imagePullPolicy: "IfNotPresent"
         readinessProbe:
-          httpGet:
-            path: "/"
+          tcpSocket:
             port: 8080
           initialDelaySeconds: 20
           timeoutSeconds: 10
+          failureThreshold: 3
         livenessProbe:
-          httpGet:
-            path: "/"
+          tcpSocket:
             port: 8080
           initialDelaySeconds: 120
           timeoutSeconds: 10
+          failureThreshold: 3
         name: "jenkins"
         ports:
         - containerPort: 50000
