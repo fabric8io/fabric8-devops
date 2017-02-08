@@ -1,0 +1,15 @@
+kind: CronJob
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - image: busybox
+            imagePullPolicy: IfNotPresent
+            name: upgrade-job
+            command:
+            - echo
+            - yo
