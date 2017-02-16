@@ -26,9 +26,9 @@ spec:
          name: "sonarqube"
          ports:
          - containerPort: 9000
-           name: "kafka-manager"
+           name: "sonaqube"
          resources:
-           limits:
+          limits:
            cpu: 1
            memory: 1G
          requests:
