@@ -1,0 +1,13 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  labels:
+    experimental: "true"
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - image: fabric8/fabric8-system-tests:0.0.1
+        imagePullPolicy: IfNotPresent
+        name: validator-job
