@@ -1,15 +1,19 @@
 kind: CronJob
+metadata:
+  labels:
+    experimental: "true"
 spec:
-  schedule: "* * * * *"
+  schedule: "0 * * * *"
   jobTemplate:
     spec:
       template:
         spec:
           restartPolicy: OnFailure
           containers:
-          - image: busybox
+          - image: fabric8/gofabric8:${gofabric8.version}
             imagePullPolicy: IfNotPresent
             name: upgrade-job
             command:
-            - echo
-            - yo
+            - gofabric8
+            - upgrade
+            - --all

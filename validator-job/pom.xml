@@ -26,11 +26,11 @@
     <version>2.2-SNAPSHOT</version>
   </parent>
 
-  <artifactId>upgrade-job</artifactId>
+  <artifactId>validator-job</artifactId>
 
-  <name>upgrade-job</name>
+  <name>validator-job</name>
   <description>
-    Checks for a new release and update running applications
+    Validates a fabric8 install using system tests to create new projects
   </description>
 
   <build>
