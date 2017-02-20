@@ -98,17 +98,11 @@ spec:
             cpu: "0"
             memory: "0"
         volumeMounts:
-        - mountPath: /var/jenkins_home/jobs
-          name: jenkins-jobs
-          readOnly: false
-        - mountPath: /var/jenkins_home/workspace
-          name: jenkins-workspace
+        - mountPath: /var/jenkins_home
+          name: jenkins-home
           readOnly: false
       serviceAccountName: "jenkins"
       volumes:
-      - name: jenkins-jobs
+      - name: jenkins-home
         persistentVolumeClaim:
-          claimName: jenkins-jobs
-      - name: jenkins-workspace
-        persistentVolumeClaim:
-          claimName: jenkins-workspace
+          claimName: jenkins-home
