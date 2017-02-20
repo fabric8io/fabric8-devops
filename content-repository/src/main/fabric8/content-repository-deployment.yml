@@ -35,7 +35,7 @@ spec:
         imagePullPolicy: "IfNotPresent"
         name: "content-repository"
         ports:
-        - containerPort: 80
+        - containerPort: 8080
           name: "http"
         resources:
           limits:
