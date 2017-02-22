@@ -10,7 +10,8 @@ metadata:
     expose: "true"
 spec:
   ports:
-  - port: 80
+  - port: 9000
+    protocol: "TCP"
     targetPort: 9000
   selector:
     name: "sonarqube"
