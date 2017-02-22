@@ -2,6 +2,8 @@ kind: CronJob
 metadata:
   labels:
     experimental: "true"
+  annotations:
+      fabric8.io/target-platform: "kubernetes"
 spec:
   schedule: "0 * * * *"
   jobTemplate:
