@@ -29,8 +29,8 @@ spec:
            name: "sonaqube"
          resources:
           limits:
-           cpu: 1
-           memory: 1G
+           cpu: 0.5
+           memory: 512M
          requests:
            cpu: 0.5
            memory: 512M
