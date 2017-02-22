@@ -1,0 +1,18 @@
+kind: BuildConfig
+spec:
+  runPolicy: Serial
+  strategy:
+    type: Custom
+    customStrategy:
+      from:
+        kind: DockerImage
+        name: fabric8/gofabric8:${gofabric8.version}
+      env:
+      - name: ARGS
+        value: "upgrade --all --namespace-file /var/run/secrets/kubernetes.io/serviceaccount/namespace"
+      exposeDockerSocket: false
+  triggers:
+  - type: "Generic"
+    generic:
+      secret: "secret101"
+      allowEnv: true
