@@ -10,29 +10,42 @@ spec:
   template:
     spec:
       containers:
-      - image: "fabric8/jenkins-openshift:dev"
+      - image: "fabric8/jenkins-openshift:online"
         imagePullPolicy: "Always"
         name: "jenkins"
+        readinessProbe:
+          timeoutSeconds: 3
+          initialDelaySeconds: 3
+          httpGet:
+            path: "/login"
+            port: 8080
+        livenessProbe:
+          timeoutSeconds: 3
+          initialDelaySeconds: 420
+          failureThreshold: 30
+          httpGet:
+            path: "/login"
+            port: 8080
         ports:
         - containerPort: 50000
           name: "slave"
         - containerPort: 8080
           name: "http"
         env:
-        - name: JENKINS_PASSWORD
-          value: admin
+        - name: OPENSHIFT_ENABLE_OAUTH
+          value: "true"
+        - name: OPENSHIFT_ENABLE_REDIRECT_PROMPT
+          value: "true"
+        - name: KUBERNETES_TRUST_CERTIFICATES
+          value: "true"
+        - name: KUBERNETES_MASTER
+          value: "https://kubernetes.default:443"
         volumeMounts:
-        - mountPath: /var/lib/jenkins/jobs
-          name: jenkins-jobs
-          readOnly: false
-        - mountPath: /var/lib/jenkins/workspace
-          name: jenkins-workspace
+        - mountPath: /var/lib/jenkins
+          name: jenkins-home
           readOnly: false
       serviceAccountName: "jenkins"
       volumes:
-      - name: jenkins-jobs
+      - name: jenkins-home
         persistentVolumeClaim:
-          claimName: jenkins-jobs
-      - name: jenkins-workspace
-        persistentVolumeClaim:
-          claimName: jenkins-workspace
+          claimName: jenkins-home
