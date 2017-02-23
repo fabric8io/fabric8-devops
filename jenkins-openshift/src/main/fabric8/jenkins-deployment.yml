@@ -10,7 +10,7 @@ spec:
   template:
     spec:
       containers:
-      - image: "openshift/jenkins-2-centos7:latest"
+      - image: "fabric8/jenkins-openshift:online"
         imagePullPolicy: "Always"
         name: "jenkins"
         readinessProbe:
@@ -36,6 +36,10 @@ spec:
           value: "true"
         - name: OPENSHIFT_ENABLE_REDIRECT_PROMPT
           value: "true"
+        - name: KUBERNETES_TRUST_CERTIFICATES
+          value: "true"
+        - name: KUBERNETES_MASTER
+          value: "https://kubernetes.default:443"
         volumeMounts:
         - mountPath: /var/lib/jenkins
           name: jenkins-home
