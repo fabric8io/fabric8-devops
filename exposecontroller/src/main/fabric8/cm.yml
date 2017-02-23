@@ -1,3 +1,7 @@
+metadata:
+  name: ${project.artifactId}
+  annotations:
+      fabric8.io/target-platform: "kubernetes"
 data:
   config.yml: |
     domain:

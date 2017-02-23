@@ -44,6 +44,13 @@
       <plugin>
         <groupId>io.fabric8</groupId>
         <artifactId>fabric8-maven-plugin</artifactId>
+        <configuration>
+          <enricher>
+            <excludes>
+              <exclude>fmp-merge</exclude>
+            </excludes>
+          </enricher>
+        </configuration>
       </plugin>
     </plugins>
   </build>
