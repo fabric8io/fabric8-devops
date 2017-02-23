@@ -5,7 +5,7 @@ metadata:
   labels:
     project: "jenkins"
     provider: "fabric8"
-    expose: "true"
+    expose: "false"
   name: "jenkins-jnlp"
 spec:
   ports:

@@ -1,0 +1,9 @@
+metadata:
+  name: "jenkins"
+spec:
+  to:
+    kind: Service
+    name: "jenkins"
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
