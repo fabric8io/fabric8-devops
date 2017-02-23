@@ -10,7 +10,7 @@ spec:
   template:
     spec:
       containers:
-      - image: "fabric8/jenkins-openshift:online"
+      - image: "fabric8/jenkins-openshift:${jenkins-openshift.version}"
         imagePullPolicy: "Always"
         name: "jenkins"
         readinessProbe:
