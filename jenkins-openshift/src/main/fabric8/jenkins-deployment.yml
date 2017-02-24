@@ -32,6 +32,10 @@ spec:
         - containerPort: 8080
           name: "http"
         env:
+        - name: GIT_COMMITTER_EMAIL
+          value: fabric8@googlegroups.com
+        - name: GIT_COMMITTER_NAME
+          value: fabric8
         - name: OPENSHIFT_ENABLE_OAUTH
           value: "true"
         - name: OPENSHIFT_ENABLE_REDIRECT_PROMPT
