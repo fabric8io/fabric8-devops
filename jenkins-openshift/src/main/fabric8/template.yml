@@ -1,3 +1,0 @@
-parameters:
-- description: The namespace that the template will be installed into
-  name: NAMESPACE
