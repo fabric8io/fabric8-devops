@@ -1,0 +1,9 @@
+metadata:
+  name: "content-repository"
+spec:
+  to:
+    kind: Service
+    name: "content-repository"
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect

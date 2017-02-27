@@ -12,18 +12,7 @@ metadata:
   name: "content-repository"
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      provider: "fabric8"
-      project: "${project.artifactId}"
-      group: "io.fabric8.devops.apps"
   template:
-    metadata:
-      labels:
-        provider: "fabric8"
-        project: "${project.artifactId}"
-        version: "${project.version}"
-        group: "io.fabric8.devops.apps"
     spec:
       containers:
       - env:
@@ -49,4 +38,6 @@ spec:
           name: "content"
           readOnly: false
       volumes:
-      - name: "content"
+      - name: content
+        persistentVolumeClaim:
+          claimName: content-repository
