@@ -4,6 +4,8 @@ kind: "Service"
 metadata:
   annotations:
     fabric8.io/iconUrl: "https://cdn.rawgit.com/fabric8io/fabric8-devops/master/content-repository/src/main/fabric8/icon.svg"
+    prometheus.io/port: "9779"
+    prometheus.io/scrape: "true"
   labels:
     provider: "fabric8"
     project: "${project.artifactId}"
