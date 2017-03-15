@@ -44,6 +44,9 @@ spec:
           value: "true"
         - name: KUBERNETES_MASTER
           value: "https://kubernetes.default:443"
+        resources:
+            limits:
+              memory: 350Mi
         volumeMounts:
         - mountPath: /var/lib/jenkins
           name: jenkins-home
