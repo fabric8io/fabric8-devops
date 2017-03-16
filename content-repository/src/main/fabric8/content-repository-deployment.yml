@@ -26,6 +26,8 @@ spec:
         ports:
         - containerPort: 8080
           name: "http"
+        - containerPort: 9180
+          name: "prometheus"
         resources:
           limits:
             cpu: "0"
