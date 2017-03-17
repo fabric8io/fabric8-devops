@@ -116,7 +116,7 @@
 
     <configmapcontroller.version>2.3.5</configmapcontroller.version>
     <exposecontroller.version>2.3.6</exposecontroller.version>
-    <jenkins-openshift.version>va28ca84</jenkins-openshift.version>
+    <jenkins-openshift.version>v51e6ec3</jenkins-openshift.version>
   </properties>
 
   <distributionManagement>
