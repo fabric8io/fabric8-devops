@@ -20,7 +20,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: "metadata.namespace"
-        image: "fabric8/alpine-caddy:${project.version}"
+        image: "fabric8/caddy-server:${caddy-server.version}"
         imagePullPolicy: "IfNotPresent"
         name: "content-repository"
         ports:
