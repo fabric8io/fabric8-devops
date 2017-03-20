@@ -333,12 +333,20 @@
                   <HTTP_PORT>${http.port}</HTTP_PORT>
                 </env>
                 <ports>
-                  <port>8778</port>
                   <port>${http.port}</port>
+                  <port>8778</port>
                 </ports>
               </build>
             </image>
           </images>
+          <enricher>
+             <config>
+                <fmp-service>
+                  <!-- expose first port 8080 as 80 -->
+                  <port>80</port>
+                </fmp-service>
+             </config>
+          </enricher>
         </configuration>
       </plugin>
       </plugins>
