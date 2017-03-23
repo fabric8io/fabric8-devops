@@ -1,0 +1,40 @@
+---
+apiVersion: "extensions/v1beta1"
+kind: "Deployment"
+metadata:
+  labels:
+    name: "hubot-mattermost"
+  name: "hubot-mattermost"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: "hubot-mattermost"
+  template:
+    metadata:
+      labels:
+        name: "hubot-mattermost"
+      name: "hubot-mattermost"
+    spec:
+      containers:
+      - env:
+        - name: "HUBOT_GRAFANA_API_KEY"
+          valueFrom:
+            configMapKeyRef:
+              key: "hubot-grafana-api-key"
+              name: "hubot-mattermost"
+        - name: "HUBOT_GRAFANA_HOST"
+          valueFrom:
+            configMapKeyRef:
+              key: "hubot-grafana-host"
+              name: "hubot-mattermost"
+        - name: "HUBOT_JENKINS_URL"
+          valueFrom:
+            configMapKeyRef:
+              key: "hubot-jenkins-url"
+              name: "hubot-mattermost"
+        image: "fabric8/hubot-mattermost:1.0.0"
+        name: "hubot-mattermost"
+        ports:
+        - containerPort: 8080
+          protocol: "TCP"

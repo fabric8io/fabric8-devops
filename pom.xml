@@ -178,6 +178,7 @@
     <module>grafana</module>
     <module>hubot-irc</module>
     <module>hubot-letschat</module>
+    <module>hubot-mattermost</module>
     <module>hubot-notifier</module>
     <module>hubot-slack</module>
     <module>image-linker</module>
