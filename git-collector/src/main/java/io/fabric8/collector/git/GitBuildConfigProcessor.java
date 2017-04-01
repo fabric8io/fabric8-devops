@@ -34,8 +34,8 @@ import io.fabric8.openshift.api.model.GitBuildSource;
 import io.fabric8.utils.Files;
 import io.fabric8.utils.Function;
 import io.fabric8.utils.Strings;
-import io.fabric8.utils.cxf.JsonHelper;
-import io.fabric8.utils.cxf.WebClients;
+import io.fabric8.utils.jaxrs.JAXRSClients;
+import io.fabric8.utils.jaxrs.JsonHelper;
 import org.eclipse.jgit.api.CloneCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.PullCommand;
@@ -330,7 +330,7 @@ public class GitBuildConfigProcessor implements BuildConfigProcessor {
     }
 
     protected String findFirstId(final SearchDTO search) {
-        return WebClients.handle404ByReturningNull(new Callable<String>() {
+        return JAXRSClients.handle404ByReturningNull(new Callable<String>() {
             @Override
             public String call() throws Exception {
                 ObjectNode results = elasticsearchClient.search(esIndex, esType, search);
