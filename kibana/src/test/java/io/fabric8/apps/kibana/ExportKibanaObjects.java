@@ -22,7 +22,7 @@ import io.fabric8.collector.elasticsearch.ElasticsearchClient;
 import io.fabric8.collector.elasticsearch.SearchDTO;
 import io.fabric8.utils.Files;
 import io.fabric8.utils.Strings;
-import io.fabric8.utils.cxf.JsonHelper;
+import io.fabric8.utils.jaxrs.JsonHelper;
 
 import java.io.File;
 import java.io.IOException;

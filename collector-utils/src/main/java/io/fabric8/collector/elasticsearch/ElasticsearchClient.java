@@ -26,16 +26,13 @@ import io.fabric8.utils.Function;
 import io.fabric8.utils.Objects;
 import io.fabric8.utils.Strings;
 import io.fabric8.utils.cxf.ExceptionResponseMapper;
-import io.fabric8.utils.cxf.JsonHelper;
-import io.fabric8.utils.cxf.WebClients;
+import io.fabric8.utils.jaxrs.JAXRSClients;
+import io.fabric8.utils.jaxrs.JsonHelper;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -149,7 +146,7 @@ public class ElasticsearchClient implements ElasticsearchAPI {
     }
 
     public ObjectNode createIndexIfMissing(final String index, final String type, Function<ObjectNode, Boolean> updater) {
-        ObjectNode metadata = WebClients.handle404ByReturningNull(new Callable<ObjectNode>() {
+        ObjectNode metadata = JAXRSClients.handle404ByReturningNull(new Callable<ObjectNode>() {
             @Override
             public ObjectNode call() throws Exception {
                 return getIndex(index);
@@ -178,7 +175,7 @@ public class ElasticsearchClient implements ElasticsearchAPI {
     }
 
     public ObjectNode createIndexMappingIfMissing(final String index, final String type, Function<ObjectNode, Boolean> updater) {
-        ObjectNode metadata = WebClients.handle404ByReturningNull(new Callable<ObjectNode>() {
+        ObjectNode metadata = JAXRSClients.handle404ByReturningNull(new Callable<ObjectNode>() {
             @Override
             public ObjectNode call() throws Exception {
                 return getIndexMapping(index, type);

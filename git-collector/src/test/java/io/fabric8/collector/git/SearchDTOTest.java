@@ -18,7 +18,7 @@ package io.fabric8.collector.git;
 
 import io.fabric8.collector.elasticsearch.SearchDTO;
 import io.fabric8.collector.git.elasticsearch.Searches;
-import io.fabric8.utils.cxf.JsonHelper;
+import io.fabric8.utils.jaxrs.JsonHelper;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
