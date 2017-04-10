@@ -1,0 +1,39 @@
+---
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - env:
+        - name: "DIRSRV_HOSTNAME"
+          valueFrom:
+            configMapKeyRef:
+              key: "dirsrv-hostname"
+              name: "dirsrv-389ds"
+        - name: "DIRSRV_ADMIN_USERNAME"
+          valueFrom:
+            secretKeyRef:
+              key: "dirsrvAdminUserName"
+              name: "dirsrv-389ds"
+        - name: "DIRSRV_ADMIN_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              key: "dirsrvAdminUserPassword"
+              name: "dirsrv-389ds"
+        - name: "DIRSRV_MANAGER_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              key: "dirsrvManagerPassword"
+              name: "dirsrv-389ds"
+        - name: "DIRSRV_SUFFIX"
+          valueFrom:
+            configMapKeyRef:
+              key: "dirsrv-suffix"
+              name: "dirsrv-389ds"
+        image: "${docker.image}"
+        imagePullPolicy: "IfNotPresent"
+        name: "dirsrv-389ds"
+        ports:
+        - containerPort: 389
+          name: "ldap"
+      serviceAccountName: "dirsrv-389ds"

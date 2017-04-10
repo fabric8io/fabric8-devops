@@ -1,0 +1,24 @@
+== 389ds - Directory Server
+
+This deploys the http://directory.fedoraproject.org/[389ds] to the Kubernetes or OpenShift
+
+=== Deploying to kubernetes
+
+To deploy the application to kubernetes using the command from http://fabric8.io/manifests/kubernetes.html and
+selecting the version of the dirsrv-389ds app from the list
+
+
+=== Deploying to OpenShift
+
+
+IMPORTANT: When deploying in the OpenShift, the project to which the application will be deployed needs to have the
+           policy added like  `oc adm policy add-scc-to-user anyuid system:serviceaccount:<project>:dirsrv-389ds`
+
+To deploy the application to OpenShift using the command from http://fabric8.io/manifests/openshift.html and
+selecting the version of the 389ds app from the list
+
+NOTE: The OpenShift right now allows accessing the LDAP server using NodePort only, as the OpenShift router
+needs SNI + other things to do ldap transport
+
+
+

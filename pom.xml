@@ -118,6 +118,7 @@
     <configmapcontroller.version>2.3.5</configmapcontroller.version>
     <exposecontroller.version>2.3.6</exposecontroller.version>
     <jenkins-openshift.version>v14e753c</jenkins-openshift.version>
+    <dirsrv-389ds.version>0.1.1</dirsrv-389ds.version>
   </properties>
 
   <distributionManagement>
@@ -167,6 +168,7 @@
     <module>collector-utils</module>
     <module>configmapcontroller</module>
     <module>content-repository</module>
+    <module>dirsrv-389ds</module>
     <module>elasticsearch</module>
     <module>exposecontroller</module>
     <module>fabric8-docker-registry</module>
