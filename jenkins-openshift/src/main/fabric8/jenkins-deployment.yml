@@ -44,6 +44,10 @@ spec:
           value: "true"
         - name: KUBERNETES_MASTER
           value: "https://kubernetes.default:443"
+        - name: "KUBERNETES_NAMESPACE"
+          valueFrom:
+            fieldRef:
+              fieldPath: "metadata.namespace"
         resources:
             limits:
               memory: 350Mi
