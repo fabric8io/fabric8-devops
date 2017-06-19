@@ -116,7 +116,7 @@
     <version.compiler.plugin>2.3.1</version.compiler.plugin>
 
     <configmapcontroller.version>2.3.7</configmapcontroller.version>
-    <exposecontroller.version>2.3.15</exposecontroller.version>
+    <exposecontroller.version>2.3.16</exposecontroller.version>
     <jenkins-openshift.version>v14e753c</jenkins-openshift.version>
   </properties>
 
