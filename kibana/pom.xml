@@ -58,7 +58,7 @@
                 <from>centos:7</from>
                 <assembly>
                   <targetDir>/</targetDir>
-                  <mode>tar</mode>
+                  <mode>dir</mode>
                   <inline>
                     <id>kibana-config</id>
                     <fileSets>
