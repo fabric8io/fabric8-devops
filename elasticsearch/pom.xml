@@ -57,7 +57,7 @@
                 <from>centos:7</from>
                 <assembly>
                   <targetDir>/</targetDir>
-                  <mode>tar</mode>
+                  <mode>dir</mode>
                   <inline>
                     <id>logstash-template</id>
                     <fileSets>
