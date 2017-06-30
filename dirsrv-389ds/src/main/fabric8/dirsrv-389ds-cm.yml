@@ -1,0 +1,8 @@
+apiVersion: "v1"
+data:
+  dirsrv-hostname: ""
+  dirsrv-suffix: "dc=example,dc=com"
+metadata:
+  name: "dirsrv-389ds"
+kind: "ConfigMap"
+labels: {}
