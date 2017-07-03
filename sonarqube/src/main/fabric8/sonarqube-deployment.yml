@@ -17,20 +17,29 @@ spec:
         name: "sonarqube"
     spec:
       containers:
-       - env:
-         - name: "KUBERNETES_MASTER"
-           value: "https://kubernetes.default"
-
-         image: "sonarqube"
-         imagePullPolicy: "IfNotPresent"
-         name: "sonarqube"
-         ports:
-         - containerPort: 9000
-           name: "sonaqube"
-         resources:
-          limits:
-           cpu: 0.5
-           memory: 512M
-         requests:
-           cpu: 0.5
-           memory: 512M
+      - env:
+        - name: "KUBERNETES_MASTER"
+          value: "https://kubernetes.default"
+        image: fabric8/sonarqube-docker:${sonarqube.version}
+        name: "sonarqube"
+        ports:
+        - containerPort: 9000
+          name: "sonaqube"
+        resources:
+         limits:
+          cpu: 0.5
+          memory: 512M
+        requests:
+          cpu: 0.5
+          memory: 512M
+        volumeMounts:
+        - mountPath: /opt/sonarqube/config/
+          name: sonarqube
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: sonarqube
+        name: sonarqube
+        items:
+        - key: sonar.properties
+          path: sonar.properties
