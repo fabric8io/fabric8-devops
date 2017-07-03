@@ -118,6 +118,7 @@
     <configmapcontroller.version>2.3.7</configmapcontroller.version>
     <exposecontroller.version>2.3.16</exposecontroller.version>
     <jenkins-openshift.version>v14e753c</jenkins-openshift.version>
+    <sonarqube.version>dummy</sonarqube.version>
   </properties>
 
   <distributionManagement>
