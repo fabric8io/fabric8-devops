@@ -115,7 +115,7 @@
     <version.maven-bundle-plugin>2.3.7</version.maven-bundle-plugin>
     <version.compiler.plugin>2.3.1</version.compiler.plugin>
 
-    <configmapcontroller.version>2.3.7</configmapcontroller.version>
+    <configmapcontroller.version>2.3.11</configmapcontroller.version>
     <exposecontroller.version>2.3.16</exposecontroller.version>
     <jenkins-openshift.version>v14e753c</jenkins-openshift.version>
     <sonarqube.version>v4c88694</sonarqube.version>
