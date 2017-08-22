@@ -116,7 +116,7 @@
     <version.compiler.plugin>2.3.1</version.compiler.plugin>
 
     <configmapcontroller.version>2.3.11</configmapcontroller.version>
-    <exposecontroller.version>2.3.21</exposecontroller.version>
+    <exposecontroller.version>2.3.22</exposecontroller.version>
     <jenkins-openshift.version>v14e753c</jenkins-openshift.version>
     <sonarqube.version>v4c88694</sonarqube.version>
   </properties>
