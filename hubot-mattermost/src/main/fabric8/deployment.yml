@@ -33,6 +33,31 @@ spec:
             configMapKeyRef:
               key: "hubot-jenkins-url"
               name: "hubot-mattermost"
+        - name: "MATTERMOST_ENDPOINT"
+          valueFrom:
+            configMapKeyRef:
+              key: "hubot-mattermost_endpoint"
+              name: "hubot-mattermost"
+        - name: "MATTERMOST_INCOME_URL"
+          valueFrom:
+            configMapKeyRef:
+              key: "hubot-mattermost_income_url"
+              name: "hubot-mattermost"
+        - name: "MATTERMOST_TOKEN"
+          valueFrom:
+            configMapKeyRef:
+              key: "hubot-mattermost_token"
+              name: "hubot-mattermost"
+        - name: "MATTERMOST_ICON_URL"
+          valueFrom:
+            configMapKeyRef:
+              key: "hubot-mattermost_icon_url"
+              name: "hubot-mattermost"
+        - name: "MATTERMOST_HUBOT_USERNAME"
+          valueFrom:
+            configMapKeyRef:
+              key: "hubot-mattermost_hubot_username"
+              name: "hubot-mattermost"
         image: "fabric8/hubot-mattermost:1.0.0"
         name: "hubot-mattermost"
         ports:
