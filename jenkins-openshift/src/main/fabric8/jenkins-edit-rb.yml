@@ -1,9 +1,0 @@
-metadata:
-  name: edit-jenkins
-roleRef:
-  name: jenkins
-subjects:
-- kind: ServiceAccount
-  name: jenkins
-roleRef:
-  name: edit
