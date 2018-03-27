@@ -20,7 +20,7 @@ spec:
       - env:
         - name: "KUBERNETES_MASTER"
           value: "https://kubernetes.default"
-        image: fabric8/sonarqube-docker:${sonarqube.version}
+        image: fabric8/sonarqube:${sonarqube.version}
         name: "sonarqube"
         ports:
         - containerPort: 9000
