@@ -1,1 +1,0 @@
-Provides centralised historical [Metrics](http://fabric8.io/guide/metrics.html) and alerting using [Prometheus](prometheus) as the back end and [Grafana2](http://grafana.org/) as the front end

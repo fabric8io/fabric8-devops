@@ -1,1 +1,0 @@
-[Hubot](https://hubot.github.com/) adapter to use with [Mattermost](https://about.mattermost.com/)

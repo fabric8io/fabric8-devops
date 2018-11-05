@@ -1,1 +1,0 @@
-Checks for a new release and update running applications that have opted for automatic upgrades
