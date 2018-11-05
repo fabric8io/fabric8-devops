@@ -1,1 +1,0 @@
-Provides [Chat](http://fabric8.io/guide/chat.html) using [Hubot](https://hubot.github.com/) as the bot framework and IRC as the chat service

@@ -1,1 +1,0 @@
-ConfigMap Controller watches for ConfigMap changes and restarts the associated annotated Deployment objects causing rolling upgrades of new configuration
